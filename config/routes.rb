@@ -3,5 +3,14 @@ Rails.application.routes.draw do
 
   root 'landing#index'
 
-  get 'admin' => 'admin#index'
+  namespace :admin do
+    get '/' => 'admin#index'
+
+    resources :garland_prices
+    resources :lamp_prices
+    resources :orders
+    resources :customers
+
+  end
+
 end
