@@ -1,7 +1,8 @@
 @application = angular.module('garland.landing',
   [ 'ui.router',
     'angularUtils.directives.dirPagination',
-    'ui.mask'
+    'ui.mask',
+    'bootstrapLightbox'
   ])
 
 @application.config ['$httpProvider', '$stateProvider', '$urlRouterProvider', ($httpProvider, $stateProvider, $urlRouterProvider) ->
@@ -23,4 +24,9 @@
     templateUrl: '/templates/landing/benefits'
 
   $urlRouterProvider.otherwise '/'
+]
+
+
+@application.run ['$rootScope', ($rootScope) ->
+  $rootScope.settings = JSON.parse($("meta[name='settings']").attr('content'))
 ]

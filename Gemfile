@@ -14,7 +14,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'mongoid'
-gem 'simple_enum'
+gem 'simple_enum', '~> 2.1.1', require: 'simple_enum/mongoid'
+gem 'active_model_serializers'
 gem 'bower-rails'
 gem 'haml'
 gem 'haml-rails'

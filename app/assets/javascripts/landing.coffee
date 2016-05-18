@@ -14,6 +14,8 @@
 #= require angular-resource
 #= require angular-utils-pagination
 #= require angular-local-storage
+#= require angular-bootstrap/ui-bootstrap-tpls
+#= require angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox
 #= require angular-ui-mask
 #= require ng-droplet
 

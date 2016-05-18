@@ -1,12 +1,8 @@
 .header
   .section_inner
     %ul.main_menu
-      - if Rails.env.development?
-        %li.menu_item
-          %a.menu_link(href = "" ng-click = "vm.log.info(vm.order)")
-            %span.link_text Заказ
       %li.menu_item
-        %a.menu_link{:href => "#"}
+        %a.menu_link(href = "" ng-click = "vm.calc_price()")
           %span.link_text расчитать стоимость
       %li.menu_item
         %a.menu_link{:href => "#"}

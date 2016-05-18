@@ -5,12 +5,9 @@ class ApplicationController < ActionController::Base
 
   def serialize_resources(resources, serializer)
     return [{}] if not resources
-
-    user = current_user ? current_user : nil
     ActiveModel::SerializableResource.new(
         resources,
         each_serializer: serializer,
-        scope: user,
         root: false
     ).serializable_hash
   end
@@ -20,7 +17,6 @@ class ApplicationController < ActionController::Base
     ActiveModel::SerializableResource.new(
         resource,
         serializer: serializer,
-        scope: user,
         root: false
     ).serializable_hash
   end

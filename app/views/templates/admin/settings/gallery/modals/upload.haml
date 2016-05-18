@@ -1,0 +1,36 @@
+.modal-header
+  %button.close(aria-label = "Close" data-dismiss = "modal" type = "button")
+    %span(aria-hidden = "true") ×
+  %h4.modal-title Добавить изображение
+.modal-body
+  .row
+    / Drop zone
+    .col-sm-12.well
+      %input(type="file" ng-model="vm.interface" multiple base-sixty-four-input accept="image/*")
+
+    / Tags
+    .col-sm-12.well
+      %label.checkbox-inline
+        %input(type = 'checkbox' ng-model = "vm.tags.holidays")
+        праздники
+      %label.checkbox-inline
+        %input(type = 'checkbox' ng-model = "vm.tags.iterior")
+        ярмарки и интерьеры
+      %label.checkbox-inline
+        %input(type = 'checkbox' ng-model = "vm.tags.cinema")
+        реклама и кино
+      %label.checkbox-inline
+        %input(type = 'checkbox' ng-model = "vm.tags.wedding")
+        свадьбы
+
+    / Preview zone
+    .col-sm-12
+      .row.well
+        .col-sm-12.col-xs-12.col-md-4.col-lg-3(ng-repeat = "file in vm.interface" style = 'margin-bottom: 25px;'  height = "240px" style = "display: block;" width = "320px")
+          %img.thumbnail.img-responsive(ng-src = "data:{{file.filetype}};base64,{{file.base64}}")
+            %a.btn.btn-xs.btn-danger.btn-flat(ng-click = "vm.interface.splice(vm.interface.indexOf(file),1)")
+              %i.fa.fa-trash
+
+.modal-footer
+  %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
+  %button.btn.btn-primary(ng-click = "vm.upload()") Загрузить

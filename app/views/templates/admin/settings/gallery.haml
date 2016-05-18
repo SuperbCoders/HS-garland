@@ -1,1 +1,29 @@
-gallery.haml
+.box
+  .box-header.with-border
+    %label.checkbox-inline
+      %input(type = 'checkbox' ng-model = "vm.filter.all")
+      все фото (121)
+    %label.checkbox-inline
+      %input(type = 'checkbox' ng-model = "vm.filter.holidays")
+      праздники (33)
+    %label.checkbox-inline
+      %input(type = 'checkbox' ng-model = "vm.filter.iterior")
+      ярмарки и интерьеры (24)
+    %label.checkbox-inline
+      %input(type = 'checkbox' ng-model = "vm.filter.cinema")
+      реклама и кино (2)
+    %label.checkbox-inline
+      %input(type = 'checkbox' ng-model = "vm.filter.wedding")
+      свадьбы (62)
+
+    %button.btn.btn-sm.btn-success.btn-flat.pull-right(ng-click = "vm.upload_modal()") Добавить
+
+  .box-body
+    .row
+      .col-sm-12
+        .row.well
+          .col-sm-12.col-xs-12.col-md-4.col-lg-3(ng-repeat = "image in vm.images | filter:{tags: vm.filter}" style = 'margin-bottom: 25px;'  height = "240px" style = "display: block;" width = "320px")
+            %img.thumbnail.img-responsive(ng-src = "{{image.path}}")
+            %a.btn.btn-xs.btn-danger.btn-flat(ng-click = "vm.destroy(image)")
+              %i.fa.fa-trash
+            %span.label.label-default(ng-repeat = "(key, value) in image.tags" ng-show = "{{value}}" style = 'margin-right: 2px') {{ key | tagFilter}}
