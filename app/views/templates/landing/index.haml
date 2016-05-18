@@ -1,0 +1,381 @@
+.wrapper
+  .slider_holder
+    .mainSlider.swiper-container.main_slider
+      .swiper_controls
+        .section_inner
+          #main_slider_next.swiper-button-next
+          #main_slider_prev.swiper-button-prev
+      .swiper-wrapper.clearfix
+        .swiper-slide
+          .slide_img
+            %img{:src => "/i/top_banner.jpg"}/
+        .swiper-slide
+          .slide_img
+            %img{:src => "/i/top_banner.jpg"}/
+        .swiper-slide
+          .slide_img
+            %img{:src => "/i/top_banner.jpg"}/
+        .swiper-slide
+          .slide_img
+            %img{:src => "/i/top_banner.jpg"}/
+      .slide_content
+        .section_inner.text_center
+          .slide_i_block
+            %h2.slide_i_caption.fz_30 А Р Е Н Д А
+            %p.fz_72 Ретро
+            %p.fz_42 гирлянды
+            %p.fz_37 с лампами
+            %p.fz_30 накаливания
+    %a.btn_v3.order_now_btn.white_btn(href = "#") заказать сейчас
+
+  .base
+    = render 'templates/landing/shared/menu'
+
+    .main_content
+
+      .section_w.section_v1
+        .section_inner
+          %h2.section_caption.bordered
+            на несколько дней
+            %br/
+            ИЛИ навсегда
+          .article_v1.text_center
+            %p
+              3 года назад мы начали делать и продавать гирлянды в Happy Station, а еще через полгода стали сдавать их в аренду. Тогда мы были одними из первых, если не самыми первыми. С тех пор мы сделали 9 километров чистой красоты, побывали с ними на 17 ярмарках, украсили 62 свадьбы, 7 интерьеров ресторанов, 1 рекламный ролик и даже 1 фильм со
+              %br/
+              Шнуром в главной роли.
+            %p Если вы хотите украсить свой праздник, — лучше, изящнее и интеллигентнее способа не найдете, а мы с удовольствием в этом поможем.
+
+      .section_w.section_v2
+        .garland_block
+          .garland_4.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "1.2"}
+            %img(src = "i/1604_HS_Garland_Parallax_04.png")/
+          .garland_3.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "1.5"}
+            %img(src = "i/1604_HS_Garland_Parallax_03.png")/
+          .garland_2.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "1.8"}
+            %img(src = "i/1604_HS_Garland_Parallax_02.png")/
+          .garland_1.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "2.1"}
+            %img(src = "i/1604_HS_Garland_Parallax_01.png")/
+
+          .section_inner
+            %ul.garland_dims
+              %li
+                .garland_dim_unit
+                  .garland_dim_caption
+                    расстояние
+                    %br/
+                    между лампочками
+                  .garland_dim_img
+                    %img{:src => "i/lamp_dist.svg"}/
+                    .garland_text
+                      30
+                      %span.fz_24 см
+                  %p На наших гирляндах элементарно больше лампочек!
+              %li
+                .garland_dim_unit
+                  .garland_dim_caption
+                    длина
+                    %br/
+                    гирлянд
+                  .garland_dim_img
+                    %img{:src => "i/garland.svg"}/
+                    .garland_text
+                      3
+                      = succeed "\u{2022}" do
+                        %span.fz_24 м
+                      = succeed "\u{2022}" do
+                        %span.fz_24 м
+                      = succeed "\u{2022}" do
+                        %span.fz_24 м
+                      %span.fz_24 м
+                  %p Мы подобрали оптимальные длины гирлянд на все случаи.
+              %li
+                .garland_dim_unit
+                  .garland_dim_caption
+                    мощность
+                    %br/
+                    ламп
+                  .garland_dim_img
+                    %img{:src => "i/lamp_power.svg"}/
+                    .garland_text
+                      10
+                      = succeed "\u{a0}" do
+                        %span.fz_24 Вт
+                      %span.fz_24 Вт
+                  %p Наши гирлянды подходят как для украшения, так и для освещения.
+              %li
+                .garland_dim_unit
+                  .garland_dim_caption и ещё
+                  .garland_dim_img
+                    %a.garland_add_mode(href = '' ui-sref='benefits')
+                  %p Еще несколько причин, почему наши гирлянды самые крутые
+
+          .garland_works
+            .section_inner
+              %h2.section_caption
+                наши гирлянДы
+                %br/
+                в работе
+              .tab_controls
+                %ul#works_filter.filter_list
+                  %li.filter_item
+                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'all'")
+                      %span все фото (121)
+                  %li.filter_item
+                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'holidays'")
+                      %span праздники (33)
+                  %li.filter_item
+                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'iterior'")
+                      %span ярмарки и интерьеры (24)
+                  %li.filter_item
+                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'cinema'")
+                      %span реклама и кино (2)
+                  %li.filter_item
+                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'wedding'")
+                      %span свадьбы (62)
+
+              .tabBlock{"data-tab-context" => "#works_filter"}
+                #filter_tab_1
+                  .tab_inner.works_slider
+                    .swiper-container.workSlider
+                      .swiper-wrapper.clearfix
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                        .swiper-slide
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                          .work_slide
+                            %img{:src => "i/photo_1.jpg"}/
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                    .slider_pagination
+                    .swiper-button-next.slider_next
+                    .swiper-button-prev.slider_prev
+
+              / Share banner
+              .share_banner
+                .share_discount
+                  %span.discount_val 10
+                  %span.discount_perc %
+                  .discount_text   скидка
+                .share_b_left
+                  %span за фото вашего праздника с тегом
+                .share_b_right
+                  %span #гирлянды_happystation
+
+      .section_w.section_v2
+        .section_inner
+          .order_form
+            %h2.section_caption.buyMode
+              выберите дату
+              %br/
+              и забронируйте гирлянды
+            %h2.section_caption.buyMode.modeInvert{:style => "display:none;"}
+              выберите размер
+              %br/
+              и закажите доставку
+            %form.validateMe
+              .text_center
+                %label.order_switcher
+                  {{ vm.order_mode }}
+                  %input.inp_hidden.checkDependence(checked = "checked" data-dependence = ".buyMode" type = "checkbox" ng-model = 'vm.order.rent')
+                  %span.switcher_trigger
+                  %span.switcher_on купить
+                  %span.switcher_off арендовать
+              .buyMode
+                .date_p_controls
+                  .date_p_years
+                    %select.select2.dateRangeYear{"data-select-class" => "select_v1"}
+                  .date_p_months
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Январь
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Февраль
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Март
+                    .date_month.dateMonth.active
+                      %span.month_day.monthBtn Апрель
+                    .date_month.dateMonth.active
+                      %span.month_day.monthBtn Май
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Июнь
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Июль
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Август
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Сентябрь
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Октябрь
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Ноябрь
+                    .date_month.dateMonth
+                      %span.month_day.monthBtn Декабрь
+                .date_p_holder.datePicker
+                  %input#daterange.inp_hidden{:name => "daterange", :type => "text"}/
+                .date_p_value
+                  %span выбранный Период аренды:
+                  %span.dateRange.date_p_range 13 ДНЕЙ
+
+
+              / Delivery & Options
+              .order_options_table
+
+                / Delivery type
+                .order_opt_row
+                  .order_opt_cell
+                    .order_opt_item
+                      %label.radio_v1
+                        %input.inp_hidden(type = "radio" value = "moscow" ng-model = "vm.delivery")
+                        %span.check_text
+                          %span.clr_gold
+                            доставка по москве 500 руб
+                            %br/
+                          %span.clr_gray (бесплатно при заказе от 6000 руб)
+                  .order_opt_cell
+                    .order_opt_item
+                      %label.radio_v1
+                        %input.inp_hidden(type = "radio" value = "moscow_out" ng-model = "vm.delivery")
+                        %span.check_text
+                          %span.clr_gold
+                            доставка за пределы москвы
+                            %br/
+                          %span.clr_gray (расСчитывается индивидуально)
+                  .order_opt_cell
+                    .order_opt_item
+                      %label.radio_v1
+                        %input.inp_hidden(type = "radio" value = "pickup" ng-model = "vm.delivery")
+                        %span.check_text
+                          %span.clr_gold
+                            самовывоз
+                            %br/
+                          %span.clr_gray (посмотреть на карте)
+
+                / Order options
+                .order_opt_row
+                  .order_opt_cell  
+                  .order_opt_cell
+                    .order_opt_item
+                      %label.check_v1.buyMode
+                        %input.inp_hidden(type = "checkbox" ng-model = "vm.order.need_installation")
+                        %span.check_text
+                          %span.clr_gold
+                            нужен монтаж
+                            %br/
+                          %span.clr_gray (рассчитывается индивидуально)
+                    .order_opt_item
+                      %label.check_v1.buyMode
+                        %input.inp_hidden.checkDependence2(type = "checkbox" ng-model = "vm.order.rain_protection")
+                        %span.check_text
+                          %span.clr_gold
+                            нужна защита от дождя
+                            %br/
+                          %span.clr_gray (только для гирлянд длиной 50 м)
+                  .order_opt_cell  
+
+              / Items list
+              .order_settings_table(ng-repeat = "garland in vm.order.garlands")
+
+                / Длина герлянд
+                .order_settings_cell
+                  .setting_unit
+                    %span.clr_gray длина гирлянды:
+                    %span
+                      %select.select2{"data-select-class" => "select_v2"}
+                        %option{"data-nowaterproof" => "не влагозащищенные"} 3 метра
+                        %option{"data-nowaterproof" => "не влагозащищенные"} 5 метров
+                        %option{"data-nowaterproof" => "не влагозащищенные"} 10 метров
+                        %option{"data-nowaterproof" => "не влагозащищенные"} 15 метров
+                        %option 25 метров
+                        %option 50 метров
+
+                / Количество герлянд
+                .order_settings_cell
+                  .setting_unit
+                    %span.clr_gray количество гирлянд:
+                    %span.settings_counter
+                      %span.settings_btn.btn_down(ng-click = "vm.decr(garland)")
+                      %input.f_input.input_v1(ng-model = "garland.count")/
+                      %span.settings_btn.btn_up(ng-click = "vm.incr(garland)")
+
+                / Мощность ламп
+                .order_settings_cell
+                  .setting_unit
+                    %span.clr_gray мощность ламп:
+                    %span
+                      %select.select2(data-select-class = "select_v2" ng-model = "garland.lamp_power")
+                        %option 25 вт
+                        %option 50 вт
+                        %option 75 вт
+                        %option 100 вт
+
+              / Add new garland button
+              .text_center
+                %a.order_add_btn(href = "" ng-click = "vm.add_garland()") добавить гирлянду другого размера
+              .form_row
+                .form_cell
+                  %input.f_input.input_v2(class = "validate[required]" placeholder = "ваше имя" ng-model = "vm.order.name")
+                .form_cell
+                  %input.f_input.input_v2(class = "validate[required,custom[email]]" placeholder = "ваш e-mail" ng-model = "vm.order.email")
+                .form_cell
+                  %input.f_input.input_v2(class = "validate[required]" placeholder = "ваш телефон" ng-model="vm.order.phone" ui-mask="+7 (999) 999-99-99"  ui-mask-placeholder ui-mask-placeholder-char="_")
+              .text_center(ng-show = "vm.order.rent")
+                .pledge_sum.buyMode
+                  %span.clr_gray сумма залога за гирлянды:
+                  %span.clr_gold 12 000 руб
+                .rent_sum
+                  %span.clr_gray стоимость аренды:
+                  %span.clr_gold 1 000 руб
+                %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
+              .text_center(ng-show = "!vm.order.rent")
+                .rent_sum
+                  %span.clr_gray стоимость герлянд:
+                  %span.clr_gold 1 000 руб
+                %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
+
+  = render 'templates/landing/shared/footer'

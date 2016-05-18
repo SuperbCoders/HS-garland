@@ -1,0 +1,88 @@
+$icon-logo: "\e903";
+$icon-chevron-thin-left: "\e904";
+$icon-check: "\e917";
+$icon-facebook: "\e909";
+$icon-instagram: "\e902";
+$icon-twitter: "\e90a";
+$icon-chevron-thin-right: "\e905";
+$icon-vk: "\e906";
+$icon-google: "\e900";
+$icon-pinterest: "\e901";
+
+[class^="icon-"], [class*=" icon-"], .icon-before {
+  &:before {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'girland_icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.icon-logo {
+  &:before {
+    content: $icon-logo;
+  }
+}
+
+.icon-chevron-thin-left {
+  &:before {
+    content: $icon-chevron-thin-left;
+  }
+}
+
+.icon-check {
+  &:before {
+    content: $icon-check;
+  }
+}
+
+.icon-facebook {
+  &:before {
+    content: $icon-facebook;
+  }
+}
+
+.icon-instagram {
+  &:before {
+    content: $icon-instagram;
+  }
+}
+
+.icon-twitter {
+  &:before {
+    content: $icon-twitter;
+  }
+}
+
+.icon-chevron-thin-right {
+  &:before {
+    content: $icon-chevron-thin-right;
+  }
+}
+
+.icon-vk {
+  &:before {
+    content: $icon-vk;
+  }
+}
+
+.icon-google {
+  &:before {
+    content: $icon-google;
+  }
+}
+
+.icon-pinterest {
+  &:before {
+    content: $icon-pinterest;
+  }
+}
+

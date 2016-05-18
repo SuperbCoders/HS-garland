@@ -1,0 +1,59 @@
+%aside.main-sidebar
+  %section.sidebar
+    %ul.sidebar-menu
+
+      %li(ui-sref-active = 'active')
+        %a(href = "" ui-sref = 'dashboard')
+          %i.fa.fa-dashboard
+          %span Дэшборд
+
+      %li(ui-sref-active = 'active')
+        %a(href = "" ui-sref = 'orders')
+          %i.fa.fa-server
+          %span Заказы
+
+
+      %li(ui-sref-active = 'active')
+        %a(href = "" ui-sref = 'customers')
+          %i.fa.fa-users
+          %span Клиенты
+
+      / Настройк
+      %li.treeview
+        %a(href = "")
+          %i.fa.fa-rouble
+          %span Цены
+          %i.fa.fa-angle-left.pull-right
+        %ul.treeview-menu(style = "display: block;")
+          %li
+            %a(href = "" ui-sref = "settings.prices.garland")
+              %i.fa.fa-gg
+              Гирлянды
+          %li
+            %a(href = "" ui-sref = "settings.prices.lamp")
+              %i.fa.fa-lightbulb-o
+              Лампочки
+
+
+
+      / Настройки
+      %li.treeview
+        %a(href = "")
+          %i.fa.fa-cog
+          %span Настройки
+          %i.fa.fa-angle-left.pull-right
+        %ul.treeview-menu(style = "display: block;")
+          %li
+            %a(href = "" ui-sref = "settings.gallery")
+              %i.fa.fa-picture-o
+              Галерея
+          %li
+            %a(href = "" ui-sref = "settings.slider")
+              %i.fa.fa-camera
+              Фотографии слайдера
+
+          %li
+            %a(href = "" ui-sref = "settings.share_banner")
+              %i.fa.fa-wrench
+              Баннер
+

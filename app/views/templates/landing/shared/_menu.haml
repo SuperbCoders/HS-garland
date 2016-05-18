@@ -1,0 +1,21 @@
+.header
+  .section_inner
+    %ul.main_menu
+      - if Rails.env.development?
+        %li.menu_item
+          %a.menu_link(href = "" ng-click = "vm.log.info(vm.order)")
+            %span.link_text Заказ
+      %li.menu_item
+        %a.menu_link{:href => "#"}
+          %span.link_text расчитать стоимость
+      %li.menu_item
+        %a.menu_link{:href => "#"}
+          %span.link_text условия аренды
+      %li.menu_item.logo_holder
+        %span.logo
+      %li.menu_item
+        %a.menu_link(href = "mailto:arenda@happystation.ru")
+          %span.link_text остались вопросы?
+      %li.menu_item
+        %a.menu_link(href = "tel:84951357531")
+          %span.link_text звоните: 8 495 135 75 31

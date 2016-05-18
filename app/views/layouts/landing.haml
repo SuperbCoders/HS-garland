@@ -1,0 +1,19 @@
+!!!
+%html(lang="ru" ng-app = "garland.landing")
+  %head
+    %title Girland
+    %meta(charset = "utf-8")
+    %meta(content = "width=device-width, initial-scale=1.0" name = "viewport")
+    %meta(content = "SKYPE_TOOLBAR_PARSER_COMPATIBLE" name = "SKYPE_TOOLBAR")
+    %meta(content = "yes" name = "apple-mobile-web-app-capable")
+    %meta(content = "telephone=no" name = "format-detection")
+
+    = stylesheet_link_tag    'landing', media: 'all'
+    = javascript_include_tag 'landing'
+    = csrf_meta_tags
+
+    /[if lt IE 9]
+      <script type="text/javascript" src="js/vendor/html5shiv.js"></script>
+
+  %body.h_100p
+    %div(ui-view)

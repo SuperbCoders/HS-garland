@@ -1,0 +1,29 @@
+%nav.navbar.navbar-static-top{:role => "navigation"}
+  %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
+    %span.sr-only Toggle navigation
+  .navbar-custom-menu
+    %ul.nav.navbar-nav
+      %li.dropdown.user.user-menu
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
+          %img.user-image{:alt => "User Image", :src => "http://placehold.it/160x160"}
+            %span.hidden-xs User
+        %ul.dropdown-menu
+          %li.user-header
+            %img.img-circle{:alt => "User Image", :src => "http://placehold.it/160x160"}
+              %p
+                %small В системе с #{DateTime.now}
+
+          / Menu Footer
+          %li.user-footer
+            .checkbox
+              %label
+                %input{:type => "checkbox", 'ng-model' => 'debug'}
+                Debug
+            .pull-left
+              %a.btn.btn-default.btn-flat{:href => ""} Profile
+            .pull-right
+              %a.btn.btn-default.btn-flat{:href => "", 'ng-click' => 'sign_out()'} Sign out
+
+      %li
+        %a{"data-toggle" => "control-sidebar", :href => "#"}
+          %i.fa.fa-search

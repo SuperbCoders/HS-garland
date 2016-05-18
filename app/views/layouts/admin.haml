@@ -1,0 +1,26 @@
+!!!
+%html.no-js(lang = "ru" ng-app = 'garland.admin')
+  %head
+    %title Garland - Панель управления
+
+    %meta(charset = "UTF-8")
+    %meta(content = "ie=edge" http-equiv = "x-ua-compatible")
+    %meta(content = "width=device-width, initial-scale=1" name = "viewport")
+
+    = stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => false
+    = javascript_include_tag 'admin', 'data-turbolinks-track' => false
+    = csrf_meta_tags
+
+  %body.hold-transition.skin-red.fixed.sidebar-mini
+    / Site wrapper
+    .wrapper
+      %header.main-header
+
+        = render 'templates/admin/shared/navbar'
+
+      = render 'templates/admin/shared/sidebar'
+
+      .content-wrapper
+        %section.content
+          %div(ui-view)
+

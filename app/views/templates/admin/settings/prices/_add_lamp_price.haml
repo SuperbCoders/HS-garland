@@ -1,0 +1,35 @@
+#add_lamp_price.modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(aria-label = "Close" data-dismiss = "modal" type = "button")
+          %span(aria-hidden = "true") ×
+        %h4.modal-title Добавить цену на лампу
+      .modal-body
+
+        %form.form-horizontal
+          .form-group
+            .col-sm-3
+              %label Мощность ватт
+            .col-sm-9
+              %input.form-control(ng-model = "vm.lamp_price.power")
+
+          .form-group
+            .col-sm-3
+              %label Цена на покупку
+            .col-sm-9
+              %input.form-control(type = 'number' ng-model = "vm.lamp_price.buy_price")
+
+          .form-group
+            .col-sm-3
+              %label Цена на аренду
+            .col-sm-9
+              %input.form-control(type = 'number' ng-model = "vm.lamp_price.rent_price")
+
+
+
+      .modal-footer
+        %button.btn.btn-default.pull-left{"data-dismiss" => "modal", :type => "button"} Close
+        %button.btn.btn-primary{:type => "button"} Save changes
+    / /.modal-content
+  / /.modal-dialog
