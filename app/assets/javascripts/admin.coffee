@@ -15,5 +15,6 @@
 #= require jquery.slimscroll/jquery.slimscroll
 
 #= require ./admin/app
+#= require_tree ./admin/factories
 #= require_tree ./admin/
 #= require_tree ./shared
