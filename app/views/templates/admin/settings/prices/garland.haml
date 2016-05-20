@@ -1,7 +1,7 @@
 .box
   .box-header.with-border
     %h3.box-title.lead Цены на гирлянды
-    %a.btn.btn-sm.btn-default.btn-flat.pull-right(ng-click = "vm.modal('add_garland_price', 'show')")
+    %a.btn.btn-sm.btn-default.btn-flat.pull-right(ng-click = "vm.add_garland_price()")
       Добавить
 
   .box-body.no-padding
@@ -13,13 +13,13 @@
             %td Число лампочек
             %td Цена на покупку
             %td Цена на аренду
-            %td.col-xs-2
+            %td.col-xs-1
           %tbody
             %tr(ng-repeat = "price in vm.garland_prices")
-              %td {{ price.length }}
-              %td {{ price.lamps }}
-              %td {{ price.buy_price }}
-              %td {{ price.rent_price }}
+              %td {{ price.length }} метров
+              %td {{ price.lamps }} ламп
+              %td {{ price.buy_price }} ₽
+              %td {{ price.rent_price }} ₽
               %td
-                %a.btn.btn-sm.btn-flat(ng-click = "vm.destroy(price)")
+                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('garland_price', price)")
                   %i.fa.fa-trash

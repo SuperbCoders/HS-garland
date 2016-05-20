@@ -1,7 +1,7 @@
 .box
   .box-header.with-border
     %h3.box-title.lead Цены на ламы
-    %a.btn.btn-sm.btn-default.btn-flat.pull-right(ng-click = "vm.modal('add_lamp_price', 'show')")
+    %a.btn.btn-sm.btn-default.btn-flat.pull-right(ng-click = "vm.add_lamp_price()")
       Добавить
 
   .box-body.no-padding
@@ -9,15 +9,15 @@
       .col-xs-12
         %table.table.table-condensed.table-striped.table-hover.table-bordered
           %thead
-            %td Мощность
+            %td Мощность ВТ
             %td Цена на покупку
             %td Цена на аренду
-            %td.col-xs-2
+            %td.col-xs-1
           %tbody
             %tr(ng-repeat = "price in vm.lamp_prices")
-              %td {{ price.power }}
-              %td {{ price.buy_price }}
-              %td {{ price.rent_price }}
+              %td {{ price.power }} ВТ
+              %td {{ price.buy_price }} ₽
+              %td {{ price.rent_price }} ₽
               %td
-                %a.btn.btn-sm.btn-flat(ng-click = "vm.destroy(price)")
+                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('lamp_price', price)")
                   %i.fa.fa-trash

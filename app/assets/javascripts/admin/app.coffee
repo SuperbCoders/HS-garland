@@ -1,8 +1,12 @@
 @application = angular.module('garland.admin',
-  ['ui.router',
-   'ui.bootstrap',
-   'angularUtils.directives.dirPagination',
-   'ngResource'])
+  [
+    'ui.router',
+    'ui.bootstrap',
+    'angularUtils.directives.dirPagination',
+    'ngResource',
+    'naif.base64',
+    'angular-loading-bar'
+  ])
 
 @application.run ['$rootScope', '$state', '$stateParams', ($rootScope, $state, $stateParams) ->
   $rootScope.state = $state;
@@ -33,13 +37,29 @@
     url: '/settings'
     templateUrl: '/templates/admin/settings/index'
 
+  .state 'settings.general',
+    url: '/general'
+    templateUrl: '/templates/admin/settings/general'
+    controller: 'GeneralSettingsController'
+    controllerAs: 'vm'
+
+  .state 'settings.share_banner',
+    url: '/share_banner'
+    templateUrl: '/templates/admin/settings/share_banner'
+    controller: 'GeneralSettingsController'
+    controllerAs: 'vm'
+
   .state 'settings.gallery',
     url: '/gallery'
     templateUrl: '/templates/admin/settings/gallery'
+    controller: 'GalleryController'
+    controllerAs: 'vm'
 
   .state 'settings.slider',
     url: '/slider'
     templateUrl: '/templates/admin/settings/slider'
+    controller: 'SliderController'
+    controllerAs: 'vm'
 
   .state 'settings.prices',
     url: '/prices'
@@ -56,9 +76,6 @@
     templateUrl: '/templates/admin/settings/prices/lamp'
 
 
-  .state 'settings.share_banner',
-    url: '/share_banner'
-    templateUrl: '/templates/admin/settings/share_banner'
 
   $urlRouterProvider.otherwise '/orders'
   return

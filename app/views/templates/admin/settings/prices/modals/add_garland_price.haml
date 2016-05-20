@@ -1,0 +1,33 @@
+.modal-header
+  %button.close(aria-label = "Close" data-dismiss = "modal" type = "button")
+    %span(aria-hidden = "true") ×
+  %h4.modal-title Добавить цену на гирлянду
+.modal-body
+  %form.form-horizontal
+    .form-group
+      .col-sm-3
+        %label Длина в метрах
+      .col-sm-9
+        %input.form-control(ng-model = "vm.price.length")
+
+    .form-group
+      .col-sm-3
+        %label Число лампочек
+      .col-sm-9
+        %input.form-control(ng-model = "vm.price.lamps")
+
+    .form-group
+      .col-sm-3
+        %label Цена на покупку
+      .col-sm-9
+        %input.form-control(type = 'number' ng-model = "vm.price.buy_price")
+
+    .form-group
+      .col-sm-3
+        %label Цена за аренду (сутки)
+      .col-sm-9
+        %input.form-control(type = 'number' ng-model = "vm.price.rent_price")
+
+.modal-footer
+  %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
+  %button.btn.btn-primary(ng-click = "vm.save()") Добавить

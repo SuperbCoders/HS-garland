@@ -1,15 +1,110 @@
 class IndexController
-  constructor: (@rootScope, @scope, @log) ->
+  constructor: (@rootScope, @scope, @log, @http, @Lightbox) ->
     vm = @
+    vm.tags =
+      all: true
+
     vm.order =
       rent: false
+      delivery: 'moscow'
+      total_price: 0
       garlands: []
-
 
     @log.info 'IndexController'
     @init_landing()
     @add_garland()
+    @fetch_gallery_images()
 
+
+    # When delivery method changed, need recalc price
+    @scope.$watch('vm.order.delivery', (method) ->
+      if method
+        vm.calc_price()
+    )
+
+  openLightboxModal: (index) ->
+    vm = @
+    vm.Lightbox.openModal(vm.images, index)
+
+  filter: (type) ->
+    vm = @
+    switch type
+      when 'all'
+        vm.tags = {all: true}
+
+      when 'holidays'
+        vm.tags = {holidays: true}
+
+      when 'iterior'
+        vm.tags = {iterior: true}
+
+      when 'cinema'
+        vm.tags = {cinema: true}
+
+      when 'wedding'
+        vm.tags = {wedding: true}
+
+  fetch_gallery_images: ->
+    vm = @
+    vm.gallery =
+      all: 0
+      holidays: 0
+      iterior: 0
+      cinema: 0
+      wedding: 0
+
+    vm.http.get('/gallery').then((response) ->
+      vm.images = response.data
+      for image in vm.images
+        vm.gallery['all'] += 1
+        vm.gallery['holidays'] += 1 if image.tags.holidays
+        vm.gallery['iterior'] += 1 if image.tags.iterior
+        vm.gallery['cinema'] += 1 if image.tags.cinema
+        vm.gallery['wedding'] += 1 if image.tags.wedding
+
+    )
+
+  calc_price: ->
+    vm = @
+    settings = vm.rootScope.settings
+    order = vm.order
+
+
+    order.total_price = 0
+
+    for garland in order.garlands
+      garland_total_price = 0
+      vm.log.info garland
+      if order.rent
+        vm.log.info 'Calc for rent'
+        garland_total_price += garland.length.rent_price + (garland.length.lamps * garland.power.rent_price)
+      else
+        vm.log.info 'Calc for buy'
+        garland_total_price += (garland.length.buy_price + (garland.length.lamps * garland.power.buy_price))
+
+      order.total_price += garland_total_price * garland.count
+
+
+    if order.delivery is 'moscow' and order.total_price < settings.general.delivery_free_limit
+      vm.log.info order.total_price
+      vm.log.info settings.general
+      order.total_price += settings.general.delivery_moscow
+
+  add_garland: ->
+    new_garland =
+      count: 1
+      length: @rootScope.settings.garland_prices[0]
+      power: @rootScope.settings.lamp_prices[0]
+
+    @order.garlands.push new_garland
+    @calc_price()
+
+  incr: (garland) ->
+    garland.count = garland.count + 1
+    @calc_price()
+  decr: (garland) ->
+    garland.count = garland.count - 1 if garland.count > 1
+    @calc_price()
 
 
   init_landing: ->
@@ -139,8 +234,5 @@ class IndexController
           ret
       return
 
-  add_garland: -> @order.garlands.push {count: 1, need_installation: false, rain_protection: false}
-  incr: (garland) -> garland.count = garland.count + 1
-  decr: (garland) -> garland.count = garland.count - 1 if garland.count > 1
 
-@application.controller 'IndexController', ['$rootScope', '$scope', '$log', IndexController]
+@application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', 'Lightbox', IndexController]

@@ -6,18 +6,10 @@
           #main_slider_next.swiper-button-next
           #main_slider_prev.swiper-button-prev
       .swiper-wrapper.clearfix
-        .swiper-slide
-          .slide_img
-            %img{:src => "/i/top_banner.jpg"}/
-        .swiper-slide
-          .slide_img
-            %img{:src => "/i/top_banner.jpg"}/
-        .swiper-slide
-          .slide_img
-            %img{:src => "/i/top_banner.jpg"}/
-        .swiper-slide
-          .slide_img
-            %img{:src => "/i/top_banner.jpg"}/
+        - SliderImage.all.each do |s_image|
+          .swiper-slide
+            %img{:src => "/uploads/#{s_image.file}"}/
+
       .slide_content
         .section_inner.text_center
           .slide_i_block
@@ -119,94 +111,45 @@
               .tab_controls
                 %ul#works_filter.filter_list
                   %li.filter_item
-                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'all'")
-                      %span все фото (121)
+                    %a.filter_link(href = "" ng-click = "vm.filter('all')")
+                      %span все фото ({{vm.gallery.all}})
                   %li.filter_item
-                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'holidays'")
-                      %span праздники (33)
+                    %a.filter_link(href = "" ng-click = "vm.filter('holidays')")
+                      %span праздники ({{vm.gallery.holidays}})
                   %li.filter_item
-                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'iterior'")
-                      %span ярмарки и интерьеры (24)
+                    %a.filter_link(href = "" ng-click = "vm.filter('iterior')")
+                      %span ярмарки и интерьеры ({{vm.gallery.iterior}})
                   %li.filter_item
-                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'cinema'")
-                      %span реклама и кино (2)
+                    %a.filter_link(href = "" ng-click = "vm.filter('cinema')")
+                      %span реклама и кино ({{vm.gallery.cinema}})
                   %li.filter_item
-                    %a.filter_link(href = "" ng-click = "vm.albom_photo_type = 'wedding'")
-                      %span свадьбы (62)
+                    %a.filter_link(href = "" ng-click = "vm.filter('wedding')")
+                      %span свадьбы ({{vm.gallery.wedding}})
 
               .tabBlock{"data-tab-context" => "#works_filter"}
                 #filter_tab_1
                   .tab_inner.works_slider
                     .swiper-container.workSlider
                       .swiper-wrapper.clearfix
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags: vm.tags}" ng-switch on="$index % 2")
+                          .work_slide(ng-switch-when = "0")
+                            %img(ng-src = "{{vm.images[$index].path}}")
                             .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
+                              %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index)") крупнее
+
+                          .work_slide(ng-switch-when = "1")
+                            %img(ng-src = "{{vm.images[$index + 1].path}}")
                             .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                        .swiper-slide
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
-                          .work_slide
-                            %img{:src => "i/photo_1.jpg"}/
-                            .work_sl_info
-                              %a.btn_v2.work_sl_info.white_btn_white{:href => "#"} крупнее
+                              %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index + 1)") крупнее
+
                     .slider_pagination
                     .swiper-button-next.slider_next
                     .swiper-button-prev.slider_prev
 
               / Share banner
               .share_banner
-                .share_discount
-                  %span.discount_val 10
-                  %span.discount_perc %
-                  .discount_text   скидка
-                .share_b_left
-                  %span за фото вашего праздника с тегом
-                .share_b_right
-                  %span #гирлянды_happystation
+                = ShareBanner.banner.text.html_safe
+
 
       .section_w.section_v2
         .section_inner
@@ -227,7 +170,7 @@
                   %span.switcher_trigger
                   %span.switcher_on купить
                   %span.switcher_off арендовать
-              .buyMode
+              .buyMode(ng-show = 'vm.order.rent')
                 .date_p_controls
                   .date_p_years
                     %select.select2.dateRangeYear{"data-select-class" => "select_v1"}
@@ -271,16 +214,16 @@
                   .order_opt_cell
                     .order_opt_item
                       %label.radio_v1
-                        %input.inp_hidden(type = "radio" value = "moscow" ng-model = "vm.delivery")
+                        %input.inp_hidden(type = "radio" value = "moscow" ng-model = "vm.order.delivery")
                         %span.check_text
                           %span.clr_gold
-                            доставка по москве 500 руб
+                            доставка по москве {{ settings.general.delivery_moscow }} руб
                             %br/
-                          %span.clr_gray (бесплатно при заказе от 6000 руб)
+                          %span.clr_gray (бесплатно при заказе от {{ settings.general.delivery_free_limit }} руб)
                   .order_opt_cell
                     .order_opt_item
                       %label.radio_v1
-                        %input.inp_hidden(type = "radio" value = "moscow_out" ng-model = "vm.delivery")
+                        %input.inp_hidden(type = "radio" value = "moscow_out" ng-model = "vm.order.delivery")
                         %span.check_text
                           %span.clr_gold
                             доставка за пределы москвы
@@ -289,7 +232,7 @@
                   .order_opt_cell
                     .order_opt_item
                       %label.radio_v1
-                        %input.inp_hidden(type = "radio" value = "pickup" ng-model = "vm.delivery")
+                        %input.inp_hidden(type = "radio" value = "pickup" ng-model = "vm.order.delivery")
                         %span.check_text
                           %span.clr_gold
                             самовывоз
@@ -326,13 +269,7 @@
                   .setting_unit
                     %span.clr_gray длина гирлянды:
                     %span
-                      %select.select2{"data-select-class" => "select_v2"}
-                        %option{"data-nowaterproof" => "не влагозащищенные"} 3 метра
-                        %option{"data-nowaterproof" => "не влагозащищенные"} 5 метров
-                        %option{"data-nowaterproof" => "не влагозащищенные"} 10 метров
-                        %option{"data-nowaterproof" => "не влагозащищенные"} 15 метров
-                        %option 25 метров
-                        %option 50 метров
+                      %select.select2(ng-change = "vm.calc_price()" ng-model = "garland.length" ng-options = "price.name for price in settings.garland_prices" data-select-class = "select_v2")
 
                 / Количество герлянд
                 .order_settings_cell
@@ -348,11 +285,7 @@
                   .setting_unit
                     %span.clr_gray мощность ламп:
                     %span
-                      %select.select2(data-select-class = "select_v2" ng-model = "garland.lamp_power")
-                        %option 25 вт
-                        %option 50 вт
-                        %option 75 вт
-                        %option 100 вт
+                      %select.select2(ng-change = "vm.calc_price()" ng-model = "garland.power" ng-options = "lamp.name for lamp in settings.lamp_prices" data-select-class = "select_v2")
 
               / Add new garland button
               .text_center
@@ -367,15 +300,15 @@
               .text_center(ng-show = "vm.order.rent")
                 .pledge_sum.buyMode
                   %span.clr_gray сумма залога за гирлянды:
-                  %span.clr_gold 12 000 руб
+                  %span.clr_gold {{settings.general.guaranty_amount}} руб
                 .rent_sum
                   %span.clr_gray стоимость аренды:
-                  %span.clr_gold 1 000 руб
+                  %span.clr_gold {{ vm.order.total_price }} руб
                 %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
               .text_center(ng-show = "!vm.order.rent")
                 .rent_sum
                   %span.clr_gray стоимость герлянд:
-                  %span.clr_gold 1 000 руб
+                  %span.clr_gold {{ vm.order.total_price }} руб
                 %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
 
   = render 'templates/landing/shared/footer'
