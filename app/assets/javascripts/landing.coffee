@@ -17,7 +17,6 @@
 #= require angular-bootstrap/ui-bootstrap-tpls
 #= require angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox
 #= require angular-ui-mask
-#= require ng-droplet
 
 #= require ./landing/app
 #= require_tree ./landing
