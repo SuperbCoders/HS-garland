@@ -108,6 +108,14 @@ class IndexController
 
   make_order: ->
     vm = @
+
+    return alert('Укажите Имя') if not vm.order.name
+    return alert('Укажите Email') if not vm.order.email
+    return alert('Укажите номер телефона') if not vm.order.phone
+
+    if vm.order.rent and not vm.order.start_date and not vm.order.end_date
+      return alert('Выберите период аренды')
+
     vm.http.post('/order', vm.order).then((response) ->
       console.log response
     )
