@@ -69,6 +69,7 @@ class IndexController
     settings = vm.rootScope.settings
     order = vm.order
 
+    vm.log.info order
 
     order.total_price = 0
 
@@ -86,8 +87,6 @@ class IndexController
 
 
     if order.delivery is 'moscow' and order.total_price < settings.general.delivery_free_limit
-      vm.log.info order.total_price
-      vm.log.info settings.general
       order.total_price += settings.general.delivery_moscow
 
   add_garland: ->
@@ -102,18 +101,27 @@ class IndexController
   incr: (garland) ->
     garland.count = garland.count + 1
     @calc_price()
+
   decr: (garland) ->
     garland.count = garland.count - 1 if garland.count > 1
     @calc_price()
 
+  make_order: ->
+    vm = @
+    vm.http.post('/order', vm.order).then((response) ->
+      console.log response
+    )
 
   init_landing: ->
+    vm = @
+
     datePickerParam =
       'parentEl': '.datePicker'
       'opens': 'embed'
       'showDropdowns': true
       autoUpdateInput: true
       'applyClass': 'inp_hidden'
+      'autoApply': true
       'cancelClass': 'inp_hidden'
       'minDate': moment()
       locale:
@@ -128,6 +136,7 @@ class IndexController
           'Пт'
           'Сб'
         ]
+
     header = $('.header')
     dateRange = $('.dateRange')
     doc = $(document)
@@ -195,10 +204,21 @@ class IndexController
       return
 
     datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
-      console.log start, end, label
       $(this)[0].element.change()
       return
     )
+
+    $('input#daterange').on('apply.daterangepicker',(ev, picker) ->
+      vm.log.info "Range selected. From : "+picker.startDate
+      console.log picker
+      vm.rootScope.$apply( ->
+        vm.order.start_date = picker.startDate
+        vm.order.end_date = picker.endDate
+        vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
+      )
+
+    )
+
 
     $('.validateMe').validationEngine
       scroll: false

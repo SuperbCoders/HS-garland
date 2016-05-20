@@ -1,1 +1,26 @@
-customers.index
+.box
+  .box-header.with-border
+    %h3.box-title.lead Клиенты
+    %form.form-inline
+      .form-group
+        %label Фильтр
+        %input.form-control(ng-model = "vm.filter")
+
+  .box-body.no-padding
+    .row
+      .col-xs-12
+        %table.table.table-striped.table-hover.table-bordered
+          %thead
+            %td.col-xs-2 Имя
+            %td.col-xs-2 Email
+            %td.col-xs-2 Телефон
+          %tbody
+            %tr(dir-paginate  = "customer in vm.customers | filter:vm.filter | itemsPerPage: 20")
+              %td {{customer.name}}
+              %td {{customer.email}}
+              %td +7 {{customer.phone}}
+
+  .box-footer
+    .col-xs-12
+      %dir-pagination-controls
+

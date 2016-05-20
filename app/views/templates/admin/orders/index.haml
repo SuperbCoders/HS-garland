@@ -1,1 +1,57 @@
-orders.index
+.box
+  .box-header.with-border
+    .row
+      .col-sm-12
+        %form.form-inline
+          .form-group
+            %label Сделка
+            %select.form-control(ng-model = 'vm.filter.rent')
+              %option(value = 'false') Продажа
+              %option(value = 'true') Аренда
+
+          .form-group
+            %label Статус
+            %select.form-control(ng-model = 'vm.filter.status')
+              %option(value = 'new') Новые
+              %option(value = 'confirmed') Подтвержденные
+              %option(value = 'declined') Отмененные
+          .form-group
+            %button.btn.btn-success.btn-flat(ng-click = "vm.fetch()")
+              %i.fa.fa-refresh
+  .box-body.no-padding
+    .row
+      .col-xs-12
+        %table.table.table-striped.table-hover.table-bordered
+          %thead
+            %td.col-xs-2 Клиент
+            %td.col-xs-2 Число герлянд
+            %td.col-xs-2 Тип
+            %td.col-xs-2 Цена
+            %td.col-xs-2 Опции
+            %td.col-xs-1 Статус
+            %td.col-xs-1
+          %tbody
+            %tr(dir-paginate  = "order in vm.orders | filter:vm.filter | itemsPerPage: 50")
+              %td
+                %a(href = "mailto:{{ order.customer.email }}") {{ order.customer.name }}
+                %p +7 {{ order.customer.phone }}
+              %td
+                %p(ng-repeat = "garland in order.order_garlands")
+                  {{ garland.garland_price.length }} метра с {{ garland.lamp_price.power }} ВТ
+              %td
+                %span.label.label-info(ng-show = '!order.rent') Продажа
+                %span.label.label-success(ng-show = 'order.rent') Аренда на {{ order.days }} дней
+                %p.small {{order.start_date | date: 'dd.MM.yyyy'}} до {{order.end_date | date: 'dd.MM.yyyy' }}
+              %td {{ order.total_price }} ₽
+              %td
+                %span.label.label-default(ng-show = 'order.need_installation') монтаж
+                %span.label.label-default(ng-show = 'order.rain_protection') защита от дождя
+              %td {{ order.status }}
+              %td
+                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('garland_price', price)")
+                  %i.fa.fa-trash
+
+  .box-footer
+    .col-xs-12
+      %dir-pagination-controls
+

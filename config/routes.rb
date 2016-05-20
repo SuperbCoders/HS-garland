@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'landing#index'
   get 'gallery' => 'landing#gallery'
+  post 'order' => 'landing#order'
 
   namespace :admin do
     get '/' => 'admin#index'

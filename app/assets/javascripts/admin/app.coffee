@@ -24,6 +24,8 @@
   .state 'orders',
     url: '/orders'
     templateUrl: '/templates/admin/orders/index'
+    controller: 'OrdersController'
+    controllerAs: 'vm'
 
   .state 'dashboard',
     url: '/dashboard'
@@ -32,6 +34,8 @@
   .state 'customers',
     url: '/customers'
     templateUrl: '/templates/admin/customers/index'
+    controller: 'CustomersController'
+    controllerAs: 'vm'
 
   .state 'settings',
     url: '/settings'

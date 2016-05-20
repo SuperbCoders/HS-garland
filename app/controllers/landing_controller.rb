@@ -14,4 +14,13 @@ class LandingController < ApplicationController
     render json: serialize_resources(GalleryImage.all, Admin::GalleryImageSerializer)
   end
 
+  def order
+    result = {
+        order: Order.new_order(params)
+    }
+
+    render json: result
+  end
+
+
 end

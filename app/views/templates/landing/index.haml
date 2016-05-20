@@ -200,10 +200,10 @@
                     .date_month.dateMonth
                       %span.month_day.monthBtn Декабрь
                 .date_p_holder.datePicker
-                  %input#daterange.inp_hidden{:name => "daterange", :type => "text"}/
-                .date_p_value
+                  %input#daterange.inp_hidden(name = "daterange" type = "text")
+                .date_p_value(ng-show = 'vm.order.days > 0')
                   %span выбранный Период аренды:
-                  %span.dateRange.date_p_range 13 ДНЕЙ
+                  %span.dateRange.date_p_range {{ vm.order.days }} ДНЕЙ
 
 
               / Delivery & Options
