@@ -20,6 +20,7 @@ gem 'bower-rails'
 gem 'haml'
 gem 'haml-rails'
 gem 'coffee-script'
+gem 'thin'
 gem 'coffee-rails'
 
 # Use ActiveModel has_secure_password
