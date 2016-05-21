@@ -117,7 +117,7 @@ class IndexController
       return alert('Выберите период аренды')
 
     vm.http.post('/order', vm.order).then((response) ->
-      console.log response
+      vm.rootScope.g.state.go('thanks')
     )
 
   init_landing: ->

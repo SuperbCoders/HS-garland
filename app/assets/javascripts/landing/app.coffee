@@ -19,14 +19,21 @@
     controller: 'IndexController'
     controllerAs: 'vm'
 
+  .state 'thanks',
+    url: '/thanks'
+    templateUrl: '/templates/landing/thanks'
+
   .state 'benefits',
     url: '/benefits'
     templateUrl: '/templates/landing/benefits'
-
+    controller: 'IndexController'
+    controllerAs: 'vm'
   $urlRouterProvider.otherwise '/'
 ]
 
 
-@application.run ['$rootScope', ($rootScope) ->
+@application.run ['$rootScope', '$state', ($rootScope, $state) ->
   $rootScope.settings = JSON.parse($("meta[name='settings']").attr('content'))
+  $rootScope.g =
+    state: $state
 ]

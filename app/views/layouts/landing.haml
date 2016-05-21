@@ -17,4 +17,27 @@
       <script type="text/javascript" src="js/vendor/html5shiv.js"></script>
 
   %body.h_100p
-    %div(ui-view)
+
+    .wrapper
+      .hero_holder(ng-show = "g.state.current.name == 'thanks'")
+        .hero_inner.text_center
+          .gl_table
+            .gl_table_cell
+              .section_inner
+                .any_questions Заказ успешно отправлен!
+                .why_rockstars Успешный заказ!
+                .hero_text_block
+                  %p Пару слов об успешном заказе!
+
+      .hero_holder(ng-show = "g.state.current.name == 'benefits'")
+        .hero_inner.text_center
+          .gl_table
+            .gl_table_cell
+              .section_inner
+                .any_questions остались вопросы?
+                .why_rockstars ПОЧЕМУ МЫ САМЫЕ КРУТЫЕ
+                .hero_text_block
+                  %p Конечно мы не изобрели гирлянды с лампочками, но совершенно точно производить и сдавать в аренду начали первыми. Поэтому, опираясь на свой опыт, и протестировав гирлянды конкурентов, — можем подсказать на что обратить внимание, чтобы...
+                  %p А, да ладно! По правде, так: Чуваки посмотрели как мы морочимся, упростили технологию производства, выкинув этапы, которые на их взгляд лишние и понадеялись, что это не отразится на надежности.
+                  %p Так что мы хотя бы предупредим вас, дальше сами примете решение.
+      %div(ui-view)
