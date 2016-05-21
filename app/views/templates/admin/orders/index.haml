@@ -41,7 +41,7 @@
               %td
                 %span.label.label-info(ng-show = '!order.rent') Продажа
                 %span.label.label-success(ng-show = 'order.rent') Аренда на {{ order.days }} дней
-                %p.small {{order.start_date | date: 'dd.MM.yyyy'}} до {{order.end_date | date: 'dd.MM.yyyy' }}
+                %p.small(ng-show = 'order.rent') {{order.start_date | date: 'dd.MM.yyyy'}} до {{order.end_date | date: 'dd.MM.yyyy' }}
               %td {{ order.total_price }} ₽
               %td
                 %span.label.label-default(ng-show = 'order.need_installation') монтаж
