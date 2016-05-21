@@ -68,19 +68,13 @@ class IndexController
     vm = @
     settings = vm.rootScope.settings
     order = vm.order
-
-    vm.log.info order
-
     order.total_price = 0
 
     for garland in order.garlands
       garland_total_price = 0
-      vm.log.info garland
       if order.rent
-        vm.log.info 'Calc for rent'
         garland_total_price += garland.length.rent_price + (garland.length.lamps * garland.power.rent_price)
       else
-        vm.log.info 'Calc for buy'
         garland_total_price += (garland.length.buy_price + (garland.length.lamps * garland.power.buy_price))
 
       order.total_price += garland_total_price * garland.count
@@ -262,5 +256,21 @@ class IndexController
           ret
       return
 
+    $('.monthBtn').on 'click', ->
+      console.log 'month click'
+      firedEl = $(this).parent()
+      dateMonth = $('.dateMonth')
+      ind = firedEl.index()
+      firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect')
+      secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect')
+      firedEl.siblings().removeClass 'active'
+      firstMonthSelect[0].selectedIndex = ind
+      if ind == 11
+        dateMonth.eq(ind).addClass 'active'
+        dateMonth.eq(0).addClass 'active'
+      else
+        dateMonth.eq(ind).addClass('active').next().addClass 'active'
+      firstMonthSelect.trigger 'change'
+      false
 
 @application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', 'Lightbox', IndexController]
