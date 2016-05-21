@@ -15,7 +15,6 @@ class IndexController
     @add_garland()
     @fetch_gallery_images()
 
-
     # When delivery method changed, need recalc price
     @scope.$watch('vm.order.delivery', (method) ->
       if method
@@ -209,6 +208,15 @@ class IndexController
       $(this)[0].element.change()
       return
     )
+
+    datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each (ind) ->
+      $('.dateRangeYear').append $('<option>' + @innerHTML + '</option>')
+      return
+    $('.dateRangeYear').on 'change', ->
+      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
+      yearSelect[0].selectedIndex = @selectedIndex
+      yearSelect.trigger 'change'
+      return
 
     $('input#daterange').on('apply.daterangepicker',(ev, picker) ->
       vm.log.info "Range selected. From : "+picker.startDate
