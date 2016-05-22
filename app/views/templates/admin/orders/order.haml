@@ -9,6 +9,13 @@
 
 .modal-body
   %form.form-horizontal
+    %p.lead Общая информация
+    .form-group
+      .col-sm-3
+        %label Тип сделки
+      .col-sm-9
+        %span.label.label-success(ng-show = 'vm.order.rent') Аренда
+        %span.label.label-info(ng-show = '!vm.order.rent') Продажа
 
     .form-group
       .col-sm-3
@@ -62,13 +69,17 @@
 
           %tbody
             %tr(ng-repeat = "garland in vm.order.order_garlands")
-              %td {{ garland.garland_price.length }} метров
+              %td
+                %select.form-control(ng-options = "garland_price as garland_price.name for garland_price in vm.garland_prices" ng-model = "garland.garland_price")
               %td {{ garland.garland_price.lamps }}
-              %td {{ garland.lamp_price.power }} ВТ
+              %td
+                %select.form-control(ng-options = "lamp as lamp.name for lamp in vm.lamp_prices" ng-model = "garland.lamp_price")
               %td
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.order.order_garlands.splice(vm.order.order_garlands.indexOf(garland), 1)")
                   %i.fa.fa-trash
-
+      .col-xs-12
+        %pre
+          {{ vm.order | json }}
 .modal-footer
   %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
   %button.btn.btn-primary(ng-click = "vm.save()") Сохранить

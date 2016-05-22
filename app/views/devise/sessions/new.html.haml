@@ -5,7 +5,8 @@
 .login-box-body
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .form-group.has-feedback
-      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email'
+      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email', type: 'text'
+
     .form-group.has-feedback
       = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'
 

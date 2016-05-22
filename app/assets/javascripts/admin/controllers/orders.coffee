@@ -1,12 +1,12 @@
 class OrderModalController
-  constructor: (@scope, @uibModalInstance) ->
+  constructor: (@scope, @uibModalInstance, @http) ->
     console.log 'OrderModalController'
     vm = @
     vm.order = @scope.order
     vm.order_statuses = @scope.order_statuses
 
-    console.log vm.order
-    console.log vm.order_statuses
+    vm.http.get('/admin/garland_prices').then((response) -> vm.garland_prices = response.data)
+    vm.http.get('/admin/lamp_prices').then((response) -> vm.lamp_prices = response.data)
 
   save: ->
     vm = @
@@ -18,7 +18,7 @@ class OrderModalController
     vm.uibModalInstance.dismiss 'cancel'
     return
 
-@application.controller 'OrderModalController', ['$scope', '$uibModalInstance', OrderModalController]
+@application.controller 'OrderModalController', ['$scope', '$uibModalInstance', '$http', OrderModalController]
 
 
 class OrdersController
