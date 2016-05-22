@@ -10,12 +10,12 @@
           %thead
             %td.col-xs-2 Клиент
             %td.col-xs-2 Число герлянд
-            %td.col-xs-2 Тип
-            %td.col-xs-2 Цена
+            %td.col-xs-1 Тип
+            %td.col-xs-1 Цена
             %td.col-xs-2 Опции
-            %td.col-xs-3 Статус
+            %td.col-xs-2 Статус
             %td.col-xs-1 Дата
-            %td.col-xs-1
+            %td.col-xs-2
           %tbody
             %tr(dir-paginate  = "order in vm.orders | itemsPerPage: 50")
               %td
@@ -37,9 +37,9 @@
                   %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
               %td {{ order.c_at | date: 'dd.MM.yyyy' }}
               %td
-                %a.btn-btn.sm-btn-success.btn-flat(ng-click = "vm.edit(price)")
+                %a.btn.btn-sm.btn-success.btn-flat(ng-click = "vm.open(order)")
                   %i.fa.fa-pencil
-                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('garland_price', price)")
+                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy(order)")
                   %i.fa.fa-trash
 
   .box-footer
