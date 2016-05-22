@@ -27,10 +27,6 @@
     controller: 'OrdersController'
     controllerAs: 'vm'
 
-  .state 'dashboard',
-    url: '/dashboard'
-    templateUrl: '/templates/admin/dashboard/index'
-
   .state 'customers',
     url: '/customers'
     templateUrl: '/templates/admin/customers/index'

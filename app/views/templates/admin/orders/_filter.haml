@@ -1,0 +1,32 @@
+.row
+  .col-xs-12.col-md-12
+    %form.form-inline
+      .col-xs-4.col-md-4
+        .form-group
+          %label Сделка
+          %select.form-control(ng-model = 'vm.filters.rent')
+            %option(value = 'false') Продажа
+            %option(value = 'true') Аренда
+
+        .form-group
+          %label Статус
+          %select.form-control.input-xs(ng-model = "vm.filters.status")
+            %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
+
+      .col-xs-6.col-md-6
+        .form-group
+          %label Дата от
+          %input.form-control(ng-click = "vm.open_datepicker('date_from_opened')" datepicker-options = "dateOptions" is-open = "vm.date_filter.date_from_opened" ng-model = "vm.date_filter.date_from" ng-required = "false" type = "text"  uib-datepicker-popup = "")
+
+        .form-group
+          %label Дата до
+          %input.form-control(ng-click = "vm.open_datepicker('date_to_opened')" datepicker-options = "dateOptions" is-open = "vm.date_filter.date_to_opened" ng-model = "vm.date_filter.date_to" ng-required = "false" type = "text"  uib-datepicker-popup = "")
+
+      .col-md-2.col-xs-2
+        .form-group
+          %button.btn.btn-success.btn-flat(ng-click = "vm.fetch()")
+            %i.fa.fa-refresh
+
+  .col-xs-12
+    .well.well-sm
+      Заказов : {{ vm.statistic.total_orders }}. Аренда {{ vm.statistic.rent_amount }}. Продажа {{ vm.statistic.buy_amount }}

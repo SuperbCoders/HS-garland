@@ -1,21 +1,8 @@
 .box
   .box-header.with-border
-    .row
-      .col-sm-12
-        %form.form-inline
-          .form-group
-            %label Сделка
-            %select.form-control(ng-model = 'vm.filter.rent')
-              %option(value = 'false') Продажа
-              %option(value = 'true') Аренда
+    = render '/templates/admin/orders/filter'
 
-          .form-group
-            %label Статус
-            %select.form-control.input-xs(ng-model = "vm.filter.status")
-              %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
-          .form-group
-            %button.btn.btn-success.btn-flat(ng-click = "vm.fetch()")
-              %i.fa.fa-refresh
+.box
   .box-body.no-padding
     .row
       .col-xs-12
@@ -27,9 +14,10 @@
             %td.col-xs-2 Цена
             %td.col-xs-2 Опции
             %td.col-xs-3 Статус
+            %td.col-xs-1 Дата
             %td.col-xs-1
           %tbody
-            %tr(dir-paginate  = "order in vm.orders | filter:vm.filter | itemsPerPage: 50")
+            %tr(dir-paginate  = "order in vm.orders | itemsPerPage: 50")
               %td
                 %a(href = "mailto:{{ order.customer.email }}") {{ order.customer.name }}
                 %p +7 {{ order.customer.phone }}
@@ -47,6 +35,7 @@
               %td
                 %select.form-control.input-xs(ng-model = "order.status" ng-change = "vm.save(order)")
                   %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
+              %td {{ order.c_at | date: 'dd.MM.yyyy' }}
               %td
                 %a.btn-btn.sm-btn-success.btn-flat(ng-click = "vm.edit(price)")
                   %i.fa.fa-pencil
