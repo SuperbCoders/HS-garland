@@ -1,13 +1,11 @@
 class OrdersController
   constructor: (@rootScope, @scope, @log, @Orders, @http) ->
     vm = @
-
-    @log.info 'OrdersController'
     @fetch()
 
   save: (order) ->
-    alert(order.status)
     order.$save({id: order.id})
+
   fetch: ->
     vm = @
     vm.http.get('/admin/orders/statuses').then((statuses) ->
