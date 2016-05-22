@@ -7,7 +7,7 @@
     %p(ng-show = '!vm.order.rent')
       Продажа на сумму {{ vm.order.total_price }} для {{ vm.order.customer.name }} | +7 {{ vm.order.customer.phone }}
 
-.modal-body
+.modal-body.well.well-sm
   %form.form-horizontal
     %p.lead Общая информация
     .form-group
@@ -70,16 +70,16 @@
           %tbody
             %tr(ng-repeat = "garland in vm.order.order_garlands")
               %td
-                %select.form-control(ng-options = "garland_price as garland_price.name for garland_price in vm.garland_prices" ng-model = "garland.garland_price")
+                %select.form-control(ng-options = "garland_price as garland_price.name for garland_price in vm.garland_prices track by garland_price.id" ng-model = "garland.garland_price")
               %td {{ garland.garland_price.lamps }}
               %td
-                %select.form-control(ng-options = "lamp as lamp.name for lamp in vm.lamp_prices" ng-model = "garland.lamp_price")
+                %select.form-control(ng-options = "lamp as lamp.name for lamp in vm.lamp_prices track by lamp.id" ng-model = "garland.lamp_price")
               %td
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.order.order_garlands.splice(vm.order.order_garlands.indexOf(garland), 1)")
                   %i.fa.fa-trash
-      .col-xs-12
-        %pre
-          {{ vm.order | json }}
+      -#.col-xs-12
+      -#  %pre
+      -#    {{ vm.order | json }}
 .modal-footer
   %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
   %button.btn.btn-primary(ng-click = "vm.save()") Сохранить
