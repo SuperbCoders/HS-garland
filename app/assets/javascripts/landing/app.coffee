@@ -19,6 +19,12 @@
     controller: 'IndexController'
     controllerAs: 'vm'
 
+  .state 'conditions',
+    url: '/conditions'
+    templateUrl: '/templates/landing/conditions'
+    controller: 'IndexController'
+    controllerAs: 'vm'
+
   .state 'thanks',
     url: '/thanks'
     templateUrl: '/templates/landing/thanks'

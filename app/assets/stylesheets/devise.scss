@@ -1,0 +1,17 @@
+/*
+ *= require bootstrap
+ *= require font-awesome
+ *= require admin-lte/dist/css/AdminLTE
+ *= require admin-lte/dist/css/skins/_all-skins.min
+ */
+
+.login-box-body {
+  padding: 0px;
+}
+
+.login-box, .register-box {
+  width: 460px;
+  margin: 5% auto;
+  border: 1px dotted #DDDDDD;
+  padding: 20px;
+}

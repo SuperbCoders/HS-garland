@@ -1,0 +1,13 @@
+.login-logo
+  %a{:href => "../../index2.html"}
+    %b> GARLAND
+/ /.login-logo
+.login-box-body
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .form-group.has-feedback
+      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email'
+    .form-group.has-feedback
+      = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'
+
+    .actions
+      %button.btn.btn-primary.btn-block.btn-flat{:type => "submit"} Войти

@@ -19,6 +19,18 @@
   %body.h_100p
 
     .wrapper
+      .slider_holder(ng-show = "g.state.current.name == 'conditions'")
+        .hero_holder
+          .garland_lamp{"data-stellar-offset-parent" => "true", "data-stellar-ratio" => "2"}
+            %img{:src => "i/big_lamp.png"}/
+          .hero_inner.text_center
+            .gl_table
+              .gl_table_cell
+                .section_inner
+                  .any_questions аренда
+                  .why_rockstars условия аренды гирлянд
+        %a.btn_v3.order_now_btn.white_btn{:href => "#"} скачать договор (pdf)
+
       .hero_holder(ng-show = "g.state.current.name == 'thanks'")
         .hero_inner.text_center
           .gl_table
