@@ -125,6 +125,7 @@ class IndexController
       'autoApply': true
       'cancelClass': 'inp_hidden'
       'minDate': moment()
+      'maxDate': moment().add(2, 'years')
       locale:
         format: 'DD/MM/YYYY'
         firstDay: 1

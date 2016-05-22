@@ -28,7 +28,11 @@ Rails.application.routes.draw do
     # Resources
     resources :garland_prices
     resources :lamp_prices
-    resources :orders
+    resources :orders do
+      collection do
+        get :statuses
+      end
+    end
     resources :customers
 
   end

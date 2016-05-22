@@ -11,10 +11,8 @@
 
           .form-group
             %label Статус
-            %select.form-control(ng-model = 'vm.filter.status')
-              %option(value = 'new') Новые
-              %option(value = 'confirmed') Подтвержденные
-              %option(value = 'declined') Отмененные
+            %select.form-control.input-xs(ng-model = "vm.filter.status")
+              %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}            
           .form-group
             %button.btn.btn-success.btn-flat(ng-click = "vm.fetch()")
               %i.fa.fa-refresh
@@ -28,7 +26,7 @@
             %td.col-xs-2 Тип
             %td.col-xs-2 Цена
             %td.col-xs-2 Опции
-            %td.col-xs-1 Статус
+            %td.col-xs-3 Статус
             %td.col-xs-1
           %tbody
             %tr(dir-paginate  = "order in vm.orders | filter:vm.filter | itemsPerPage: 50")
@@ -46,7 +44,9 @@
               %td
                 %span.label.label-default(ng-show = 'order.need_installation') монтаж
                 %span.label.label-default(ng-show = 'order.rain_protection') защита от дождя
-              %td {{ order.status }}
+              %td
+                %select.form-control.input-xs(ng-model = "order.status" ng-change = "vm.save(order)")
+                  %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
               %td
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('garland_price', price)")
                   %i.fa.fa-trash

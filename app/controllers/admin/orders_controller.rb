@@ -5,6 +5,10 @@ class Admin::OrdersController < Admin::BaseController
   before_action :new_resource, only: %w(create new)
   before_action :find_resource, only: %w(show update destroy edit)
 
+  def statuses
+    render json: Order.statuses.hash.keys
+  end
+
   def resource_scope
     Order
   end
@@ -23,9 +27,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def permitted_params
     [
-        :power,
-        :buy_price,
-        :rent_price
+        :status
     ]
   end
 end
