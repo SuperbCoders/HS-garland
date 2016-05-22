@@ -22,7 +22,8 @@ gem 'haml-rails'
 gem 'coffee-script'
 gem 'thin'
 gem 'coffee-rails'
-
+gem 'bson_ext'
+gem 'devise'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

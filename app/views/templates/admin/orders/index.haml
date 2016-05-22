@@ -12,7 +12,7 @@
           .form-group
             %label Статус
             %select.form-control.input-xs(ng-model = "vm.filter.status")
-              %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}            
+              %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
           .form-group
             %button.btn.btn-success.btn-flat(ng-click = "vm.fetch()")
               %i.fa.fa-refresh
