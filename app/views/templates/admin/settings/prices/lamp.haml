@@ -19,5 +19,7 @@
               %td {{ price.buy_price }} ₽
               %td {{ price.rent_price }} ₽
               %td
+                %a.btn.btn-sm.btn-success.btn-flat(ng-click = "vm.edit_lamp_price(price)")
+                  %i.fa.fa-pencil
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('lamp_price', price)")
                   %i.fa.fa-trash

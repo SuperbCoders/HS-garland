@@ -48,6 +48,8 @@
                 %select.form-control.input-xs(ng-model = "order.status" ng-change = "vm.save(order)")
                   %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
               %td
+                %a.btn-btn.sm-btn-success.btn-flat(ng-click = "vm.edit(price)")
+                  %i.fa.fa-pencil
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy('garland_price', price)")
                   %i.fa.fa-trash
 

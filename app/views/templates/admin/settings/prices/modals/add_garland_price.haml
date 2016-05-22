@@ -1,7 +1,8 @@
 .modal-header
   %button.close(aria-label = "Close" data-dismiss = "modal" type = "button")
     %span(aria-hidden = "true") ×
-  %h4.modal-title Добавить цену на гирлянду
+  %h4.modal-title(ng-show = 'vm.price.id') Редактировать цену на гирлянду
+  %h4.modal-title(ng-show = '!vm.price.id') Добавить цену на гирлянду
 .modal-body
   %form.form-horizontal
     .form-group
@@ -30,4 +31,4 @@
 
 .modal-footer
   %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
-  %button.btn.btn-primary(ng-click = "vm.save()") Добавить
+  %button.btn.btn-primary(ng-click = "vm.save()") Сохранить

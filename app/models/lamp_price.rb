@@ -3,6 +3,8 @@ class LampPrice
   include Mongoid::Timestamps::Short
   include SimpleEnum::Mongoid
 
+  default_scope { order(created_at: :asc) }
+  
   field :power, type: Integer
   field :buy_price, type: Integer
   field :rent_price, type: Integer

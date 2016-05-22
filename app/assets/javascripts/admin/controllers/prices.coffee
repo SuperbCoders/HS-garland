@@ -20,6 +20,46 @@ class PricesController
         vm.GarlandPrices.remove({id: price.id})
         vm.fetch()
 
+  edit_lamp_price: (price) ->
+    vm = @
+    new_scope = vm.rootScope.$new()
+    new_scope.price = price
+    modalInstance = @uibModal.open(
+      templateUrl: '/templates/admin/settings/prices/modals/add_lamp_price'
+      controller: 'PriceModalController'
+      controllerAs: 'vm'
+      scope: new_scope
+    )
+
+    modalInstance.result.then ((price) ->
+      price.$save({id: price.id})
+      vm.fetch()
+      return
+    ), ->
+      vm.log.info 'edit_lamp_price Modal dismissed at: ' + new Date
+      return
+    return
+
+  edit_garland_price: (price) ->
+    vm = @
+    new_scope = vm.rootScope.$new()
+    new_scope.price = price
+    modalInstance = @uibModal.open(
+      templateUrl: '/templates/admin/settings/prices/modals/add_garland_price'
+      controller: 'PriceModalController'
+      controllerAs: 'vm'
+      scope: new_scope
+    )
+
+    modalInstance.result.then ((price) ->
+      price.$save({id: price.id})
+      vm.fetch()
+      return
+    ), ->
+      vm.log.info 'edit_lamp_price Modal dismissed at: ' + new Date
+      return
+    return
+
   add_lamp_price: ->
     vm = @
     modalInstance = @uibModal.open(
@@ -32,7 +72,10 @@ class PricesController
       vm.log.info "add_lamp_price Modal closed"
       vm.log.info lamp_price
 
-      vm.LampPrices.create(lamp_price)
+      if lamp_price and lamp_price.buy_price and lamp_price.rent_price and lamp_price.power
+        vm.LampPrices.create(lamp_price)
+      else
+        alert('Заполните все поля')
       vm.fetch()
       return
     ), ->
@@ -52,7 +95,10 @@ class PricesController
       vm.log.info "add_garland_price Modal closed"
       vm.log.info garland_price
 
-      vm.GarlandPrices.create(garland_price)
+      if garland_price and garland_price.buy_price and garland_price.rent_price and garland_price.lamps and garland_price.length
+        vm.GarlandPrices.create(garland_price)
+      else
+        alert('Заполните все поля')
       vm.fetch()
       return
     ), ->

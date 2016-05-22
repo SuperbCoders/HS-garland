@@ -2,7 +2,9 @@ class PriceModalController
   constructor: (@scope, @uibModalInstance) ->
     console.log 'PriceModalController'
     vm = @
-    vm.price = {}
+    vm.price ||= @scope.price
+
+    console.log vm.price
 
   save: ->
     vm = @

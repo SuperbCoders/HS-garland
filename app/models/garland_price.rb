@@ -4,6 +4,8 @@ class GarlandPrice
   include SimpleEnum::Mongoid
 
 
+  default_scope { order(created_at: :asc) }
+
   field :length, type: Integer
   field :lamps, type: Integer
   field :buy_price, type: Integer
