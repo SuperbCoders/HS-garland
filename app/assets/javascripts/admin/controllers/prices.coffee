@@ -76,10 +76,12 @@ class PricesController
       vm.log.info lamp_price
 
       if lamp_price and lamp_price.buy_price and lamp_price.rent_price and lamp_price.power
-        vm.LampPrices.create(lamp_price)
+        vm.LampPrices.create(lamp_price).$promise.then((response) ->
+          vm.fetch()
+        )
       else
         alert('Заполните все поля')
-      vm.fetch()
+
       return
     ), ->
       vm.log.info 'lamp_price Modal dismissed at: ' + new Date
@@ -99,10 +101,12 @@ class PricesController
       vm.log.info garland_price
 
       if garland_price and garland_price.buy_price and garland_price.rent_price and garland_price.lamps and garland_price.length
-        vm.GarlandPrices.create(garland_price)
+        vm.GarlandPrices.create(garland_price).$promise.then((response) ->
+          vm.fetch()
+        )
       else
         alert('Заполните все поля')
-      vm.fetch()
+
       return
     ), ->
       vm.log.info 'garland_price Modal dismissed at: ' + new Date
