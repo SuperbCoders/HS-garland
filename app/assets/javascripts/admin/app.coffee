@@ -5,7 +5,8 @@
     'angularUtils.directives.dirPagination',
     'ngResource',
     'naif.base64',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'ui.mask'
   ])
 
 @application.run ['$rootScope', '$state', '$stateParams', ($rootScope, $state, $stateParams) ->

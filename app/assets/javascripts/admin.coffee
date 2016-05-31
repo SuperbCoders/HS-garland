@@ -12,6 +12,7 @@
 #= require angular-base64-upload/dist/angular-base64-upload
 #= require angular-loading-bar
 #= require admin-lte/dist/js/app
+#= require angular-ui-mask
 #= require jquery.slimscroll/jquery.slimscroll
 
 #= require ./admin/app

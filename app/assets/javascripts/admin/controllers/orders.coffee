@@ -24,6 +24,8 @@ class OrderModalController
 class OrdersController
   constructor: (@rootScope, @scope, @log, @Orders, @http, @filter, @uibModal) ->
     vm = @
+    vm.filters =
+      rent: 'undefined'
     vm.date_filter =
       date_from_opened: false
       date_to_opened: false
@@ -73,8 +75,27 @@ class OrdersController
       vm.order_statuses = statuses.data
     )
 
-    @Orders.query(vm.date_filter).$promise.then((orders) ->
-      vm.orders = vm.filter('filter')(orders, vm.filters)
+    t_date = {}
+    t_date['date_from'] = moment(vm.date_filter.date_from, 'DDMMYYYY').format() if vm.date_filter.date_from
+    t_date['date_to'] = moment(vm.date_filter.date_to, 'DDMMYYYY').format() if vm.date_filter.date_to
+
+    if t_date['date_from'] and t_date['date_from'] is 'Invalid date'
+      return alert('Указана неверная дата: от')
+
+    if t_date['date_to'] and t_date['date_to'] is 'Invalid date'
+      return alert('Указана неверная дата: до')
+
+    @Orders.query(t_date).$promise.then((orders) ->
+      vm.log.info vm.filters
+
+      if vm.filters.rent and vm.filters.rent is 'undefined'
+        t_filter = angular.copy vm.filters
+        delete t_filter['rent']
+        vm.orders = vm.filter('filter')(orders, t_filter)
+      else
+        vm.orders = vm.filter('filter')(orders, vm.filters)
+
+
       vm.statistic =
         rent_amount: 0
         buy_amount: 0

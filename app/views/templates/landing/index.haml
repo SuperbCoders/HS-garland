@@ -153,11 +153,11 @@
     .section_w.section_v2
       .section_inner
         .order_form
-          %h2.section_caption.buyMode
+          %h2.section_caption.buyMode(ng-show = 'vm.order.rent')
             выберите дату
             %br/
             и забронируйте гирлянды
-          %h2.section_caption.buyMode.modeInvert{:style => "display:none;"}
+          %h2.section_caption.buyMode.modeInvert(ng-show = '!vm.order.rent')
             выберите размер
             %br/
             и закажите доставку

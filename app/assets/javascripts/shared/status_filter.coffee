@@ -7,6 +7,6 @@
       when 'confirmed'
         result = 'обработан'
       when 'declined'
-        result = 'отказ'
+        result = 'отменен'
     result
 ]
