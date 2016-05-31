@@ -5,6 +5,10 @@ class Admin::GarlandPricesController < Admin::BaseController
   before_action :new_resource, only: %w(create new)
   before_action :find_resource, only: %w(show update destroy edit)
 
+  def destroy
+    send_json @resource, @resource.update_attributes(deleted: true)
+  end
+
   def resource_scope
     GarlandPrice
   end

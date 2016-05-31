@@ -2,10 +2,10 @@ class Admin::OrderGarlandSerializer < Admin::BaseSerializer
   attributes :garland_price, :lamp_price
 
   def lamp_price
-    serialize_resource(object.lamp_price, Admin::LampPriceSerializer)
+    serialize_resource(LampPrice.unscoped.find(object.lamp_price_id), Admin::LampPriceSerializer)
   end
 
   def garland_price
-    serialize_resource(object.garland_price, Admin::GarlandPriceSerializer)
+    serialize_resource(GarlandPrice.unscoped.find(object.garland_price_id), Admin::GarlandPriceSerializer)
   end
 end

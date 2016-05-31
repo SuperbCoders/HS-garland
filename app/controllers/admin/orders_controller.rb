@@ -6,7 +6,7 @@ class Admin::OrdersController < Admin::BaseController
   before_action :find_resource, only: %w(show update destroy edit)
 
   def index
-    @resources = Order.all
+    @resources = Order.unscoped
     @resources = @resources.where(:c_at.gte => params[:date_from].to_datetime) if params[:date_from]
     @resources = @resources.where(:c_at.lte => params[:date_to]) if params[:date_to]
 
