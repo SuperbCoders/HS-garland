@@ -6,11 +6,11 @@ class Admin::LampPricesController < Admin::BaseController
   before_action :find_resource, only: %w(show update destroy edit)
 
   def destroy
-    send_json @resource, @resource.update_attributes(deleted: true)
+    send_json @resource, (@resource && @resource.update_attributes(deleted: true))
   end
 
   def resource_scope
-    LampPrice
+    LampPrice.where(deleted: false)
   end
 
   def resource_serializer

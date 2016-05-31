@@ -14,11 +14,14 @@ class PricesController
     vm = @
     switch type
       when 'lamp_price'
-        vm.LampPrices.remove({id: price.id})
-        vm.fetch()
+        vm.LampPrices.remove({id: price.id}).$promise.then((res) ->
+          vm.fetch()
+        )
+
       when 'garland_price'
-        vm.GarlandPrices.remove({id: price.id})
-        vm.fetch()
+        vm.GarlandPrices.remove({id: price.id}).$promise.then((res) ->
+          vm.fetch()
+        )
 
   edit_lamp_price: (price) ->
     vm = @
