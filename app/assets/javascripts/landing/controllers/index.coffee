@@ -11,7 +11,6 @@ class IndexController
       garlands: []
 
     @log.info 'IndexController'
-    @init_landing()
     @add_garland()
     @fetch_gallery_images()
 
@@ -20,6 +19,8 @@ class IndexController
       if method
         vm.calc_price()
     )
+
+    @init_landing()
 
   openLightboxModal: (index) ->
     vm = @
@@ -150,7 +151,9 @@ class IndexController
       slidesPerView: 1
       spaceBetween: 0
       onInit: (swp) ->
+        console.log 'onInit'
         $(swp.slides).each (ind) ->
+          console.log ind
           slide = $(this)
           slide.backstretch slide.find('img').hide().attr('src')
           return

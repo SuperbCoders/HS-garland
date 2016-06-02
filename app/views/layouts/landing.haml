@@ -28,7 +28,7 @@
           .swiper-wrapper.clearfix
             - SliderImage.all.each do |s_image|
               .swiper-slide
-                %img{:src => "/uploads/#{s_image.file}", :width => "60", :height => "60"}/
+                %img{:src => "/uploads/#{s_image.file}"}/
           .slide_content
             .section_inner.text_center
               .slide_i_block
