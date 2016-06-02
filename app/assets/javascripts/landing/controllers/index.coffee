@@ -18,6 +18,7 @@ class IndexController
     # When delivery method changed, need recalc price
     @scope.$watch('vm.garland_added', (m) ->
       vm.init_select2()
+      vm.init_select2()
     )
 
     @scope.$watch('vm.order.delivery', (method) ->
