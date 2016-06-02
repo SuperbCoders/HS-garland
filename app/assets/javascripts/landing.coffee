@@ -22,20 +22,3 @@
 #= require ./landing/app
 #= require_tree ./landing
 
-$ ($) ->
-  mainSlider = new Swiper('.mainSlider',
-    loop: false
-    initialSlide: 0
-    setWrapperSize: true
-    nextButton: '#main_slider_next'
-    prevButton: '#main_slider_prev'
-    slidesPerView: 1
-    spaceBetween: 0
-    onInit: (swp) ->
-      $(swp.slides).each (ind) ->
-        slide = $(this)
-        slide.backstretch slide.find('img').hide().attr('src')
-        return
-      return
-  )
-  return
