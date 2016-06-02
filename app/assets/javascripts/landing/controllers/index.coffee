@@ -2,6 +2,7 @@ class IndexController
   constructor: (@rootScope, @scope, @log, @http, @Lightbox) ->
     vm = @
     vm.garland_added = 0
+    vm.image_added = 0
     vm.tags =
       all: true
 
@@ -19,6 +20,10 @@ class IndexController
     @scope.$watch('vm.garland_added', (m) ->
       vm.init_select2()
       vm.init_select2()
+    )
+
+    @scope.$watch('vm.image_added', (m) ->
+      vm.init_work_slider()
     )
 
     @scope.$watch('vm.order.delivery', (method) ->
@@ -70,7 +75,7 @@ class IndexController
         vm.gallery['iterior'] += 1 if image.tags.iterior
         vm.gallery['cinema'] += 1 if image.tags.cinema
         vm.gallery['wedding'] += 1 if image.tags.wedding
-
+      vm.init_work_slider()
     )
 
   calc_price: ->
@@ -145,6 +150,36 @@ class IndexController
           ret
       return
 
+  init_work_slider: ->
+    console.log 'init_work_slider()'
+    $('.workSlider').each ->
+      $this = $(this)
+      sl = new Swiper(this,
+        loop: false
+        initialSlide: 0
+        setWrapperSize: true
+        nextButton: $this.nextAll('.slider_next')
+        prevButton: $this.nextAll('.slider_prev')
+        slidesPerView: 5
+        slidesPerGroup: 5
+        spaceBetween: 23
+        pagination: $this.nextAll('.slider_pagination')
+        paginationClickable: true
+        breakpoints:
+          320:
+            slidesPerView: 1
+            slidesPerGroup: 1
+          640:
+            slidesPerView: 2
+            slidesPerGroup: 2
+          840:
+            slidesPerView: 3
+            slidesPerGroup: 3
+          960:
+            slidesPerView: 4
+            slidesPerGroup: 4)
+      sl.update()
+      return
   init_landing: ->
     vm = @
     header = $('.header')
@@ -188,34 +223,9 @@ class IndexController
           return
         return
     )
+    mainSlider.update()
 
-    $('.workSlider').each ->
-      $this = $(this)
-      sl = new Swiper(this,
-        loop: false
-        initialSlide: 0
-        setWrapperSize: true
-        nextButton: $this.nextAll('.slider_next')
-        prevButton: $this.nextAll('.slider_prev')
-        slidesPerView: 5
-        slidesPerGroup: 5
-        spaceBetween: 23
-        pagination: $this.nextAll('.slider_pagination')
-        paginationClickable: true
-        breakpoints:
-          320:
-            slidesPerView: 1
-            slidesPerGroup: 1
-          640:
-            slidesPerView: 2
-            slidesPerGroup: 2
-          840:
-            slidesPerView: 3
-            slidesPerGroup: 3
-          960:
-            slidesPerView: 4
-            slidesPerGroup: 4)
-      return
+    @init_work_slider()
 
     $('.validateMe').validationEngine
       scroll: false
