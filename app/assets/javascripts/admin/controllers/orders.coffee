@@ -8,8 +8,16 @@ class OrderModalController
     vm.http.get('/admin/garland_prices').then((response) -> vm.garland_prices = response.data)
     vm.http.get('/admin/lamp_prices').then((response) -> vm.lamp_prices = response.data)
 
+  add_order_garland: ->
+    vm = @
+    vm.order.order_garlands.push {}
+
   save: ->
     vm = @
+    for order_garland in vm.order.order_garlands
+      return alert('Выберите тип гирлянд') if not order_garland.garland_price
+      return alert('Выберите тип ламп') if not order_garland.lamp_price
+
     vm.uibModalInstance.close vm.order
     return
 

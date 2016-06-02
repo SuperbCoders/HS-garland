@@ -1,5 +1,5 @@
 class Admin::OrderGarlandSerializer < Admin::BaseSerializer
-  attributes :garland_price, :lamp_price
+  attributes :garland_price, :lamp_price, :count
 
   def lamp_price
     serialize_resource(LampPrice.unscoped.find(object.lamp_price_id), Admin::LampPriceSerializer)

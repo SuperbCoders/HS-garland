@@ -37,19 +37,50 @@ class Order
     if customer
       order.customer = customer
       order.phone = customer.phone
-      order.total_price = order_price(params)
       order.status = :new
       if order.save
         params[:garlands].each do |garland_param|
-          logger.info "GarlandPrice #{garland_param[:id]}"
+          logger.info "Count #{garland_param[:count]}"
+          logger.info "GarlandPrice #{garland_param[:length][:id]}"
           logger.info "LampPrice #{garland_param[:power][:id]}"
-          order.order_garlands.create(garland_price_id: garland_param[:length][:id], lamp_price_id: garland_param[:power][:id])
+          og = order.order_garlands.create(count: garland_param[:count], garland_price_id: garland_param[:length][:id], lamp_price_id: garland_param[:power][:id])
+          logger.info "Order Garland #{og.to_json}"
         end
+
+        order.calc_price
         # order.order_garlands.create(garland_price_id: )
       end
     end
 
     order
+  end
+
+
+
+  def calc_price
+    order = self
+    order.total_price = 0
+
+    order_garlands.each do |order_garland|
+      garland_total_price = 0
+
+      if order.rent
+        garland_total_price += order_garland.garland_price.rent_price + (order_garland.garland_price.lamps * order_garland.lamp_price.rent_price)
+      else
+        garland_total_price += order_garland.garland_price.buy_price + (order_garland.garland_price.lamps * order_garland.lamp_price.buy_price)
+      end
+
+      order.total_price += garland_total_price * order_garland.count
+      logger.info "Total price #{order.total_price}"
+      logger.info "#{garland_total_price} | #{order_garland.count}"
+    end
+
+    if self.delivery == :moscow and self.total_price < Setting.general.delivery_free_limit
+      self.total_price += Setting.general.delivery_moscow
+    end
+
+    logger.info "Total price #{total_price}"
+    self.save
   end
 
   private

@@ -62,18 +62,30 @@
       .col-xs-12
         %table.table.table-striped.table-hover.table-bordered
           %thead
+            %td.col-xs-1 Колич-во
             %td.col-xs-2 Длина
-            %td.col-xs-1 Количество ламп
+            %td.col-xs-1 Колич-во
             %td.col-xs-1 Мощность ламп
+            %td.col-xs-1 Сумма
             %td.col-xs-1
+              %a.btn.btn-xs.btn-flat.btn-success(ng-click = "vm.add_order_garland()")
+                %i.fa.fa-plus
 
           %tbody
             %tr(ng-repeat = "garland in vm.order.order_garlands")
               %td
+                %input.input-xs.form-control.col-xs-1(ng-model = "garland.count" type="number")
+              %td
                 %select.form-control(ng-options = "garland_price as garland_price.name for garland_price in vm.garland_prices track by garland_price.id" ng-model = "garland.garland_price")
-              %td {{ garland.garland_price.lamps }}
+              %td {{ garland.garland_price.lamps }} 💡
               %td
                 %select.form-control(ng-options = "lamp as lamp.name for lamp in vm.lamp_prices track by lamp.id" ng-model = "garland.lamp_price")
+              %td
+                .buy(ng-show = 'vm.order.rent')
+                  {{ garland.garland_price.rent_price }} + {{ garland.garland_price.lamps * garland.lamp_price.rent_price }}
+                .rent(ng-show = '!vm.order.rent')
+                  {{ garland.garland_price.buy_price }} + {{ garland.garland_price.lamps * garland.lamp_price.buy_price }}
+
               %td
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.order.order_garlands.splice(vm.order.order_garlands.indexOf(garland), 1)")
                   %i.fa.fa-trash

@@ -13,6 +13,28 @@ class Admin::OrdersController < Admin::BaseController
     render json: serialize_resources(@resources, Admin::OrderSerializer)
   end
 
+  def update
+    result = @resource.update_attributes(resource_params) if @resource
+
+    if result
+
+
+      if params[:order_garlands]
+        @resource.order_garlands.destroy_all
+        params[:order_garlands].map { |og_p|
+          @resource.order_garlands.create(
+              garland_price_id: og_p[:garland_price][:id],
+              lamp_price_id: og_p[:lamp_price][:id],
+              count: og_p[:count]
+          )
+        }
+      end
+
+      @resource.calc_price
+    end
+    send_json serialize_resource(@resource, resource_serializer),result
+  end
+
   def statuses
     render json: Order.statuses.hash.keys
   end
@@ -40,4 +62,5 @@ class Admin::OrdersController < Admin::BaseController
         :date_to
     ]
   end
+
 end
