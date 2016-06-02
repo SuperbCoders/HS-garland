@@ -139,12 +139,12 @@
                     .swiper-wrapper.clearfix
                       .swiper-slide(ng-repeat = "image in vm.images | filter:{tags: vm.tags}" ng-switch on="$index % 2")
                         .work_slide(ng-switch-when = "0")
-                          %img(ng-src = "{{vm.images[$index].path}}" width = '60px' height = '60px')
+                          %img(ng-src = "{{vm.images[$index].path}}")
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index)") крупнее
 
                         .work_slide(ng-switch-when = "1")
-                          %img(ng-src = "{{vm.images[$index + 1].path}}" width = '60px' height = '60px')
+                          %img(ng-src = "{{vm.images[$index + 1].path}}")
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index + 1)") крупнее
 
