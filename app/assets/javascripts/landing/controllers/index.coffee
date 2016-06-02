@@ -115,6 +115,8 @@ class IndexController
 
   init_landing: ->
     vm = @
+    header = $('.header')
+    dateRange = $('.dateRange')
 
     datePickerParam =
       'parentEl': '.datePicker'
@@ -139,35 +141,6 @@ class IndexController
           'Сб'
         ]
 
-    header = $('.header')
-    dateRange = $('.dateRange')
-    doc = $(document)
-    browserWindow = $(window)
-
-    browserWindow.on 'scroll', ->
-      header.toggleClass 'fixed_header', doc.scrollTop() >= 90
-      return
-
-    $(window).stellar
-      hideDistantElements: false
-      responsive: true
-      horizontalScrolling: false
-      verticalScrolling: true
-
-    $('.validateMe').validationEngine
-      scroll: false
-      showPrompts: true
-      showArrow: false
-      addSuccessCssClassToField: 'success'
-      addFailureCssClassToField: 'error'
-      parentFieldClass: '.formCell'
-      promptPosition: 'centerRight'
-      autoHidePrompt: true
-      autoHideDelay: 2000
-      autoPositionUpdate: true
-      addPromptClass: 'relative_mode'
-      showOneMessage: false
-
     mainSlider = new Swiper('.mainSlider',
       loop: false
       initialSlide: 0
@@ -175,7 +148,14 @@ class IndexController
       nextButton: '#main_slider_next'
       prevButton: '#main_slider_prev'
       slidesPerView: 1
-      spaceBetween: 0)
+      spaceBetween: 0
+      onInit: (swp) ->
+        $(swp.slides).each (ind) ->
+          slide = $(this)
+          slide.backstretch slide.find('img').hide().attr('src')
+          return
+        return
+    )
 
     $('.workSlider').each ->
       $this = $(this)
@@ -205,31 +185,6 @@ class IndexController
             slidesPerGroup: 4)
       return
 
-    datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
-      $(this)[0].element.change()
-      return
-    )
-
-    datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each (ind) ->
-      $('.dateRangeYear').append $('<option>' + @innerHTML + '</option>')
-      return
-    $('.dateRangeYear').on 'change', ->
-      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
-      yearSelect[0].selectedIndex = @selectedIndex
-      yearSelect.trigger 'change'
-      return
-
-    $('input#daterange').on('apply.daterangepicker',(ev, picker) ->
-      vm.log.info "Range selected. From : "+picker.startDate
-      console.log picker
-      vm.rootScope.$apply( ->
-        vm.order.start_date = picker.startDate
-        vm.order.end_date = picker.endDate
-        vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
-      )
-
-    )
-
 
     $('.validateMe').validationEngine
       scroll: false
@@ -244,6 +199,12 @@ class IndexController
       autoPositionUpdate: true
       addPromptClass: 'relative_mode'
       showOneMessage: false
+
+    $(window).stellar
+      hideDistantElements: false
+      responsive: true
+      horizontalScrolling: false
+      verticalScrolling: true
 
     $('.select2').each (ind) ->
       $slct = $(this)
@@ -265,6 +226,7 @@ class IndexController
           ret
       return
 
+
     $('.monthBtn').on 'click', ->
       console.log 'month click'
       firedEl = $(this).parent()
@@ -281,5 +243,37 @@ class IndexController
         dateMonth.eq(ind).addClass('active').next().addClass 'active'
       firstMonthSelect.trigger 'change'
       false
+
+    datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
+      $(this)[0].element.change()
+      return
+    )
+
+    datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each (ind) ->
+      $('.dateRangeYear').append $('<option>' + @innerHTML + '</option>')
+      return
+
+    $('.dateRangeYear').on 'change', ->
+      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
+      yearSelect[0].selectedIndex = @selectedIndex
+      yearSelect.trigger 'change'
+      return
+
+    $('input#daterange').on('apply.daterangepicker',(ev, picker) ->
+      vm.log.info "Range selected. From : "+picker.startDate
+      console.log picker
+      vm.rootScope.$apply( ->
+        vm.order.start_date = picker.startDate
+        vm.order.end_date = picker.endDate
+        vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
+      )
+    )
+
+    $(window).on 'scroll', ->
+      $('.header').toggleClass 'fixed_header', $(document).scrollTop() >= 90
+      return
+
+
+
 
 @application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', 'Lightbox', IndexController]

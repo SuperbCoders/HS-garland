@@ -19,6 +19,26 @@
   %body.h_100p
 
     .wrapper
+      .slider_holder(ng-show = "g.state.current.name == 'index'")
+        .mainSlider.swiper-container.main_slider
+          .swiper_controls
+            .section_inner
+              #main_slider_next.swiper-button-next
+              #main_slider_prev.swiper-button-prev
+          .swiper-wrapper.clearfix
+            - SliderImage.all.each do |s_image|
+              .swiper-slide
+                %img{:src => "/uploads/#{s_image.file}"}/
+          .slide_content
+            .section_inner.text_center
+              .slide_i_block
+                %h2.slide_i_caption.fz_30 А Р Е Н Д А
+                %p.fz_72 Ретро
+                %p.fz_42 гирлянды
+                %p.fz_37 с лампами
+                %p.fz_30 накаливания
+        %a.btn_v3.order_now_btn.white_btn{:href => "#"} заказать сейчас
+
       .slider_holder(ng-show = "g.state.current.name == 'conditions'")
         .hero_holder
           .garland_lamp{"data-stellar-offset-parent" => "true", "data-stellar-ratio" => "2"}

@@ -42,4 +42,6 @@
   $rootScope.settings = JSON.parse($("meta[name='settings']").attr('content'))
   $rootScope.g =
     state: $state
+
+  console.log 'app run'
 ]

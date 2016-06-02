@@ -1,23 +1,27 @@
-.slider_holder
-  .mainSlider.swiper-container.main_slider
-    .swiper_controls
-      .section_inner
-        #main_slider_next.swiper-button-next
-        #main_slider_prev.swiper-button-prev
-    .swiper-wrapper.clearfix
-      - SliderImage.all.each do |s_image|
-        .swiper-slide
-          %img{:src => "/uploads/#{s_image.file}"}/
 
-    .slide_content
-      .section_inner.text_center
-        .slide_i_block
-          %h2.slide_i_caption.fz_30 А Р Е Н Д А
-          %p.fz_72 Ретро
-          %p.fz_42 гирлянды
-          %p.fz_37 с лампами
-          %p.fz_30 накаливания
-  %a.btn_v3.order_now_btn.white_btn(href = "#") заказать сейчас
+
+-#.slider_holder
+-#  .mainSlider.swiper-container.main_slider
+-#    .swiper_controls
+-#      .section_inner
+-#        #main_slider_next.swiper-button-next
+-#        #main_slider_prev.swiper-button-prev
+-#    .swiper-wrapper.clearfix
+-#      - SliderImage.all.each do |s_image|
+-#        .swiper-slide
+-#          %img{:src => "/uploads/#{s_image.file}"}/
+
+-#    .slide_content
+-#      .section_inner.text_center
+-#        .slide_i_block
+-#          %h2.slide_i_caption.fz_30 А Р Е Н Д А
+-#          %p.fz_72 Ретро
+-#          %p.fz_42 гирлянды
+-#          %p.fz_37 с лампами
+-#          %p.fz_30 накаливания
+-#  %a.btn_v3.order_now_btn.white_btn(href = "#") заказать сейчас
+
+
 
 .base
   = render 'templates/landing/shared/menu'
@@ -39,6 +43,8 @@
 
     .section_w.section_v2
       .garland_block
+
+        / Paralax
         .garland_4.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "1.2"}
           %img(src = "i/1604_HS_Garland_Parallax_04.png")/
         .garland_3.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "1.5"}
@@ -47,6 +53,7 @@
           %img(src = "i/1604_HS_Garland_Parallax_02.png")/
         .garland_1.garland_item{"data-stellar-horizontal-offset" => "0", "data-stellar-offset-parent" => "true", "data-stellar-ratio" => "2.1"}
           %img(src = "i/1604_HS_Garland_Parallax_01.png")/
+
 
         .section_inner
           %ul.garland_dims
@@ -132,12 +139,12 @@
                     .swiper-wrapper.clearfix
                       .swiper-slide(ng-repeat = "image in vm.images | filter:{tags: vm.tags}" ng-switch on="$index % 2")
                         .work_slide(ng-switch-when = "0")
-                          %img(ng-src = "{{vm.images[$index].path}}")
+                          %img(ng-src = "{{vm.images[$index].path}}" width = '60px' height = '60px')
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index)") крупнее
 
                         .work_slide(ng-switch-when = "1")
-                          %img(ng-src = "{{vm.images[$index + 1].path}}")
+                          %img(ng-src = "{{vm.images[$index + 1].path}}" width = '60px' height = '60px')
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index + 1)") крупнее
 

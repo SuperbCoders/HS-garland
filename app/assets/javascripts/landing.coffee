@@ -4,6 +4,7 @@
 #= require moment
 #= require lodash/lodash
 #= require select2/dist/js/select2.full
+#= require jquery-backstretch/jquery.backstretch.min
 #= require includes/jquery.validationEngine
 #= require includes/jquery.validationEngine-ru
 #= require includes/daterangepicker
@@ -20,3 +21,4 @@
 
 #= require ./landing/app
 #= require_tree ./landing
+

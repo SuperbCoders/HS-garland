@@ -12,6 +12,7 @@ asset 'jquery'
 asset 'jquery-ui'
 asset 'jquery-flot'
 asset 'jquery.placeholder'
+asset 'jquery-backstretch'
 asset 'jquery.stellar'
 asset 'jquery.slimscroll'
 
