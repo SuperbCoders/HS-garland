@@ -1,6 +1,7 @@
 class IndexController
   constructor: (@rootScope, @scope, @log, @http, @Lightbox) ->
     vm = @
+    vm.garland_added = 0
     vm.tags =
       all: true
 
@@ -15,12 +16,19 @@ class IndexController
     @fetch_gallery_images()
 
     # When delivery method changed, need recalc price
+    @scope.$watch('vm.garland_added', (m) ->
+      vm.init_select2()
+    )
+
     @scope.$watch('vm.order.delivery', (method) ->
       if method
         vm.calc_price()
     )
 
+
     @init_landing()
+
+    console.log "Index Selects : "+$('.select2').length
 
   openLightboxModal: (index) ->
     vm = @
@@ -91,6 +99,7 @@ class IndexController
 
     @order.garlands.push new_garland
     @calc_price()
+    @garland_added = @order.garlands.length
 
   incr: (garland) ->
     garland.count = garland.count + 1
@@ -113,6 +122,27 @@ class IndexController
     vm.http.post('/order', vm.order).then((response) ->
       vm.rootScope.g.state.go('thanks')
     )
+
+  init_select2: ->
+    $('.select2').each (ind) ->
+      $slct = $(this)
+      cls = $slct.attr('data-select-class') or ''
+      $slct.select2
+        minimumResultsForSearch: Infinity
+        width: '100%'
+        containerCssClass: cls
+        adaptDropdownCssClass: (c) ->
+          cls
+        templateResult: (d, c) ->
+          #console.log(d, c);
+          extraInfo = $(d.element).attr('data-nowaterproof') or false
+          noWaterproof = $('.checkDependence2').prop('checked')
+          ret = $('<div>' + $(d.element).text() + '</div>')
+          if extraInfo and noWaterproof
+            $(c).addClass 'no_rain_defence'
+            ret.append $('<div class="extra_info">' + extraInfo + '</div>')
+          ret
+      return
 
   init_landing: ->
     vm = @
@@ -151,9 +181,7 @@ class IndexController
       slidesPerView: 1
       spaceBetween: 0
       onInit: (swp) ->
-        console.log 'onInit'
         $(swp.slides).each (ind) ->
-          console.log ind
           slide = $(this)
           slide.backstretch slide.find('img').hide().attr('src')
           return
@@ -188,7 +216,6 @@ class IndexController
             slidesPerGroup: 4)
       return
 
-
     $('.validateMe').validationEngine
       scroll: false
       showPrompts: true
@@ -209,25 +236,7 @@ class IndexController
       horizontalScrolling: false
       verticalScrolling: true
 
-    $('.select2').each (ind) ->
-      $slct = $(this)
-      cls = $slct.attr('data-select-class') or ''
-      $slct.select2
-        minimumResultsForSearch: Infinity
-        width: '100%'
-        containerCssClass: cls
-        adaptDropdownCssClass: (c) ->
-          cls
-        templateResult: (d, c) ->
-          #console.log(d, c);
-          extraInfo = $(d.element).attr('data-nowaterproof') or false
-          noWaterproof = $('.checkDependence2').prop('checked')
-          ret = $('<div>' + $(d.element).text() + '</div>')
-          if extraInfo and noWaterproof
-            $(c).addClass 'no_rain_defence'
-            ret.append $('<div class="extra_info">' + extraInfo + '</div>')
-          ret
-      return
+    @init_select2()
 
 
     $('.monthBtn').on 'click', ->

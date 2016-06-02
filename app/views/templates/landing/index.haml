@@ -263,7 +263,7 @@
                 .order_opt_cell  
 
             / Items list
-            .order_settings_table(ng-repeat = "garland in vm.order.garlands")
+            .order_settings_table(ng-repeat = "garland in vm.order.garlands" ng-init = "vm.init_select2()")
 
               / Длина герлянд
               .order_settings_cell

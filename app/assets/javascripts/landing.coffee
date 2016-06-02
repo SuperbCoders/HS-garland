@@ -21,4 +21,3 @@
 
 #= require ./landing/app
 #= require_tree ./landing
-
