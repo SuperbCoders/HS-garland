@@ -1,4 +1,4 @@
-#= require jquery
+#= require jquery/jquery.min
 #= require jquery-ui
 #= require jquery.stellar/jquery.stellar.min
 #= require moment
