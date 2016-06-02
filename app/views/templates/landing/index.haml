@@ -138,7 +138,7 @@
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index)") крупнее
 
-                        .work_slide(ng-switch-when = "1")
+                        .work_slide(ng-switch-when = "0")
                           %img(ng-src = "{{vm.images[$index + 1].path}}")
                           .work_sl_info
                             %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.openLightboxModal($index + 1)") крупнее
