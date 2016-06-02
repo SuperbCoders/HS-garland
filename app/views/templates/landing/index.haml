@@ -111,19 +111,19 @@
               в работе
             .tab_controls
               %ul#works_filter.filter_list
-                %li.filter_item
+                %li.filter_item(ng-class = "{'ui-state-active': vm.tags['all']}")
                   %a.filter_link(href = "" ng-click = "vm.filter('all')")
                     %span все фото ({{vm.gallery.all}})
-                %li.filter_item
+                %li.filter_item(ng-class = "{'ui-state-active': vm.tags['holidays']}")
                   %a.filter_link(href = "" ng-click = "vm.filter('holidays')")
                     %span праздники ({{vm.gallery.holidays}})
-                %li.filter_item
+                %li.filter_item(ng-class = "{'ui-state-active': vm.tags['iterior']}")
                   %a.filter_link(href = "" ng-click = "vm.filter('iterior')")
                     %span ярмарки и интерьеры ({{vm.gallery.iterior}})
-                %li.filter_item
+                %li.filter_item(ng-class = "{'ui-state-active': vm.tags['cinema']}")
                   %a.filter_link(href = "" ng-click = "vm.filter('cinema')")
                     %span реклама и кино ({{vm.gallery.cinema}})
-                %li.filter_item
+                %li.filter_item(ng-class = "{'ui-state-active': vm.tags['wedding']}")
                   %a.filter_link(href = "" ng-click = "vm.filter('wedding')")
                     %span свадьбы ({{vm.gallery.wedding}})
 
