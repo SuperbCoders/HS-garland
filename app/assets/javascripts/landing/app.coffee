@@ -22,8 +22,6 @@
   .state 'conditions',
     url: '/conditions'
     templateUrl: '/templates/landing/conditions'
-    controller: 'IndexController'
-    controllerAs: 'vm'
 
   .state 'thanks',
     url: '/thanks'
@@ -32,8 +30,7 @@
   .state 'benefits',
     url: '/benefits'
     templateUrl: '/templates/landing/benefits'
-    controller: 'IndexController'
-    controllerAs: 'vm'
+
   $urlRouterProvider.otherwise '/'
 ]
 
