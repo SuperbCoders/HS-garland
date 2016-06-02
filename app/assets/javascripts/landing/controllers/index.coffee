@@ -57,6 +57,7 @@ class IndexController
 
       when 'wedding'
         vm.tags = {wedding: true}
+    vm.init_work_slider()
 
   fetch_gallery_images: ->
     vm = @
