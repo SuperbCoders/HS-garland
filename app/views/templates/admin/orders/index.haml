@@ -23,6 +23,9 @@
                 %p +7 {{ order.customer.phone }}
               %td
                 %p(ng-repeat = "garland in order.order_garlands")
+                  {{garland.count}}
+                  %b
+                    %small X
                   {{ garland.garland_price.length }} метра с {{ garland.lamp_price.power }} ВТ
               %td
                 %span.label.label-info(ng-show = '!order.rent') Продажа

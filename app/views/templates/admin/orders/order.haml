@@ -17,6 +17,12 @@
         %span.label.label-success(ng-show = 'vm.order.rent') Аренда
         %span.label.label-info(ng-show = '!vm.order.rent') Продажа
 
+    .form-group(ng-show = 'vm.order.rent')
+      .col-sm-3
+        %label Дней
+      .col-sm-9
+        %input.form-control(ng-model = "vm.order.days")
+
     .form-group
       .col-sm-3
         %label Сумма
@@ -81,11 +87,7 @@
               %td
                 %select.form-control(ng-options = "lamp as lamp.name for lamp in vm.lamp_prices track by lamp.id" ng-model = "garland.lamp_price")
               %td
-                .buy(ng-show = 'vm.order.rent')
-                  {{ garland.garland_price.rent_price }} + {{ garland.garland_price.lamps * garland.lamp_price.rent_price }}
-                .rent(ng-show = '!vm.order.rent')
-                  {{ garland.garland_price.buy_price }} + {{ garland.garland_price.lamps * garland.lamp_price.buy_price }}
-
+                {{ vm.calc_order_garland(order.rent, garland) }}
               %td
                 %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.order.order_garlands.splice(vm.order.order_garlands.indexOf(garland), 1)")
                   %i.fa.fa-trash

@@ -65,7 +65,7 @@ class Order
       garland_total_price = 0
 
       if order.rent
-        garland_total_price += order_garland.garland_price.rent_price + (order_garland.garland_price.lamps * order_garland.lamp_price.rent_price)
+        garland_total_price += (order_garland.garland_price.rent_price + (order_garland.garland_price.lamps * order_garland.lamp_price.rent_price)) * order.days
       else
         garland_total_price += order_garland.garland_price.buy_price + (order_garland.garland_price.lamps * order_garland.lamp_price.buy_price)
       end

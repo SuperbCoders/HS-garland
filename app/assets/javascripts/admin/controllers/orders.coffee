@@ -8,9 +8,20 @@ class OrderModalController
     vm.http.get('/admin/garland_prices').then((response) -> vm.garland_prices = response.data)
     vm.http.get('/admin/lamp_prices').then((response) -> vm.lamp_prices = response.data)
 
+  calc_order_garland: (order, garland) ->
+    if order.rent
+      total_price = garland.garland_price.rent_price + ( garland.garland_price.lamps * garland.lamp_price.rent_price )
+      total_price = total_price * order.days
+    else
+      total_price = garland.garland_price.buy_price + ( garland.garland_price.lamps * garland.lamp_price.buy_price)
+
+
+    total_price = total_price * garland.count
+    total_price
+
   add_order_garland: ->
     vm = @
-    vm.order.order_garlands.push {}
+    vm.order.order_garlands.push {count: 1}
 
   save: ->
     vm = @

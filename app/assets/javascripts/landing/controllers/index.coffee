@@ -17,19 +17,10 @@ class IndexController
     @fetch_gallery_images()
 
     # When delivery method changed, need recalc price
-    @scope.$watch('vm.garland_added', (m) ->
-      vm.init_select2()
-      vm.init_select2()
-    )
-
-    @scope.$watch('vm.image_added', (m) ->
-      vm.init_work_slider()
-    )
-
-    @scope.$watch('vm.order.delivery', (method) ->
-      if method
-        vm.calc_price()
-    )
+    @scope.$watch('vm.order.days', (d) -> vm.calc_price( ))
+    @scope.$watch('vm.garland_added', (m) -> vm.init_select2() )
+    @scope.$watch('vm.image_added', (m) -> vm.init_work_slider())
+    @scope.$watch('vm.order.delivery', (method) -> vm.calc_price() if method)
 
 
     @init_landing()
@@ -87,15 +78,29 @@ class IndexController
 
     for garland in order.garlands
       garland_total_price = 0
+
+
       if order.rent
-        garland_total_price += garland.length.rent_price + (garland.length.lamps * garland.power.rent_price)
+        # Если это аренда
+        # То суммируем ЦЕНА_АРЕНДЫ_ГИРЛЯНЛ + (КОЛИЧЕСТВО_ЛАМП * ЦЕНУ_АРЕНДЫ_ЛАМП)
+        # и все это умножаем на количество дней
+        garland_total_price += (garland.length.rent_price + (garland.length.lamps * garland.power.rent_price)) * order.days
+
       else
+        # Если это продажа
+        # Суммируем ЦЕНА_ПРОДАЖИ_ГИРЛЯНД + (КОЛИЧЕСТВО_ЛАМП * ЦЕНА_ПРОДАЖИ_ЛАМП)
         garland_total_price += (garland.length.buy_price + (garland.length.lamps * garland.power.buy_price))
 
+
+      # Умножаем получившуюся сумму на количество гирлянд
+      # затем суммируем в общую сумму заказа
       order.total_price += garland_total_price * garland.count
 
 
+    # Если доставка по москве И общая_сумма_заказа менье чем в настройках
     if order.delivery is 'moscow' and order.total_price < settings.general.delivery_free_limit
+      # То плюсуем сумму доставки по москве
+      # которую берем из настроек админки
       order.total_price += settings.general.delivery_moscow
 
   add_garland: ->
