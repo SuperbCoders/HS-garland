@@ -13,6 +13,7 @@ class Order
   field :name
   field :email
   field :phone
+  field :order_id, type: Integer
 
   belongs_to :customer
 
@@ -22,6 +23,7 @@ class Order
   as_enum :status, [:new, :confirmed, :declined], map: :string, source: :status
 
   before_create :set_defaults
+  after_save :set_order_id
 
   def self.new_order(params)
     order_params = params.permit(:total_price, :start_date, :end_date, :days,
@@ -55,19 +57,23 @@ class Order
     order
   end
 
-
-
   def calc_price
     order = self
     order.total_price = 0
 
+    # Перечисляем все заказанные гирлянды в заказе
     order_garlands.each do |order_garland|
       garland_total_price = 0
 
       if order.rent
+        # Если заказ на аренду, то ЦЕНА_АРЕНДЫ_ГИРЛЯНДЫ + (ЦЕНА_АРЕНДЫ_ЗА_ЛАМПУ * КОЛИЧЕСТВО_ЛАМП)
+        # и результат умножаем на количество дней
         garland_total_price += (order_garland.garland_price.rent_price + (order_garland.garland_price.lamps * order_garland.lamp_price.rent_price)) * order.days
+        logger.info "Rent total price #{garland_total_price}"
       else
+        # Если заказ на продажу, то ЦЕНА_ПОКУПКИ_ГИРЛЯНДЫ + (ЦЕНА_ПОКУПКИ_ЛАМПЫ * КОЛИЧЕСТВО_ЛАМП)
         garland_total_price += order_garland.garland_price.buy_price + (order_garland.garland_price.lamps * order_garland.lamp_price.buy_price)
+        logger.info "Buy total price #{garland_total_price}"
       end
 
       order.total_price += garland_total_price * order_garland.count
@@ -75,8 +81,11 @@ class Order
       logger.info "#{garland_total_price} | #{order_garland.count}"
     end
 
-    if self.delivery == :moscow and self.total_price < Setting.general.delivery_free_limit
+    if not self.rent and self.delivery == :moscow and self.total_price < Setting.general.delivery_free_limit
+      logger.info "Without delivery price"
       self.total_price += Setting.general.delivery_moscow
+    else
+      logger.info "With delivery price"
     end
 
     logger.info "Total price #{total_price}"
@@ -84,6 +93,17 @@ class Order
   end
 
   private
+
+  def set_order_id
+    unless self.order_id
+      new_order_id = last_order_id ? last_order_id + 1 : 1
+      self.update_attributes(order_id: new_order_id)
+    end
+  end
+
+  def last_order_id
+    Order.all.order(order_id: :desc).first.order_id
+  end
 
   def self.order_price(order_params)
     total_price = 0

@@ -24,6 +24,7 @@ gem 'thin'
 gem 'coffee-rails'
 gem 'bson_ext'
 gem 'devise'
+gem 'letter_opener', group: :development
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

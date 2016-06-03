@@ -1,0 +1,97 @@
+%div
+  %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "background-color:rgb(255,255,255);margin:20px auto;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;color:rgb(0,0,0);font-style:italic", :width => "700"}
+    %tbody
+
+      %tr
+        %td
+          %img{:alt => "", :src => "http://happystation.ru/images/order_mail/good_taste.png", :style => "border:0px"}/
+
+      %tr
+        %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-style:italic;padding-top:30px"}
+          %p
+            %span{:style => "font-size:25px"} Вас ждет отличный праздник!
+            -#%br
+            -#  %a{:href => "mailto:yesthatsmybox@GMAIL.COM", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} yesthatsmybox@GMAIL.COM
+          %p
+            %span{:style => "font-size:20px"}
+              Заказ номер №#{@order.order_id}
+              %br
+                %strong #{@order.created_at.strftime('%d.%m.%Y')}
+              Мы не знаем, что вы празднуете, но что бы это ни было — поздравляем!
+
+
+      %tr
+        %td{:style => "border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+          - @order.order_garlands.each do |order_garland|
+            = "#{order_garland.count} X #{order_garland.garland_price.length} м. #{order_garland.garland_price.lamps} ламп мощностью #{order_garland.lamp_price.power} Вт на сумму #{order_garland.price} рублей"
+            %br
+            %br
+          %br
+          - if @order.rent
+            -#%p Стоимость аренды на #{@order.days} дней — #{@order.total_price} рублей
+            %p Сумма залога — #{Setting.general.guaranty_amount} рублей (эта сумма вернется вам в полном размере, если вы вернете гирлянды целыми и чистыми).
+          - elsif @order.total_price < Setting.general.delivery_free_limit
+            %p Доставка #{Setting.general.delivery_moscow} р. по Москве
+      %tr
+        %td
+          %table{:style => "border-top-width:1px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:10px 0px 30px", :width => "700"}
+            %tbody
+              %tr
+                %td{:align => "right", :style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:20px;font-style:italic", :width => "600"}
+                  %strong Итого:
+                %td{:align => "right", :style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:20px;font-style:italic"}
+                  %strong #{@order.total_price}.-
+
+
+
+      %tr
+        %td
+          %b Как оплатить
+          %p Теперь вам нужно внести залог и оплатить аренду. Залог можно вносить наличными или переводом на карту. Если вы хотите забрать гирлянды самовывозом, — оплату можно будет сделать при встрече. Если выбрали доставку, — свяжитесь с нами для пояснений.
+      %tr
+        %td
+          %b Как забрать
+          %p Вы получите заказанное количество гирлянд — самовывозом/через курьерскую службу (Тут в зависимости от указанного: Самовывоз по адресу: Пятницкое шоссе, стр 6, ОСК Бумеранг (просим за день предупреждать о приезде, у нас на складе строгая пропускная система.) Если доставка — Мы с вами обязательно свяжемся в ближайшее время.)
+      %tr
+        %td
+          %b Если вам нужен монтаж
+          %p Монтаж рассчитывается индивидуально, в зависимости от места мероприятия. Пришлите фотографии, схему или описание площадки, остальное мы берем на себя.
+      %tr
+        %td
+          %p Если у вас остались вопросы — будем рады ответить по почте hello@arendalamp.ru или по телефону +7 499 393-32-85 (потом мы его заменим на новый).
+      %tr
+        %td
+          %b Еще раз спасибо от всей семьи Happy Station!
+
+
+
+
+
+      -#%tr
+      -#  %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic"}
+      -#    Если Вы собираетесь оплачивать заказ наличными курьеру, пожалуйста приготовьте сумму без сдачи — курьер будет в восторге. Если будете оплачивать пластиковой картой — держите документы, удостоверяющие личность, под рукой.
+      -#%tr
+      -#  %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-style:italic"}
+      -#    %p{:style => "font-size:20px;padding:10px 0px"}
+      -#      Если вы хотите побыстрее узнать что-то о своем заказе или о доставке
+      -#      %a{:href => "http://www.happystation.ru/about/contacts/", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} пишите нам
+      %tr
+        %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic;padding:10px 0px"}
+          %span{:style => "font-size:20px"} Еще вы можете:
+          %ul{:style => "padding:0px;margin:0px 0px 30px;list-style-position:inside"}
+            %li
+              %a{:href => "https://www.facebook.com/happystationru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} Подписаться на новости
+          %p{:style => "font-size:20px;padding:10px 0px"}
+            Cпасибо за то, что выбрали нас!
+            %br
+              С уважением,
+              %br
+                вся команда
+                %a{:href => "http://www.happystation.ru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} happystation.ru
+      %tr
+        %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic"}
+          %img{:alt => "", :src => "http://happystation.ru/images/order_mail/order_mail_logo.png", :style => "border:0px;padding:10px 0px"}
+            %br
+              %a{:href => "http://www.happystation.ru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} happystation.ru
+              %br
+                Делаем из квартиры дом || Est. 2011

@@ -76,6 +76,7 @@ class IndexController
     order = vm.order
     order.total_price = 0
 
+    # Перечесляем заказанные гирлянды
     for garland in order.garlands
       garland_total_price = 0
 
