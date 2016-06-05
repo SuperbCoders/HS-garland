@@ -5,7 +5,7 @@ class LandingController < ApplicationController
     @settings = {
         garland_prices: serialize_resources(GarlandPrice.all, Admin::GarlandPriceSerializer),
         lamp_prices: serialize_resources(LampPrice.all, Admin::LampPriceSerializer),
-        general: Setting.general,
+        general: Setting.general.open,
         share_banner: ShareBanner.banner.text.html_safe
     }
   end

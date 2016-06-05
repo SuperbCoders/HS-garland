@@ -36,7 +36,7 @@ class Setting
   def email
     settings = {}
     attribute_names.each do |attr|
-      settings[attr] = attr if attr.include? 'email_'
+      settings[attr] = Setting.general[attr] if attr.include? 'email_'
     end
     settings
   end
@@ -44,7 +44,7 @@ class Setting
   def open
     settings = {}
     attribute_names.each do |attr|
-      settings[attr] = attr if attr.include? 'open_'
+      settings[attr] = Setting.general[attr] if attr.include? 'open_'
     end
     settings
   end

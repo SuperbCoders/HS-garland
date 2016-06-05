@@ -1,5 +1,5 @@
 class IndexController
-  constructor: (@rootScope, @scope, @log, @http, @Lightbox) ->
+  constructor: (@rootScope, @scope, @log, @http, @anchorScroll, @location) ->
     vm = @
     vm.garland_added = 0
     vm.image_added = 0
@@ -22,10 +22,22 @@ class IndexController
     @scope.$watch('vm.image_added', (m) -> vm.init_work_slider())
     @scope.$watch('vm.order.delivery', (method) -> vm.calc_price() if method)
 
-
     @init_landing()
 
     console.log "Index Selects : "+$('.select2').length
+
+  gotoAnchor: (x) ->
+    vm = @
+    newHash = x
+    if vm.location.hash() != newHash
+      # set the $location.hash to `newHash` and
+      # $anchorScroll will automatically scroll to it
+      vm.location.hash x
+    else
+      # call $anchorScroll() explicitly,
+      # since $location.hash hasn't changed
+      vm.anchorScroll()
+    return
 
   filter: (type) ->
     vm = @
@@ -138,9 +150,9 @@ class IndexController
   make_order: ->
     vm = @
 
-    return alert('Укажите Имя') if not vm.order.name
-    return alert('Укажите Email') if not vm.order.email
-    return alert('Укажите номер телефона') if not vm.order.phone
+    return if not vm.order.name
+    return if not vm.order.email
+    return if not vm.order.phone
 
     if vm.order.rent and not vm.order.start_date and not vm.order.end_date
       return alert('Выберите период аренды')
@@ -201,6 +213,7 @@ class IndexController
             slidesPerGroup: 4)
       sl.update()
       return
+
   init_landing: ->
     vm = @
     header = $('.header')
@@ -320,4 +333,4 @@ class IndexController
 
 
 
-@application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', IndexController]
+@application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', '$anchorScroll', '$location', IndexController]

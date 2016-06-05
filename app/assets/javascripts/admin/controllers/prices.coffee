@@ -35,8 +35,10 @@ class PricesController
     )
 
     modalInstance.result.then ((price) ->
-      price.$save({id: price.id})
-      vm.fetch()
+      price.$save({id: price.id}).$promise.then((response) ->
+        vm.fetch()
+      )
+
       return
     ), ->
       vm.log.info 'edit_lamp_price Modal dismissed at: ' + new Date
@@ -55,8 +57,10 @@ class PricesController
     )
 
     modalInstance.result.then ((price) ->
-      price.$save({id: price.id})
-      vm.fetch()
+      price.$save({id: price.id}).$promise.then((response) ->
+        vm.fetch()
+      )
+
       return
     ), ->
       vm.log.info 'edit_lamp_price Modal dismissed at: ' + new Date

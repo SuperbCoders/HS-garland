@@ -16,7 +16,7 @@
           %p.fz_42 гирлянды
           %p.fz_37 с лампами
           %p.fz_30 накаливания
-  %a.btn_v3.order_now_btn.white_btn{:href => "#"} заказать сейчас
+  %a.btn_v3.order_now_btn.white_btn(href = "" ng-click = "vm.gotoAnchor('order_form')") заказать сейчас
 
 .base
   = render 'templates/landing/shared/menu'
@@ -77,10 +77,13 @@
                     3
                     = succeed "\u{2022}" do
                       %span.fz_24 м
+                    5
                     = succeed "\u{2022}" do
                       %span.fz_24 м
+                    10
                     = succeed "\u{2022}" do
                       %span.fz_24 м
+                    15
                     %span.fz_24 м
                 %p Мы подобрали оптимальные длины гирлянд на все случаи.
             %li
@@ -95,6 +98,7 @@
                     10
                     = succeed "\u{a0}" do
                       %span.fz_24 Вт
+                    25
                     %span.fz_24 Вт
                 %p Наши гирлянды подходят как для украшения, так и для освещения.
             %li
@@ -153,7 +157,7 @@
               = ShareBanner.banner.text.html_safe
 
 
-    .section_w.section_v2
+    .section_w.section_v2(id='order_form')
       .section_inner
         .order_form
           %h2.section_caption.buyMode(ng-show = 'vm.order.rent')
@@ -219,9 +223,10 @@
                       %input.inp_hidden(type = "radio" value = "moscow" ng-model = "vm.order.delivery")
                       %span.check_text
                         %span.clr_gold
-                          доставка по москве {{ settings.general.delivery_moscow }} руб
+                          доставка по москве {{ settings.general.open_delivery_moscow }} руб
                           %br/
-                        %span.clr_gray (бесплатно при заказе от {{ settings.general.delivery_free_limit }} руб)
+                        %span.clr_gray (бесплатно при заказе от {{ settings.general.open_delivery_free_limit }} руб)
+
                 .order_opt_cell
                   .order_opt_item
                     %label.radio_v1
@@ -231,6 +236,7 @@
                           доставка за пределы москвы
                           %br/
                         %span.clr_gray (расСчитывается индивидуально)
+
                 .order_opt_cell
                   .order_opt_item
                     %label.radio_v1
@@ -244,7 +250,7 @@
               / Order options
               .order_opt_row
                 .order_opt_cell  
-                .order_opt_cell
+                .order_opt_cell(ng-show = 'vm.order.rent')
                   .order_opt_item
                     %label.check_v1.buyMode
                       %input.inp_hidden(type = "checkbox" ng-model = "vm.order.need_installation")
@@ -302,14 +308,14 @@
             .text_center(ng-show = "vm.order.rent")
               .pledge_sum.buyMode
                 %span.clr_gray сумма залога за гирлянды:
-                %span.clr_gold {{settings.general.guaranty_amount}} руб
+                %span.clr_gold {{settings.general.open_guaranty_amount}} руб
               .rent_sum
-                %span.clr_gray стоимость аренды:
+                %span.clr_gray Итого:
                 %span.clr_gold {{ vm.order.total_price }} руб
               %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
             .text_center(ng-show = "!vm.order.rent")
               .rent_sum
-                %span.clr_gray стоимость герлянд:
+                %span.clr_gray Итого:
                 %span.clr_gold {{ vm.order.total_price }} руб
               %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
 
