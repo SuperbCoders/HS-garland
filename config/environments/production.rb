@@ -69,14 +69,14 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.smtp_settings = {
-      address: 'smtp.yandex.ru',
-      port: '465',
-      domain: 'yandex.ru',
-      user_name: 'hellohappystation@yandex.ru',
-      password: 'hellohappystation123$',
-      authentication: :plain,
-      enable_starttls_auto: true,
-      tls: true
+      address: Setting.general.email_address,
+      port: Setting.general.email_port,
+      domain: Setting.general.email_domain,
+      user_name: Setting.general.email_user_name,
+      password: Setting.general.email_password,
+      authentication: Setting.general.email_authentication,
+      enable_starttls_auto: Setting.general.email_enable_starttls_auto,
+      tls: Setting.general.email_tls
   }
 
 

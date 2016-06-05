@@ -13,7 +13,7 @@
             .col-sm-9
               .input-group
                 .input-group-addon ₽
-                %input.form-control(ng-model = "vm.settings.delivery_moscow")
+                %input.form-control(ng-model = "vm.settings.open_delivery_moscow")
 
 
           .form-group
@@ -22,7 +22,7 @@
             .col-sm-9
               .input-group
                 .input-group-addon ₽
-                %input.form-control(ng-model = "vm.settings.delivery_free_limit")
+                %input.form-control(ng-model = "vm.settings.open_delivery_free_limit")
 
           .form-group
             .col-sm-3
@@ -30,7 +30,60 @@
             .col-sm-9
               .input-group
                 .input-group-addon ₽
-                %input.form-control(ng-model = "vm.settings.guaranty_amount")
+                %input.form-control(ng-model = "vm.settings.open_guaranty_amount")
+
+    .row
+      .col-xs-12
+        %form.form-horizontal
+          .form-group
+            .col-sm-3
+              %label Адрес сервера
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_address")
+
+          .form-group
+            .col-sm-3
+              %label Порт
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_port")
+
+          .form-group
+            .col-sm-3
+              %label домен
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_domain")
+
+          .form-group
+            .col-sm-3
+              %label Логин
+
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_user_name")
+          .form-group
+            .col-sm-3
+              %label Пароль
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_password")
+
+          .form-group
+            .col-sm-3
+              %label authentication
+            .col-sm-9
+              %input.form-control(ng-model = "vm.settings.email_authentication")
+
+          .form-group
+            .col-sm-3
+              %label enable_starttls_auto
+            .col-sm-9
+              %label.checkbox-inline
+                %input(type = 'checkbox' ng-model = "vm.settings.email_enable_starttls_auto")
+
+          .form-group
+            .col-sm-3
+              %label email_tls
+            .col-sm-9
+              %label.checkbox-inline
+                %input(type = 'checkbox' ng-model = "vm.settings.email_tls")
 
           .form-group
             .col-sm-3

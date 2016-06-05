@@ -26,6 +26,6 @@ class Admin::AdminController < Admin::BaseController
   end
 
   def setting_params
-    params.permit(:delivery_moscow, :delivery_free_limit, :guaranty_amount)
+    params.permit(Setting.attribute_names)
   end
 end
