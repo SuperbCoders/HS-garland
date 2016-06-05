@@ -21,15 +21,15 @@ class Setting
   def delivery_moscow
     open_delivery_moscow
   end
-  
+
   def delivery_free_limit
     open_delivery_free_limit
   end
-  
+
   def guaranty_amount
     open_guaranty_amount
   end
-  
+
 
   def email
     settings = {}
