@@ -9,7 +9,7 @@
         %table.table.table-striped.table-hover.table-bordered
           %thead
             %td.col-xs-2 Клиент
-            %td.col-xs-2 Число герлянд
+            %td.col-xs-2 Количество гирлянд
             %td.col-xs-1 Тип
             %td.col-xs-1 Цена
             %td.col-xs-2 Опции
@@ -21,6 +21,7 @@
               %td
                 %a(href = "mailto:{{ order.customer.email }}") {{ order.customer.name }}
                 %p +7 {{ order.customer.phone }}
+                %p {{ order.customer.email }}
               %td
                 %p(ng-repeat = "garland in order.order_garlands")
                   {{garland.count}}

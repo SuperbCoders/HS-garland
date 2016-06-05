@@ -66,10 +66,25 @@ class GalleryController
       else
         alert(response.data.error)
     )
+
   fetch: ->
     vm = @
+    vm.stat =
+      holidays: 0
+      iterior: 0
+      cinema: 0
+      wedding: 0
+
     vm.http.get('/admin/gallery').then((response) ->
       vm.images = response.data
+
+
+      vm.stat.all = vm.images.length
+      for image in vm.images
+        vm.stat.holidays += 1 if image.holidays
+        vm.stat.iterior += 1 if image.iterior
+        vm.stat.cinema += 1 if image.cinema
+        vm.stat.wedding += 1 if image.wedding
     )
 
   upload_modal: ->

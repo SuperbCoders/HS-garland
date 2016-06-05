@@ -88,6 +88,10 @@ class OrdersController
     console.log orders
     orders
 
+  destroy: (order) ->
+    vm = @
+    order.$remove({id: order.id}).then((response) -> vm.fetch() )
+
   fetch: ->
     vm = @
     vm.http.get('/admin/orders/statuses').then((statuses) ->

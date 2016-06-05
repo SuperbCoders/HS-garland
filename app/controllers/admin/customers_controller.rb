@@ -6,7 +6,7 @@ class Admin::CustomersController < Admin::BaseController
   before_action :find_resource, only: %w(show update destroy edit)
 
   def resource_scope
-    Customer
+    Customer.order(created_at: :desc)
   end
 
   def resource_serializer

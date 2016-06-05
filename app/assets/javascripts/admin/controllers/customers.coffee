@@ -9,4 +9,8 @@ class CustomersController
       vm.customers = customers
     )
 
+  destroy: (customer) ->
+    vm = @
+    customer.$remove({id: customer.id}).then((response) -> vm.fetch() )
+    
 @application.controller 'CustomersController', ['$rootScope', 'Customers', CustomersController]

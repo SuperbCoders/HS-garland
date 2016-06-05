@@ -11,7 +11,7 @@ class LandingController < ApplicationController
   end
 
   def gallery
-    render json: serialize_resources(GalleryImage.all, Admin::GalleryImageSerializer)
+    render json: serialize_resources(GalleryImage.order(created_at: :desc).all, Admin::GalleryImageSerializer)
   end
 
   def order

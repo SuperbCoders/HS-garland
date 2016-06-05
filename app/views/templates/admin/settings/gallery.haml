@@ -5,16 +5,16 @@
       все фото (121)
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.holidays")
-      праздники (33)
+      праздники ({{vm.stat.holidays}})
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.iterior")
-      ярмарки и интерьеры (24)
+      ярмарки и интерьеры ({{vm.stat.iterior}})
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.cinema")
-      реклама и кино (2)
+      реклама и кино ({{vm.stat.cinema}})
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.wedding")
-      свадьбы (62)
+      свадьбы ({{vm.stat.wedding}})
 
     %button.btn.btn-sm.btn-success.btn-flat.pull-right(ng-click = "vm.upload_modal()") Добавить
 

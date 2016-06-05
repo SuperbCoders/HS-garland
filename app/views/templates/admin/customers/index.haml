@@ -14,12 +14,17 @@
             %td.col-xs-2 Имя
             %td.col-xs-2 Email
             %td.col-xs-2 Телефон
+            %td.col-xs-1 Дата
+            %td.col-xs-1
           %tbody
             %tr(dir-paginate  = "customer in vm.customers | filter:vm.filter | itemsPerPage: 20")
               %td {{customer.name}}
               %td {{customer.email}}
               %td +7 {{customer.phone}}
-
+              %td {{customer.created_at | date}}
+              %td
+                %a.btn.btn-sm.btn-danger.btn-flat(ng-click = "vm.destroy(customer)")
+                  %i.fa.fa-trash
   .box-footer
     .col-xs-12
       %dir-pagination-controls
