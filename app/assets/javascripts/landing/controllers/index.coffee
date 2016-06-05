@@ -68,6 +68,10 @@ class IndexController
         vm.gallery['cinema'] += 1 if image.tags.cinema
         vm.gallery['wedding'] += 1 if image.tags.wedding
       vm.init_work_slider()
+      $('.fancybox').fancybox
+        padding: 0
+        openEffect: 'elastic'
+        closeBtn: false
     )
 
   calc_price: ->

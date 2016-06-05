@@ -9,6 +9,7 @@
 #= require includes/jquery.validationEngine-ru
 #= require includes/daterangepicker
 #= require swiper
+#= require fancybox/source/jquery.fancybox.pack
 
 #= require angular
 #= require angular-ui-router
@@ -21,3 +22,7 @@
 
 #= require ./landing/app
 #= require_tree ./landing
+
+$(document).ready ->
+  $('.fancybox').fancybox()
+  return
