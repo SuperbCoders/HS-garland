@@ -18,6 +18,9 @@ class Setting
 
   validates_uniqueness_of :open_setting
 
+  after_save :set_email_settings
+
+
   def delivery_moscow
     open_delivery_moscow
   end
@@ -50,5 +53,18 @@ class Setting
   def self.general
     create if all.count <= 0
     all.first
+  end
+
+  def set_email_settings
+    ActionMailer::Base.smtp_settings = {
+        address: Setting.general.email_address,
+        port: Setting.general.email_port,
+        domain: Setting.general.email_domain,
+        user_name: Setting.general.email_user_name,
+        password: Setting.general.email_password,
+        authentication: Setting.general.email_authentication,
+        enable_starttls_auto: Setting.general.email_enable_starttls_auto,
+        tls: Setting.general.email_tls
+    }
   end
 end

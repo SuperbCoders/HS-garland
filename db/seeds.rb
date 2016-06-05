@@ -14,10 +14,10 @@ if not setting.email_address
   setting.update_attributes(
       email_address: 'smtp.gmail.com',
       email_port: '587',
-      email_domain: 'gmail.com',
-      email_user_name: 'xyz@gmail.com',
+      email_domain: 'smtp.gmail.com',
+      email_user_name: 'hellohappystation@gmail.com',
       email_password: 'yourpassword',
       email_authentication: :plain,
       email_enable_starttls_auto: true,
-      email_tls: true)
+      email_tls: false)
 end
