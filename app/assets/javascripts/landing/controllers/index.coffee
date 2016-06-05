@@ -146,6 +146,7 @@ class IndexController
       return alert('Выберите период аренды')
 
     vm.http.post('/order', vm.order).then((response) ->
+      vm.rootScope.order_id = response.data.order.order_id
       vm.rootScope.g.state.go('thanks')
     )
 
