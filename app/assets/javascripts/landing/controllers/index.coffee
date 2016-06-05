@@ -27,10 +27,6 @@ class IndexController
 
     console.log "Index Selects : "+$('.select2').length
 
-  openLightboxModal: (index) ->
-    vm = @
-    vm.Lightbox.openModal(vm.images, index)
-
   filter: (type) ->
     vm = @
     switch type
@@ -49,6 +45,16 @@ class IndexController
       when 'wedding'
         vm.tags = {wedding: true}
     vm.init_work_slider()
+
+  open_fancybox: (image_id) ->
+    $.fancybox.open($("##{image_id}"),
+      padding: 0
+      openEffect: 'elastic'
+      closeBtn: false
+      autoScale: true
+      autoSize: true
+      scrolling: 'no'
+      helpers: overlay: {locked: false})
 
   fetch_gallery_images: ->
     vm = @
@@ -72,6 +78,9 @@ class IndexController
         padding: 0
         openEffect: 'elastic'
         closeBtn: false
+        autoScale: true
+        autoSize: true
+
     )
 
   calc_price: ->
@@ -310,4 +319,4 @@ class IndexController
 
 
 
-@application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', 'Lightbox', IndexController]
+@application.controller 'IndexController', ['$rootScope', '$scope', '$log', '$http', IndexController]

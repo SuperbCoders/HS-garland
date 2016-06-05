@@ -1,8 +1,7 @@
 @application = angular.module('garland.landing',
   [ 'ui.router',
     'angularUtils.directives.dirPagination',
-    'ui.mask',
-    'bootstrapLightbox'
+    'ui.mask'
   ])
 
 @application.config ['$httpProvider', '$stateProvider', '$urlRouterProvider', ($httpProvider, $stateProvider, $urlRouterProvider) ->
