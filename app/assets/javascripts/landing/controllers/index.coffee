@@ -59,14 +59,8 @@ class IndexController
     vm.init_work_slider()
 
   open_fancybox: (image_id) ->
-    $.fancybox.open($("##{image_id}"),
-      padding: 0
-      openEffect: 'elastic'
-      closeBtn: false
-      autoScale: true
-      autoSize: true
-      scrolling: 'no'
-      helpers: overlay: {locked: false})
+    $("##{image_id}").click()
+    return
 
   fetch_gallery_images: ->
     vm = @
@@ -86,13 +80,6 @@ class IndexController
         vm.gallery['cinema'] += 1 if image.tags.cinema
         vm.gallery['wedding'] += 1 if image.tags.wedding
       vm.init_work_slider()
-      $('.fancybox').fancybox
-        padding: 0
-        openEffect: 'elastic'
-        closeBtn: false
-        autoScale: true
-        autoSize: true
-
     )
 
   calc_price: ->

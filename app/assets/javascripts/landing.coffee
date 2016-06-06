@@ -1,4 +1,5 @@
 #= require jquery/jquery.min
+#= require jquery-colorbox/jquery.colorbox-min
 #= require jquery-ui
 #= require jquery.stellar/jquery.stellar.min
 #= require moment
@@ -9,9 +10,9 @@
 #= require includes/jquery.validationEngine-ru
 #= require includes/daterangepicker
 #= require swiper
-#= require fancybox/source/jquery.fancybox.pack
 
 #= require angular
+#= require angular-colorbox/js/angular-colorbox
 #= require angular-ui-router
 #= require angular-resource
 #= require angular-utils-pagination
@@ -21,7 +22,3 @@
 
 #= require ./landing/app
 #= require_tree ./landing
-
-$(document).ready ->
-  $('.fancybox').fancybox()
-  return

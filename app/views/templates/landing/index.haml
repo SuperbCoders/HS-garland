@@ -139,14 +139,15 @@
                     .swiper-wrapper.clearfix
                       .swiper-slide(ng-repeat = "image in vm.images | filter:{tags: vm.tags}" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
                         .work_slide(ng-switch-when = "0")
-                          %img(ng-src = "{{vm.images[$index].path}}" id = "{{vm.images[$index].id}}")
+                          %img(ng-src = "{{vm.images[$index].path}}" id = "{{vm.images[$index].id}}" colorboxable)
                           .work_sl_info
-                            %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.open_fancybox(vm.images[$index].id)") крупнее
+                            %a.btn_v2.work_sl_info.white_btn_white.fancybox(ng-click = "vm.open_fancybox(vm.images[$index].id)") крупнее
 
                         .work_slide(ng-switch-when = "0")
-                          %img(ng-src = "{{vm.images[$index + 1].path}}" id = "{{vm.images[$index + 1].id}}")
+                          %img(ng-src = "{{vm.images[$index + 1].path}}" id = "{{vm.images[$index + 1].id}}" colorboxable)
                           .work_sl_info
-                            %a.btn_v2.work_sl_info.white_btn_white(ng-click = "vm.open_fancybox(vm.images[$index + 1].id)") крупнее
+                            %a.btn_v2.work_sl_info.white_btn_white.fancybox(ng-click = "vm.open_fancybox(vm.images[$index + 1].id)") крупнее
+
 
                   .slider_pagination
                   .swiper-button-next.slider_next
