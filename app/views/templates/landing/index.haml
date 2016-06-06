@@ -308,7 +308,7 @@
             .text_center(ng-show = "vm.order.rent")
               .pledge_sum.buyMode
                 %span.clr_gray сумма залога за гирлянды:
-                %span.clr_gold {{settings.general.open_guaranty_amount}} руб
+                %span.clr_gold {{settings.general.open_guaranty_amount * vm.order.garlands.length }} руб
               .rent_sum
                 %span.clr_gray Итого:
                 %span.clr_gold {{ vm.order.total_price }} руб
