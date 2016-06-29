@@ -28,9 +28,12 @@
       .row.well
         .col-sm-12.col-xs-12.col-md-4.col-lg-3(ng-repeat = "file in vm.interface" style = 'margin-bottom: 25px;'  height = "240px" style = "display: block;" width = "320px")
           %img.thumbnail.img-responsive(ng-src = "data:{{file.filetype}};base64,{{file.base64}}")
-            %a.btn.btn-xs.btn-danger.btn-flat(ng-click = "vm.interface.splice(vm.interface.indexOf(file),1)")
-              %i.fa.fa-trash
-
+          %input.form-control(type = 'text' placeholder = 'описание' ng-model = 'file.description')
+          %br
+          %input.form-control(placeholder = "дата" ng-model="file.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
+          %a.btn.btn-xs.btn-danger.btn-flat(ng-click = "vm.interface.splice(vm.interface.indexOf(file),1)")
+            %i.fa.fa-trash
+            Удалить
 .modal-footer
   %button.btn.btn-default.pull-left(ng-click = "vm.cancel()") Отмена
-  %button.btn.btn-primary(ng-click = "vm.upload()") Загрузить
+  %button.btn.btn-primary(ng-click = "vm.upload()" ng-disabled = "vm.loading") Загрузить

@@ -22,6 +22,7 @@
                 %a(href = "mailto:{{ order.customer.email }}") {{ order.customer.name }}
                 %p +7 {{ order.customer.phone }}
                 %p {{ order.customer.email }}
+                %p {{ order.delivery_address }}
               %td
                 %p(ng-repeat = "garland in order.order_garlands")
                   {{garland.count}}

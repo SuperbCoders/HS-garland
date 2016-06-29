@@ -12,6 +12,8 @@ class Order
   field :rent, type: Boolean
   field :name
   field :email
+  field :guaranty_amount, type: Integer, default: 0
+  field :delivery_address
   field :phone
   field :order_id, type: Integer
 
@@ -28,7 +30,7 @@ class Order
   def self.new_order(params)
     order_params = params.permit(:total_price, :start_date, :end_date, :days,
         :need_installation, :rain_protection, :rent, :phone,
-        :garlands, :delivery, :name, :phone, :email)
+        :garlands, :delivery, :name, :phone, :email, :delivery_address, :guaranty_amount)
 
     customer_params = params.permit(:name, :phone, :email)
 
@@ -60,6 +62,7 @@ class Order
   def calc_price
     order = self
     order.total_price = 0
+    order.guaranty_amount = 0
 
     # Перечисляем все заказанные гирлянды в заказе
     order_garlands.each do |order_garland|
@@ -77,6 +80,11 @@ class Order
       end
 
       order.total_price += garland_total_price * order_garland.count
+
+      if order.rent
+        order.guaranty_amount += garland_total_price * order_garland.count
+      end
+
       logger.info "Total price #{order.total_price}"
       logger.info "#{garland_total_price} | #{order_garland.count}"
     end

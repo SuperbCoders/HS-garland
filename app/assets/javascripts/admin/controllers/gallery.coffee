@@ -4,20 +4,27 @@ class UploadModalController
     vm = @
     vm.result = {}
     vm.tags = {holidays: false, iterior: false, cinema: false, wedding: false}
+    vm.loading = false
 
   upload: ->
     vm = @
+
 
     console.log vm.tags
     if not @tags_checked()
       return alert('Выберите хотя бы один тег!')
 
+    for file in vm.interface
+      return alert('Укажите дату и описание у изображения') if not file.date or not file.description
+
     packet =
       tags: vm.tags
       files: vm.interface
 
+    vm.loading = true
     vm.http.post('/admin/gallery/upload', packet).then((response) ->
       vm.uibModalInstance.close vm.result
+      vm.loading = false
     )
 
     return

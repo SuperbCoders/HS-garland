@@ -14,13 +14,18 @@ class Admin::GalleryController < ApplicationController
 
   def upload
     params[:files].each do |file|
-      image = GalleryImage.create(tags: params[:tags])
+      image = GalleryImage.create(tags: params[:tags], description: file[:description])
       image.tags[:all] = true
       image.attach(:file, file)
+      image.date = image_date(file[:date])
       image.save
     end
 
     render json: {}
+  end
+
+  def image_date(date_str)
+    "#{date_str[0..1]}.#{date_str[2..3]}.#{date_str[4..8]}".to_date
   end
 
   def slider_destroy

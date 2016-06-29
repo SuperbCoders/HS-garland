@@ -6,5 +6,7 @@ class GalleryImage
 
   field :file
   field :tags, type: Hash
+  field :description
+  field :date, type: Date
 
 end

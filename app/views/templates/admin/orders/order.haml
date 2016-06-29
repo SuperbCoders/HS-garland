@@ -29,6 +29,12 @@
       .col-sm-9
         %input.form-control(ng-model = "vm.order.total_price")
 
+    .form-group(ng-show = 'vm.order.rent')
+      .col-sm-3
+        %label Залог
+      .col-sm-9
+        %input.form-control(ng-model = "vm.order.guaranty_amount")
+
     .form-group
       .col-sm-3
         %label Статус
@@ -61,6 +67,13 @@
         %label Email
       .col-sm-9
         %input.form-control(ng-model = "vm.order.customer.email")
+
+    .form-group
+      .col-sm-3
+        %label Адрес доставки
+      .col-sm-9
+        %input.form-control(ng-model = "vm.order.delivery_address")
+
 
     %hr
     %p.lead Гирлянды

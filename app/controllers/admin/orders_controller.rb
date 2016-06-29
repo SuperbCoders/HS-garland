@@ -59,7 +59,8 @@ class Admin::OrdersController < Admin::BaseController
     [
         :status,
         :date_from,
-        :date_to
+        :date_to,
+        :delivery_address
     ]
   end
 

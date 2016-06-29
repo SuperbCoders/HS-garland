@@ -1,5 +1,5 @@
 class Admin::GalleryImageSerializer < Admin::BaseSerializer
-  attributes :path, :tags, :all, :holidays, :iterior, :cinema, :wedding, :tags, :url
+  attributes :path, :tags, :all, :holidays, :iterior, :cinema, :wedding, :tags, :url, :date, :description
 
   def url
     "/uploads/#{object.file}"

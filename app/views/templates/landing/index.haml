@@ -179,8 +179,6 @@
                 %span.switcher_off арендовать
             .buyMode(ng-show = 'vm.order.rent')
               .date_p_controls
-                .date_p_years
-                  %select.select2.dateRangeYear{"data-select-class" => "select_v1"}
                 .date_p_months
                   .date_month.dateMonth
                     %span.month_day.monthBtn Январь
@@ -306,10 +304,13 @@
                 %input.f_input.input_v2(class = "validate[required,custom[email]]" placeholder = "ваш e-mail" ng-model = "vm.order.email")
               .form_cell
                 %input.f_input.input_v2(class = "validate[required]" placeholder = "ваш телефон" ng-model="vm.order.phone" ui-mask="+7 (999) 999-99-99"  ui-mask-placeholder ui-mask-placeholder-char="_")
+              .form_cell.form_cell_wide
+                %input.f_input.input_v2(class = "validate[required]" placeholder = "адрес доставки" ng-model = "vm.order.delivery_address")
+
             .text_center(ng-show = "vm.order.rent")
               .pledge_sum.buyMode
                 %span.clr_gray сумма залога за гирлянды:
-                %span.clr_gold {{settings.general.open_guaranty_amount * vm.order.garlands.length }} руб
+                %span.clr_gold {{vm.order.guaranty_amount }} руб
               .rent_sum
                 %span.clr_gray Итого:
                 %span.clr_gold {{ vm.order.total_price }} руб

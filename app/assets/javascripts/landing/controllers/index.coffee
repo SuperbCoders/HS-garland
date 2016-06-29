@@ -87,6 +87,7 @@ class IndexController
     settings = vm.rootScope.settings
     order = vm.order
     order.total_price = 0
+    order.guaranty_amount = 0
 
     # Перечесляем заказанные гирлянды
     for garland in order.garlands
@@ -108,6 +109,9 @@ class IndexController
       # Умножаем получившуюся сумму на количество гирлянд
       # затем суммируем в общую сумму заказа
       order.total_price += garland_total_price * garland.count
+
+      if order.rent
+        order.guaranty_amount += garland_total_price * garland.count
 
 
     # Если доставка по москве И общая_сумма_заказа менье чем в настройках
@@ -143,6 +147,9 @@ class IndexController
 
     if vm.order.rent and not vm.order.start_date and not vm.order.end_date
       return alert('Выберите период аренды')
+
+    if vm.order.rent and vm.order.days < 5
+      return alert('Минимальный срок аренды 5 дней')
 
     vm.http.post('/order', vm.order).then((response) ->
       vm.rootScope.order_id = response.data.order.order_id

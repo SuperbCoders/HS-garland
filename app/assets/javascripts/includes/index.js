@@ -1,4 +1,18 @@
 var mainSlider, work_tabs, datePicker,
+    months = [
+        'Январь',
+        'Февраль',
+        'Март',
+        'Апрель',
+        'Май',
+        'Июнь',
+        'Июль',
+        'Август',
+        'Сентябрь',
+        'Октябрь',
+        'Ноябрь',
+        'Декабрь'
+    ],
     datePickerParam = {
         "parentEl": ".datePicker",
         "opens": "embed",
@@ -17,7 +31,7 @@ var mainSlider, work_tabs, datePicker,
         "applyClass": "inp_hidden",
         "cancelClass": "inp_hidden",
         "minDate": moment(),
-        //"maxDate": moment().add(150, 'd').format('DD/MM/YYYY'),
+        "maxDate": moment().add(1, 'y'),
         //"alwaysShowCalendars": true,
 
         locale: {
@@ -35,7 +49,7 @@ var mainSlider, work_tabs, datePicker,
         }
     };
 
-$(function ($) {
+$(window).on('load', function () {
 
     var mainSlider = new Swiper('.mainSlider', {
         // Optional parameters
@@ -46,8 +60,29 @@ $(function ($) {
         nextButton: '#main_slider_next',
         prevButton: '#main_slider_prev',
         slidesPerView: 1,
-        spaceBetween: 0
+        spaceBetween: 0,
+        onInit: function (swp) {
+            $(swp.slides).each(function (ind) {
+                var slide = $(this);
+                slide.backstretch(slide.find('img').hide().attr('src'));
+            });
+        }
     });
+
+    initWorkSliders();
+
+});
+
+function updateMonths() {
+
+    $('.dateMonth').each(function (ind) {
+        var mm = moment(datePickerParam.minDate).add(ind, 'month').month();
+        $(this).attr('data-month', mm).find('.monthBtn').text(months[mm]);
+    }).first().find('.monthBtn').click();
+
+}
+
+function initWorkSliders() {
 
     $('.workSlider').each(function () {
         var $this = $(this);
@@ -91,9 +126,56 @@ $(function ($) {
                     slidesPerGroup: 4,
                     //spaceBetweenSlides: 23
                 }
+            },
+            onInit: function (swp) {
+                $(swp.slides).find('.fancyboxLink').fancybox({
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    padding: 0,
+                    closeBtn: true,
+                    tpl: {
+                        wrap: '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-counter"></div><div class="fancybox-inner"></div></div></div></div>'
+                    },
+                    helpers: {
+                        title: {
+                            type: 'inside'
+                        },
+                        overlay: {
+                            locked: false
+                        }
+                    },
+                    afterLoad: function (e) {
+                        var counter = $(this.wrap).find('.fancybox-counter'), title = this.title,
+                            counter_html = $('<div />')
+                                .append('<div class="fancybox-counter-title" >' + ((this.element).attr('data-group-name') || '') +
+                                    '</div>')
+                                .append('<div class="fancybox-counter-val">' + (this.index + 1) + ' ИЗ ' + this.group.length +
+                                    '</div>');
+
+                        if (title) {
+                            this.title = '<div class="image_title">' + (title.split('|')[0] || '') +
+                                '</div> <div class="image_location">' + (title.split('|')[1] || '') +
+                                '</div>';
+                        }
+
+                        counter.html(counter_html);
+
+                    }
+                });
             }
         });
+
+        sl.update();
     });
+}
+
+$(window).resize(function () {
+
+    //console.log('window ' + $(window).width() + ' X ' + $(window).height());
+
+});
+
+$(function ($) {
 
     var dateRange = $('.dateRange');
 
@@ -106,18 +188,18 @@ $(function ($) {
 
                 tab.parent().attr('data-active-tab', tab.index());
 
+                initWorkSliders();
+
+                $(window).trigger('resize');
                 //$('.priceSelect').val('#' + ui.newPanel.attr('id')).trigger('change');
 
             }
         });
 
-    datePicker = $('input#daterange').daterangepicker(datePickerParam, function (start, end, label) {
-        console.log(start, end, label);
-        $(this)[0].element.change();
-    });
+    datePicker = $('input#daterange').daterangepicker(datePickerParam);
 
     $('.monthBtn').on ('click', function () {
-        var firedEl = $(this).parent(), dateMonth = $('.dateMonth'), ind = firedEl.index();
+        var firedEl = $(this).parent(), ind = 1 * firedEl.attr('data-month'), dateMonth = $('.dateMonth');
 
         var firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect'),
             secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect');
@@ -126,11 +208,18 @@ $(function ($) {
 
         firstMonthSelect[0].selectedIndex = ind;
 
-        if (ind == 11) {
-            dateMonth.eq(ind).addClass('active');
-            dateMonth.eq(0).addClass('active');
+        var yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect');
+
+        yearSelect[0].selectedIndex = 1 * (moment(datePickerParam.minDate).month() > ind);
+
+        yearSelect.trigger('change');
+
+        if (firedEl.index() == 11) {
+            firedEl.prev().find('.monthBtn').click();
         } else {
-            dateMonth.eq(ind).addClass('active').next().addClass('active');
+            dateMonth.filter(function (e, r) {
+                return $(r).attr("data-month") == ind;
+            }).addClass('active').next().addClass('active');
         }
 
         firstMonthSelect.trigger('change');
@@ -149,17 +238,19 @@ $(function ($) {
 
     });
 
-    datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each(function (ind) {
-        $('.dateRangeYear').append($('<option>' + this.innerHTML + '</option>'));
-    });
+    //datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each(function (ind) {
+    //    $('.dateRangeYear').append($('<option>' + this.innerHTML + '</option>'));
+    //});
 
-    $('.dateRangeYear').on ('change', function () {
-        var yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect');
+    //$('.dateRangeYear').on ('change', function () {
+    //    var yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect');
+    //
+    //    yearSelect[0].selectedIndex = this.selectedIndex;
+    //
+    //    yearSelect.trigger('change');
+    //});
 
-        yearSelect[0].selectedIndex = this.selectedIndex;
-
-        yearSelect.trigger('change');
-    });
+    updateMonths();
 
     function formatResult(item) {
         if (!item.id) {
@@ -167,7 +258,7 @@ $(function ($) {
             return item.text;
         }
         // return item template
-        console.log(item);
+        //console.log(item);
 
         return '<i>' + item.text + '</i>';
     }
@@ -178,21 +269,6 @@ $(function ($) {
 
         return '<b>' + item.text + '</b>';
     }
-
-    $('.validateMe').validationEngine({
-        scroll: false,
-        showPrompts: true,
-        showArrow: false,
-        addSuccessCssClassToField: 'success',
-        addFailureCssClassToField: 'error',
-        parentFieldClass: '.formCell',
-        promptPosition: "centerRight",
-        autoHidePrompt: true,
-        autoHideDelay: 2000,
-        autoPositionUpdate: true,
-        addPromptClass: 'relative_mode',
-        showOneMessage: false
-    });
 
     $('.select2').each(function (ind) {
         var $slct = $(this), cls = $slct.attr('data-select-class') || '';
