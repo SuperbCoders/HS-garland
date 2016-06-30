@@ -25,6 +25,7 @@ class Order
   as_enum :status, [:new, :confirmed, :declined], map: :string, source: :status
 
   before_create :set_defaults
+  after_create { OrderMailer.order(id).deliver }
   after_save :set_order_id
 
   def self.new_order(params)
