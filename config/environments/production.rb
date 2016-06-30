@@ -75,8 +75,7 @@ Rails.application.configure do
       user_name: Setting.general.email_user_name,
       password: Setting.general.email_password,
       authentication: Setting.general.email_authentication,
-      enable_starttls_auto: Setting.general.email_enable_starttls_auto,
-      tls: Setting.general.email_tls
+      enable_starttls_auto: Setting.general.email_enable_starttls_auto
   }
 
 
