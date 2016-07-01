@@ -21,7 +21,10 @@ class IndexController
     @scope.$watch('vm.garland_added', (m) -> vm.init_select2() )
     @scope.$watch('vm.image_added', (m) -> vm.init_work_slider())
     @scope.$watch('vm.order.delivery', (method) -> vm.calc_price() if method)
-
+    @scope.$watch('vm.order.rent', (m) ->
+      console.log vm.order
+      vm.calc_price() if m
+    )
     @init_landing()
 
     console.log "Index Selects : "+$('.select2').length
@@ -89,8 +92,11 @@ class IndexController
     order.total_price = 0
     order.guaranty_amount = 0
 
+    console.log 'calc_price start ------------------- '
     # Перечесляем заказанные гирлянды
     for garland in order.garlands
+      vm.log.info garland
+
       garland_total_price = 0
 
 
@@ -111,7 +117,7 @@ class IndexController
       order.total_price += garland_total_price * garland.count
 
       if order.rent
-        order.guaranty_amount += garland_total_price * garland.count
+        order.guaranty_amount += (garland.length.buy_price + (garland.length.lamps * garland.power.buy_price)) * garland.count
 
 
     # Если доставка по москве И общая_сумма_заказа менье чем в настройках
@@ -120,6 +126,7 @@ class IndexController
       # которую берем из настроек админки
       order.total_price += settings.general.delivery_moscow
 
+    console.log 'calc_price end ------------------- '
   add_garland: ->
     new_garland =
       count: 1

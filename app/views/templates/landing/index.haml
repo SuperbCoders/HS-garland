@@ -307,14 +307,19 @@
               .form_cell.form_cell_wide
                 %input.f_input.input_v2(class = "validate[required]" placeholder = "адрес доставки" ng-model = "vm.order.delivery_address")
 
-            .text_center(ng-show = "vm.order.rent")
+            .text_center(ng-show = "vm.order.rent && !vm.order.days")
+              .pledge_sum.buyMode
+                %span.clr_gray выберите срок аренды
+
+            .text_center(ng-show = "vm.order.rent && vm.order.days > 5")
               .pledge_sum.buyMode
                 %span.clr_gray сумма залога за гирлянды:
                 %span.clr_gold {{vm.order.guaranty_amount }} руб
               .rent_sum
-                %span.clr_gray Итого:
+                %span.clr_gray стоимость аренды:
                 %span.clr_gold {{ vm.order.total_price }} руб
               %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
+
             .text_center(ng-show = "!vm.order.rent")
               .rent_sum
                 %span.clr_gray Итого:
