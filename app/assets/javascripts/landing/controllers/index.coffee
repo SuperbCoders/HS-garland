@@ -17,7 +17,7 @@ class IndexController
     @fetch_gallery_images()
 
     # When delivery method changed, need recalc price
-    @scope.$watch('vm.order.days', (d) -> vm.calc_price( ))
+    @scope.$watch('vm.order.days', (d) -> vm.calc_price())
     @scope.$watch('vm.garland_added', (m) -> vm.init_select2() )
     @scope.$watch('vm.image_added', (m) -> vm.init_work_slider())
     @scope.$watch('vm.order.delivery', (method) -> vm.calc_price() if method)
@@ -213,11 +213,11 @@ class IndexController
     header = $('.header')
     dateRange = $('.dateRange')
 
-    datePickerParam =
+    vm.datePickerParam = datePickerParam =
       'parentEl': '.datePicker'
       'opens': 'embed'
       'showDropdowns': true
-      autoUpdateInput: true
+      'autoUpdateInput': true
       'applyClass': 'inp_hidden'
       'autoApply': true
       'cancelClass': 'inp_hidden'
@@ -295,7 +295,7 @@ class IndexController
       firstMonthSelect.trigger 'change'
       false
 
-    datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
+    vm.datePicker = datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
       $(this)[0].element.change()
       return
     )
@@ -313,11 +313,17 @@ class IndexController
     $('input#daterange').on('apply.daterangepicker',(ev, picker) ->
       vm.log.info "Range selected. From : "+picker.startDate
       console.log picker
-      vm.rootScope.$apply( ->
-        vm.order.start_date = picker.startDate
-        vm.order.end_date = picker.endDate
-        vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
-      )
+      days = picker.endDate.diff(picker.startDate, 'days') + 1
+
+      if days < 5
+        alert('Минимальный срок аренды 5 дней')
+        picker.setEndDate(null)
+      else
+        vm.rootScope.$apply( ->
+          vm.order.start_date = picker.startDate
+          vm.order.end_date = picker.endDate
+          vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
+        )
     )
 
     $(window).on 'scroll', ->
