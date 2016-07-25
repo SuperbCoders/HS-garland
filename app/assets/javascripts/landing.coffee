@@ -19,6 +19,7 @@
 #= require angular-local-storage
 #= require angular-bootstrap/ui-bootstrap-tpls
 #= require angular-ui-mask
+#= require includes/jquery.fancybox
 
 #= require ./landing/app
 #= require_tree ./landing

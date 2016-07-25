@@ -1,17 +1,25 @@
 .header
   .section_inner
+    .mob_menu_btn.mobMenuBtn
+      %span
+    .logo_holder
+      %span.logo
     %ul.main_menu
       %li.menu_item
         %a.menu_link(href = "/#/order_form" ng-click = "vm.gotoAnchor('order_form')")
-          %span.link_text Рассчитать стоимость
+          %span.link_text
+            %span.mob_hidden расчитать стоимость
+            %span.dt_hidden заказать
       %li.menu_item
         %a.menu_link(href = '' ui-sref = 'conditions')
           %span.link_text условия аренды
-      %li.menu_item.logo_holder
-        %span.logo
-      %li.menu_item
+      %li.menu_item.menu_item_r
+        -#%span.logo
+        -#%li.menu_item
         %a.menu_link(href = '' ui-sref = 'benefits')
           %span.link_text Наши преимущества
-      %li.menu_item
+      %li.menu_item.menu_item_r
         %a.menu_link(href = "tel:84951357531")
-          %span.link_text звоните: 8 495 135 75 31
+          %span.link_text
+            %span.mob_hidden звоните: 8 495 135 75 31
+            %span.dt_hidden адрес

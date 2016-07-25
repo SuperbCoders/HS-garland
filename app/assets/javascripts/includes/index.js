@@ -1,4 +1,5 @@
-var mainSlider, work_tabs, datePicker,
+var mainSlider, monthSlider, dimsSlider, tabSelect, work_tabs,
+    active_work_tab = 0, datePicker,
     months = [
         'Январь',
         'Февраль',
@@ -51,11 +52,12 @@ var mainSlider, work_tabs, datePicker,
 
 $(window).on('load', function () {
 
-    var mainSlider = new Swiper('.mainSlider', {
+    mainSlider = new Swiper('.mainSlider', {
         // Optional parameters
         loop: false,
         initialSlide: 0,
         setWrapperSize: true,
+        pagination: '#main_slider_pagination',
         // Navigation arrows
         nextButton: '#main_slider_next',
         prevButton: '#main_slider_prev',
@@ -64,8 +66,52 @@ $(window).on('load', function () {
         onInit: function (swp) {
             $(swp.slides).each(function (ind) {
                 var slide = $(this);
-                slide.backstretch(slide.find('img').hide().attr('src'));
+                console.log(slide);
+                slide.find('.slide_img').each(function (ind) {
+                    var pic = $(this);
+                    pic.backstretch(pic.find('img').hide().attr('src'));
+                });
             });
+        }
+    });
+    
+    monthSlider = new Swiper('.monthSlider', {
+        // Optional parameters
+        loop: false,
+        initialSlide: 0,
+        freeMode: true,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+        onInit: function (swp) {
+
+        }
+    });
+
+    dimsSlider = new Swiper('.dimsSlider', {
+        // Optional parameters
+        loop: false,
+        initialSlide: 0,
+        setWrapperSize: true,
+        pagination: '#dim_slider_pagination',
+        // Navigation arrows
+        //nextButton: '#main_slider_next',
+        //prevButton: '#main_slider_prev',
+        spaceBetween: 0,
+        slidesPerView: 4,
+        paginationClickable: true,
+        breakpoints: {
+            // when window width is <= 1000px
+            1000: {
+                slidesPerView: 3
+            },
+            // when window width is <= 720px
+            820: {
+                slidesPerView: 2
+            },
+            // when window width is <= 320px
+            640: {
+                slidesPerView: 1
+            }
         }
     });
 
@@ -97,34 +143,40 @@ function initWorkSliders() {
             prevButton: $this.nextAll('.slider_prev'),
             slidesPerView: 5,
             slidesPerGroup: 5,
+            slidesPerColumn: 2,
             spaceBetween: 23,
             pagination: $this.nextAll('.slider_pagination'),
             paginationClickable: true,
+            slidesPerColumnFill: 'row',
             // Responsive breakpoints
             breakpoints: {
-                // when window width is <= 320px
-                320: {
-                    slidesPerView: 1,
-                    slidesPerGroup: 1,
-                    //spaceBetweenSlides: 10
-                },
-                // when window width is <= 640px
-                640: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                    //spaceBetweenSlides: 15
-                },
-                // when window width is <= 840px
-                840: {
-                    slidesPerView: 3,
-                    slidesPerGroup: 3,
-                    //spaceBetweenSlides: 20
-                },
                 // when window width is <= 960px
-                960: {
+                1200: {
                     slidesPerView: 4,
                     slidesPerGroup: 4,
+                    slidesPerColumn: 2
                     //spaceBetweenSlides: 23
+                },
+                // when window width is <= 840px
+                1000: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 3,
+                    slidesPerColumn: 2
+                    //spaceBetweenSlides: 20
+                },
+                // when window width is <= 640px
+                840: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                    slidesPerColumn: 1
+                    //spaceBetweenSlides: 15
+                },
+                // when window width is <= 320px
+                640: {
+                    slidesPerView: 1,
+                    slidesPerGroup: 1,
+                    slidesPerColumn: 1
+                    //spaceBetweenSlides: 10
                 }
             },
             onInit: function (swp) {
@@ -177,6 +229,8 @@ $(window).resize(function () {
 
 $(function ($) {
 
+    tabSelect = $('.tabSelect');
+
     var dateRange = $('.dateRange');
 
     var tabBlock = $('.tabBlock'),
@@ -192,6 +246,9 @@ $(function ($) {
 
                 $(window).trigger('resize');
                 //$('.priceSelect').val('#' + ui.newPanel.attr('id')).trigger('change');
+
+                active_work_tab = ui.newPanel.index();
+                $('.tabSelect').val('#' + ui.newPanel.attr('id')).trigger('change');
 
             }
         });
@@ -276,7 +333,7 @@ $(function ($) {
         $slct.select2({
             minimumResultsForSearch: Infinity,
             width: '100%',
-            containerCssClass: cls,
+            //containerCssClass: cls,
             adaptDropdownCssClass: function (c) {
                 return cls;
             },
@@ -300,7 +357,12 @@ $(function ($) {
         });
     });
 
+    tabSelect.find('option').eq(active_work_tab).attr('selected', 'selected');
+
     $('body')
+        .delegate('.tabSelect', 'change', function () {
+            $('a[href=' + $(this).val() + ']').click();
+        })
         .delegate('.checkDependence', 'change', function () {
             var firedEl = $(this), target = $(firedEl.attr('data-dependence'));
 

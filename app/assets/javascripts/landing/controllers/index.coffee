@@ -16,6 +16,8 @@ class IndexController
     @add_garland()
     @fetch_gallery_images()
 
+    vm.active_work_tab = 0
+
     # When delivery method changed, need recalc price
     @scope.$watch('vm.order.days', (d) -> vm.calc_price())
     @scope.$watch('vm.garland_added', (m) -> vm.init_select2() )
@@ -26,6 +28,13 @@ class IndexController
       vm.calc_price() if m
     )
     @init_landing()
+
+    @initScriptModal()
+#    @initWorkSliders2()
+
+
+    @rootScope.$on '$stateChangeStart', () ->
+      $('html').removeClass 'open_menu'
 
     console.log "Index Selects : "+$('.select2').length
 
@@ -60,6 +69,7 @@ class IndexController
       when 'wedding'
         vm.tags = {wedding: true}
     vm.init_work_slider()
+    return false
 
   open_fancybox: (image_id) ->
     $("##{image_id}").click()
@@ -196,24 +206,100 @@ class IndexController
         prevButton: $this.nextAll('.slider_prev')
         slidesPerView: 5
         slidesPerGroup: 5
+        slidesPerColumn: 2
         spaceBetween: 23
         pagination: $this.nextAll('.slider_pagination')
         paginationClickable: true
+        slidesPerColumnFill: 'row'
         breakpoints:
-          320:
-            slidesPerView: 1
-            slidesPerGroup: 1
-          640:
-            slidesPerView: 2
-            slidesPerGroup: 2
-          840:
+          1200:
+            slidesPerView: 4
+            slidesPerGroup: 4
+            slidesPerColumn: 2
+          1000:
             slidesPerView: 3
             slidesPerGroup: 3
-          960:
-            slidesPerView: 4
-            slidesPerGroup: 4)
+            slidesPerColumn: 2
+          840:
+            slidesPerView: 2
+            slidesPerGroup: 2
+            slidesPerColumn: 1
+          640:
+            slidesPerView: 1
+            slidesPerGroup: 1
+            slidesPerColumn: 1
+        onInit: (swp) ->
+          $(swp.slides).find('.fancyboxLink').fancybox
+            openEffect: 'none'
+            closeEffect: 'none'
+            padding: 0
+            closeBtn: true
+            parent: '.wrapper'
+            tpl: wrap: '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-counter"></div><div class="fancybox-inner"></div></div></div></div>'
+            helpers:
+              title: type: 'inside'
+              overlay: locked: false
+            afterLoad: (e) ->
+              counter = $(@wrap).find('.fancybox-counter')
+              title = @title
+              counter_html = $('<div />').append('<div class="fancybox-counter-title" >' + (@element.attr('data-group-name') or '') + '</div>').append('<div class="fancybox-counter-val">' + @index + 1 + ' ИЗ ' + @group.length + '</div>')
+              if title
+                @title = '<div class="image_title">' + (title.split('|')[0] or '') + '</div> <div class="image_location">' + (title.split('|')[1] or '') + '</div>'
+              counter.html counter_html
+              return
+          return
+      )
       sl.update()
       return
+
+  initScriptModal: ->
+    $html = $('html')
+    header = $('.header')
+    dateRange = $('.dateRange')
+    mobMenu = $('.mobMenuBtn')
+    doc = $(document)
+    browserWindow = $(window)
+    browserWindow.on 'scroll', ->
+      header.toggleClass 'fixed_header', doc.scrollTop() >= 90
+      return
+    mobMenu.on 'click', ->
+      $html.toggleClass 'open_menu'
+      false
+
+
+
+
+    $(window).stellar
+      hideDistantElements: false
+      responsive: true
+      horizontalScrolling: false
+      verticalScrolling: true
+    $('.validateMe').validationEngine(
+      scroll: false
+      showPrompts: true
+      showArrow: false
+      addSuccessCssClassToField: 'success'
+      addFailureCssClassToField: 'error'
+      parentFormClass: '.orderForm'
+      parentFieldClass: '.formCell'
+      promptPosition: 'centerRight'
+      autoHidePrompt: true
+      autoHideDelay: 200000
+      autoPositionUpdate: true
+      addPromptClass: 'relative_mode'
+      showOneMessage: false).find('*[class*=validate]').on 'blur keyup', ->
+    form = $(this).closest('.validateMe')
+    notDone = false
+    form.find('*[class*=validate]').each ->
+      if !$(this).hasClass('success')
+        notDone = true
+      return
+    $('#actionBtn').attr 'disabled', notDone or null
+    return
+    return
+
+
+
 
   init_landing: ->
     vm = @
@@ -333,7 +419,123 @@ class IndexController
         )
     )
 
-    $(window).on 'scroll', ->
+  initWorkSliders2: ->
+    `var work_tabs`
+
+    formatResult = (item) ->
+      if !item.id
+  # return `text` for optgroup
+        return item.text
+      # return item template
+      #console.log(item);
+      '<i>' + item.text + '</i>'
+
+    formatSelection = (item) ->
+  # return selection template
+      console.log item
+      '<b>' + item.text + '</b>'
+
+    tabSelect = $('.tabSelect')
+    dateRange = $('.dateRange')
+    tabBlock = $('.tabBlock')
+    work_tabs = tabBlock.tabs(
+      active: 0
+      tabContext: tabBlock.data('tab-context')
+      activate: (e, ui) ->
+        tab = ui.newTab
+        tab.parent().attr 'data-active-tab', tab.index()
+        initWorkSliders()
+        $(window).trigger 'resize'
+        #$('.priceSelect').val('#' + ui.newPanel.attr('id')).trigger('change');
+        vm.active_work_tab = ui.newPanel.index()
+        $('.tabSelect').val('#' + ui.newPanel.attr('id')).trigger 'change'
+        return
+    )
+#    datePicker = $('input#daterange').daterangepicker(datePickerParam)
+#    $('.monthBtn').on 'click', ->
+#      firedEl = $(this).parent()
+#      ind = 1 * firedEl.attr('data-month')
+#      dateMonth = $('.dateMonth')
+#      firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect')
+#      secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect')
+#      firedEl.siblings().removeClass 'active'
+#      firstMonthSelect[0].selectedIndex = ind
+#      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
+#      yearSelect[0].selectedIndex = 1 * (moment(datePickerParam.minDate).month() > ind)
+#      yearSelect.trigger 'change'
+#      if firedEl.index() == 11
+#        firedEl.prev().find('.monthBtn').click()
+#      else
+#        dateMonth.filter((e, r) ->
+#          $(r).attr('data-month') == ind
+#        ).addClass('active').next().addClass 'active'
+#      firstMonthSelect.trigger 'change'
+#      false
+#    datePicker.data('daterangepicker').parentEl.find('.calendar .daterangepicker_input input').on 'updated.daterangepicker', ->
+#      drp = datePicker.data('daterangepicker')
+#      if drp.endDate and drp.startDate
+#        dateRange.text plural(drp.endDate.diff(drp.startDate, 'days') + 1, 'день', 'дня', 'дней')
+#      else if drp.startDate
+#        dateRange.text plural(drp.startDate.diff(drp.startDate, 'days') + 1, 'день', 'дня', 'дней')
+#      return
+
+
+    #datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each(function (ind) {
+    #    $('.dateRangeYear').append($('<option>' + this.innerHTML + '</option>'));
+    #});
+    #$('.dateRangeYear').on ('change', function () {
+    #    var yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect');
+    #
+    #    yearSelect[0].selectedIndex = this.selectedIndex;
+    #
+    #    yearSelect.trigger('change');
+    #});
+
+
+#    updateMonths()
+    $('.select2').each (ind) ->
+      $slct = $(this)
+      cls = $slct.attr('data-select-class') or ''
+      $slct.select2
+        minimumResultsForSearch: Infinity
+        width: '100%'
+        adaptDropdownCssClass: (c) ->
+          cls
+        templateResult: (d, c) ->
+  #console.log(d, c);
+          extraInfo = $(d.element).attr('data-nowaterproof') or false
+          noWaterproof = $('.checkDependence2').prop('checked')
+          ret = $('<div>' + $(d.element).text() + '</div>')
+          if extraInfo and noWaterproof
+            $(c).addClass 'no_rain_defence'
+            ret.append $('<div class="extra_info">' + extraInfo + '</div>')
+          ret
+      return
+    tabSelect.find('option').eq(this.active_work_tab).attr 'selected', 'selected'
+    $('body').delegate('.tabSelect', 'change', ->
+      $('a[href=' + $(this).val() + ']').click()
+      return
+    ).delegate('.checkDependence', 'change', ->
+      firedEl = $(this)
+      target = $(firedEl.attr('data-dependence'))
+      target.each (ind) ->
+        $this = $(this)
+        if $this.hasClass('modeInvert')
+          $this.toggle !firedEl.prop('checked')
+        else
+          $this.toggle firedEl.prop('checked')
+        return
+      return
+    ).delegate '.checkDependence2', 'change', ->
+      firedEl = $(this)
+      target = $(firedEl.attr('data-dependence'))
+      target.toggle firedEl.prop('checked')
+      return
+    return
+
+
+
+  $(window).on 'scroll', ->
       $('.header').toggleClass 'fixed_header', $(document).scrollTop() >= 90
       return
 

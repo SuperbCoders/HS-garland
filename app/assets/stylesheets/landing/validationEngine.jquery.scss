@@ -50,8 +50,8 @@
     text-align: center;
 
     .input_w & {
-      top: 100% !important;
-      margin-top: 0 !important;
+      //top: 100% !important;
+      //margin-top: 0 !important;
     }
 
     .formErrorContent p {
@@ -261,12 +261,14 @@ body.rtl .formError .formErrorArrow {
   &.relative_mode {
     .formErrorContent {
       background: none;
-      color: #ffb2b2;
+      color: #c30000;
       padding: 0;
       font-size: 11px;
+      text-align: left;
 
       p {
-        white-space: normal;
+        //white-space: normal;
+        overflow: visible;
       }
     }
   }
@@ -378,11 +380,6 @@ body.rtl .formError .formErrorArrow {
     display: block;
     color: #ffb2b2;
   }
-}
-
-.error input {
-  box-shadow: 0 0 1em red !important;
-  border: 2px solid red !important;
 }
 
 @media only screen and (max-width: 720px) {
