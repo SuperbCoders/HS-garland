@@ -7,8 +7,10 @@
         #main_slider_pagination.swiper-button-pagination.dt_hidden
     .swiper-wrapper.clearfix
       - SliderImage.all.each do |s_image|
-        .swiper-slide
+        .slide_img.swiper-slide.mob_hidden
           %img{:src => "/uploads/#{s_image.file}"}/
+      .slide_img.swiper-slide.dt_hidden.imgBS
+        %img{:src => "/i/top_banner_mob.jpg"}/
     .slide_content
       .section_inner.text_center
         .slide_i_block
@@ -111,7 +113,7 @@
                     .garland_dim_caption И ещё
                     .garland_dim_img
                       %a.garland_add_mode(href = '' ui-sref='benefits')
-                    %p Еще несколько причин, почему наши гирлянды самые лучшие
+                    %p Еще несколько причин, почему наши гирлянды самые крутые
 
           .garland_works
             .section_inner
@@ -122,11 +124,11 @@
               .tab_select
                 .select_v3.dt_hidden
                   %select.tabSelect.select2{"data-select-class" => "tab_select_emul"}
-                    %option{:value => "#filter_tab_1"} все фото ({{vm.gallery.all - 3}})
-                    %option{:value => "#filter_tab_2"} праздники ({{vm.gallery.holidays}})
-                    %option{:value => "#filter_tab_3"} ярмарки и интерьеры ({{vm.gallery.iterior}})
-                    %option{:value => "#filter_tab_4"} реклама и кино ({{vm.gallery.cinema}})
-                    %option{:value => "#filter_tab_5"} свадьбы ({{vm.gallery.wedding}})
+                    %option{:value => "all"} все фото ({{vm.gallery.all - 3}})
+                    %option{:value => "holidays"} праздники ({{vm.gallery.holidays}})
+                    %option{:value => "iterior"} ярмарки и интерьеры ({{vm.gallery.iterior}})
+                    %option{:value => "cinema"} реклама и кино ({{vm.gallery.cinema}})
+                    %option{:value => "wedding"} свадьбы ({{vm.gallery.wedding}})
               .tab_controls.mob_hidden
                 %ul#works_filter.filter_list
                   %li.filter_item(ng-class = "{'ui-state-active': vm.tags['all']}")
@@ -265,8 +267,9 @@
                           %span.clr_gold
                             самовывоз
                             %br/
-                          %span.clr_gray (посмотреть на карте)
+                          -#%span.clr_gray (посмотреть на карте)
                           %p
+                            %a.radio_tip_link.clr_gray{:href => "https://yandex.ua/maps/10758/himki/?source=wizbiz_new_map_single&ncrnd=2233&text=%D0%BE%D1%81%D0%BA%20%D0%B1%D1%83%D0%BC%D0%B5%D1%80%D0%B0%D0%BD%D0%B3&sll=37.343002%2C55.864621&sspn=0.000180%2C0.000101&sctx=CAAAAAEAHThnRGnPQkCNl24Sg%2BBLQJP8iF%2BxhuQ%2Faw2l9iLa3T8CAAAAAQIBAAAAAAAAAAG0Q3myvn9qxdUAAAABAACAPwAAAAAAAAAA&ol=psearch&oid=62520244", :target => "_blank"} (посмотреть на карте)
 
                 .order_opt_row
                   .order_opt_cell  
@@ -296,14 +299,23 @@
                 .order_settings_cell
                   .setting_unit
                     %span.clr_gray длина гирлянды:
-                    %span
+                    %span.select_v2
                       %select.select2(ng-change = "vm.calc_price()" ng-model = "garland.length" ng-options = "price.name for price in settings.garland_prices" data-select-class = "select_v2")
 
                 / Количество герлянд
                 .order_settings_cell
                   .setting_unit
                     %span.clr_gray количество гирлянд:
-                    %span.settings_counter
+                    %span.dt_hidden
+                      %span.select_v2
+                        %select.select2{"data-select-class" => "select_v2"}
+                          %option 1
+                          %option 2
+                          %option 3
+                          %option 4
+                          %option 5
+                          %option 6
+                    %span.mob_hidden.settings_counter
                       %span.settings_btn.btn_down(ng-click = "vm.decr(garland)")
                       %input.f_input.input_v1(ng-model = "garland.count")/
                       %span.settings_btn.btn_up(ng-click = "vm.incr(garland)")
@@ -312,7 +324,7 @@
                 .order_settings_cell
                   .setting_unit
                     %span.clr_gray мощность ламп:
-                    %span
+                    %span.select_v2
                       %select.select2(ng-change = "vm.calc_price()" ng-model = "garland.power" ng-options = "lamp.name for lamp in settings.lamp_prices" data-select-class = "select_v2")
 
               / Add new garland button

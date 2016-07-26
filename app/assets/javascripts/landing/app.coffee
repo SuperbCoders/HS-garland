@@ -21,6 +21,7 @@
 
   .state 'conditions',
     url: '/conditions'
+    controller: 'OtherController'
     templateUrl: '/templates/landing/conditions'
 
   .state 'thanks',
@@ -29,6 +30,7 @@
 
   .state 'benefits',
     url: '/benefits'
+    controller: 'OtherController'
     templateUrl: '/templates/landing/benefits'
 
   $urlRouterProvider.otherwise '/'

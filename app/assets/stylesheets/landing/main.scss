@@ -2131,7 +2131,7 @@ body {
     letter-spacing: 1.5px;
     font: 23px/1 $BebasNeueRegular;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 
     &:active {
       @include transform_translate(0, 2px);
@@ -2173,7 +2173,7 @@ body {
     letter-spacing: 1.5px;
     font: 23px/1 $BebasNeueRegular;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 
     &:active {
       @include transform_translate(0, 2px);

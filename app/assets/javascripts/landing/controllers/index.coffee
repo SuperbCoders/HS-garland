@@ -30,7 +30,7 @@ class IndexController
     @init_landing()
 
     @initScriptModal()
-#    @initWorkSliders2()
+    @initWorkSliders2()
 
 
     @rootScope.$on '$stateChangeStart', () ->
@@ -68,6 +68,8 @@ class IndexController
 
       when 'wedding'
         vm.tags = {wedding: true}
+
+    vm.scope.$apply()
     vm.init_work_slider()
     return false
 
@@ -420,7 +422,9 @@ class IndexController
     )
 
   initWorkSliders2: ->
-    `var work_tabs`
+    work_tabs = {}
+
+    controller = this
 
     formatResult = (item) ->
       if !item.id
@@ -513,7 +517,9 @@ class IndexController
       return
     tabSelect.find('option').eq(this.active_work_tab).attr 'selected', 'selected'
     $('body').delegate('.tabSelect', 'change', ->
-      $('a[href=' + $(this).val() + ']').click()
+#      $('a[href=' + $(this).val() + ']').click()
+      controller.filter($(this).val())
+      controller.scope.$apply()
       return
     ).delegate('.checkDependence', 'change', ->
       firedEl = $(this)
