@@ -95,6 +95,12 @@ class IndexController
         vm.gallery['cinema'] += 1 if image.tags.cinema
         vm.gallery['wedding'] += 1 if image.tags.wedding
       vm.init_work_slider()
+      # select2 не ангуляровский приходиться так извращаться чтобы поменять ему текст      
+      $("select[data-select-class='tab_select_emul']")
+        .next()
+        .find('.select2-selection__rendered')
+        .html('все фото ('+vm.gallery['all']+')')
+        .title('все фото ('+vm.gallery['all']+')')
     )
 
   calc_price: ->
@@ -244,7 +250,7 @@ class IndexController
             afterLoad: (e) ->
               counter = $(@wrap).find('.fancybox-counter')
               title = @title
-              counter_html = $('<div />').append('<div class="fancybox-counter-title" >' + (@element.attr('data-group-name') or '') + '</div>').append('<div class="fancybox-counter-val">' + @index + 1 + ' ИЗ ' + @group.length + '</div>')
+              counter_html = $('<div />').append('<div class="fancybox-counter-title" >' + (@element.attr('data-group-name') or '') + '</div>').append('<div class="fancybox-counter-val">' + (@index + 1) + ' ИЗ ' + @group.length + '</div>')
               if title
                 @title = '<div class="image_title">' + (title.split('|')[0] or '') + '</div> <div class="image_location">' + (title.split('|')[1] or '') + '</div>'
               counter.html counter_html
