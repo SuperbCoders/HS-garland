@@ -7,7 +7,7 @@ class IndexController
       all: true
 
     vm.order =
-      rent: false
+      rent: true
       delivery: 'moscow'
       total_price: 0
       garlands: []
@@ -69,7 +69,8 @@ class IndexController
       when 'wedding'
         vm.tags = {wedding: true}
 
-    vm.scope.$apply()
+#    чтобы в мобильной успел обновиться при селекте
+    vm.scope.$apply() if !vm.scope.$$phase
     vm.init_work_slider()
     return false
 
@@ -100,7 +101,8 @@ class IndexController
         .next()
         .find('.select2-selection__rendered')
         .html('все фото ('+vm.gallery['all']+')')
-        .title('все фото ('+vm.gallery['all']+')')
+        .attr('title', 'все фото ('+vm.gallery['all']+')')
+      return
     )
 
   calc_price: ->
@@ -202,6 +204,7 @@ class IndexController
           ret
       return
 
+#      инициализация большого слайдера с галереей
   init_work_slider: ->
     console.log 'init_work_slider()'
     $('.workSlider').each ->
@@ -277,38 +280,6 @@ class IndexController
 
 
 
-    $(window).stellar
-      hideDistantElements: false
-      responsive: true
-      horizontalScrolling: false
-      verticalScrolling: true
-    $('.validateMe').validationEngine(
-      scroll: false
-      showPrompts: true
-      showArrow: false
-      addSuccessCssClassToField: 'success'
-      addFailureCssClassToField: 'error'
-      parentFormClass: '.orderForm'
-      parentFieldClass: '.formCell'
-      promptPosition: 'centerRight'
-      autoHidePrompt: true
-      autoHideDelay: 200000
-      autoPositionUpdate: true
-      addPromptClass: 'relative_mode'
-      showOneMessage: false).find('*[class*=validate]').on 'blur keyup', ->
-    form = $(this).closest('.validateMe')
-    notDone = false
-    form.find('*[class*=validate]').each ->
-      if !$(this).hasClass('success')
-        notDone = true
-      return
-    $('#actionBtn').attr 'disabled', notDone or null
-    return
-    return
-
-
-
-
   init_landing: ->
     vm = @
     header = $('.header')
@@ -352,6 +323,32 @@ class IndexController
           return
         return
     )
+
+
+    monthSlider = new Swiper('.monthSlider',
+      loop: false
+      initialSlide: 0
+      freeMode: true
+      slidesPerView: 'auto'
+      spaceBetween: 0
+      onInit: (swp) ->
+    )
+    
+    dimsSlider = new Swiper('.dimsSlider',
+      loop: false
+      initialSlide: 0
+      setWrapperSize: true
+      pagination: '#dim_slider_pagination'
+      spaceBetween: 0
+      slidesPerView: 4
+      paginationClickable: true
+      breakpoints:
+        1000: slidesPerView: 3
+        820: slidesPerView: 2
+        640: slidesPerView: 1)
+
+
+
     mainSlider.update()
 
     @init_work_slider()
@@ -378,28 +375,52 @@ class IndexController
 
     @init_select2()
 
-
-    $('.monthBtn').on 'click', ->
-      console.log 'month click'
-      firedEl = $(this).parent()
-      dateMonth = $('.dateMonth')
-      ind = firedEl.index()
-      firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect')
-      secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect')
-      firedEl.siblings().removeClass 'active'
-      firstMonthSelect[0].selectedIndex = ind
-      if ind == 11
-        dateMonth.eq(ind).addClass 'active'
-        dateMonth.eq(0).addClass 'active'
-      else
-        dateMonth.eq(ind).addClass('active').next().addClass 'active'
-      firstMonthSelect.trigger 'change'
-      false
-
     vm.datePicker = datePicker = $('input#daterange').daterangepicker(datePickerParam, (start, end, label) ->
       $(this)[0].element.change()
       return
     )
+
+    months = [
+      'Январь',
+      'Февраль',
+      'Март',
+      'Апрель',
+      'Май',
+      'Июнь',
+      'Июль',
+      'Август',
+      'Сентябрь',
+      'Октябрь',
+      'Ноябрь',
+      'Декабрь'
+    ]
+
+
+    $('.monthBtn').on 'click', ->
+      firedEl = $(this).parent()
+      ind = 1 * firedEl.attr('data-month')
+      dateMonth = $('.dateMonth')
+      firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect')
+      secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect')
+      firedEl.siblings().removeClass 'active'
+      firstMonthSelect[0].selectedIndex = ind
+      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
+      yearSelect[0].selectedIndex = 1 * (moment(datePickerParam.minDate).month() > ind)
+      yearSelect.trigger 'change'
+      if firedEl.index() == 11
+        firedEl.prev().find('.monthBtn').click()
+      else
+        dateMonth.filter((e, r) ->
+          $(r).attr('data-month') == ind.toString()
+        ).addClass('active').next().addClass 'active'
+      firstMonthSelect.trigger 'change'
+      false
+
+    $('.dateMonth').each((ind) ->
+      mm = moment(datePickerParam.minDate).add(ind, 'month').month()
+      $(this).attr('data-month', mm).find('.monthBtn').text months[mm]
+      return
+    ).first().find('.monthBtn').click()
 
     datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each (ind) ->
       $('.dateRangeYear').append $('<option>' + @innerHTML + '</option>')
@@ -418,13 +439,13 @@ class IndexController
 
       if days < 5
         alert('Минимальный срок аренды 5 дней')
-        picker.setEndDate(null)
-      else
-        vm.rootScope.$apply( ->
-          vm.order.start_date = picker.startDate
-          vm.order.end_date = picker.endDate
-          vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
-        )
+        picker.setEndDate(picker.startDate)
+        picker.endDate.add(4, 'days')
+      vm.rootScope.$apply( ->
+        vm.order.start_date = picker.startDate
+        vm.order.end_date = picker.endDate
+        vm.order.days = picker.endDate.diff(picker.startDate, 'days') + 1
+      )
     )
 
   initWorkSliders2: ->
@@ -461,48 +482,7 @@ class IndexController
         $('.tabSelect').val('#' + ui.newPanel.attr('id')).trigger 'change'
         return
     )
-#    datePicker = $('input#daterange').daterangepicker(datePickerParam)
-#    $('.monthBtn').on 'click', ->
-#      firedEl = $(this).parent()
-#      ind = 1 * firedEl.attr('data-month')
-#      dateMonth = $('.dateMonth')
-#      firstMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .monthselect')
-#      secondMonthSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.right .month .monthselect')
-#      firedEl.siblings().removeClass 'active'
-#      firstMonthSelect[0].selectedIndex = ind
-#      yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
-#      yearSelect[0].selectedIndex = 1 * (moment(datePickerParam.minDate).month() > ind)
-#      yearSelect.trigger 'change'
-#      if firedEl.index() == 11
-#        firedEl.prev().find('.monthBtn').click()
-#      else
-#        dateMonth.filter((e, r) ->
-#          $(r).attr('data-month') == ind
-#        ).addClass('active').next().addClass 'active'
-#      firstMonthSelect.trigger 'change'
-#      false
-#    datePicker.data('daterangepicker').parentEl.find('.calendar .daterangepicker_input input').on 'updated.daterangepicker', ->
-#      drp = datePicker.data('daterangepicker')
-#      if drp.endDate and drp.startDate
-#        dateRange.text plural(drp.endDate.diff(drp.startDate, 'days') + 1, 'день', 'дня', 'дней')
-#      else if drp.startDate
-#        dateRange.text plural(drp.startDate.diff(drp.startDate, 'days') + 1, 'день', 'дня', 'дней')
-#      return
 
-
-    #datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect option').each(function (ind) {
-    #    $('.dateRangeYear').append($('<option>' + this.innerHTML + '</option>'));
-    #});
-    #$('.dateRangeYear').on ('change', function () {
-    #    var yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect');
-    #
-    #    yearSelect[0].selectedIndex = this.selectedIndex;
-    #
-    #    yearSelect.trigger('change');
-    #});
-
-
-#    updateMonths()
     $('.select2').each (ind) ->
       $slct = $(this)
       cls = $slct.attr('data-select-class') or ''
@@ -523,9 +503,7 @@ class IndexController
       return
     tabSelect.find('option').eq(this.active_work_tab).attr 'selected', 'selected'
     $('body').delegate('.tabSelect', 'change', ->
-#      $('a[href=' + $(this).val() + ']').click()
       controller.filter($(this).val())
-      controller.scope.$apply()
       return
     ).delegate('.checkDependence', 'change', ->
       firedEl = $(this)
