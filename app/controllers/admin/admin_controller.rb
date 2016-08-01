@@ -15,6 +15,7 @@ class Admin::AdminController < Admin::BaseController
   def general
     if request.post?
       Setting.general.update_attributes(setting_params)
+      Setting.general.attach(:contract, params[:contract] ) unless params[:contract].nil?
     end
     render json: Setting.general.to_json
   end

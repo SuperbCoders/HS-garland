@@ -2,6 +2,8 @@ class Setting
   include Mongoid::Document
   include Mongoid::Timestamps::Short
 
+  include Attachable
+
   field :open_setting, type: Boolean, default: true
   field :open_delivery_moscow, type: Integer, default: 500
   field :open_delivery_free_limit, type: Integer, default: 6000
@@ -15,6 +17,7 @@ class Setting
   field :email_authentication
   field :email_enable_starttls_auto, type: Boolean
   field :email_tls, type: Boolean
+  field :contract
 
   validates_uniqueness_of :open_setting
 

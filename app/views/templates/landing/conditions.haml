@@ -8,7 +8,7 @@
           .section_inner
             .any_questions аренда
             .why_rockstars условия аренды гирлянд
-  %a.btn_v3.order_now_btn.white_btn(href = "/uploads/HS_Rent_05.pdf") скачать договор (pdf)
+  %a.btn_v3.order_now_btn.white_btn(href =  "/uploads/{{settings.contract}}") скачать договор ({{settings.contract_extension}})
 .base
   = render 'templates/landing/shared/menu'
 

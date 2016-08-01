@@ -39,6 +39,9 @@
 
 @application.run ['$rootScope', '$state', ($rootScope, $state) ->
   $rootScope.settings = JSON.parse($("meta[name='settings']").attr('content'))
+  $rootScope.settings.contract = if $rootScope.settings.contract then $rootScope.settings.contract else 'HS_Rent_05.pdf'
+  $rootScope.settings.contract_extension = $rootScope.settings.contract.split('.').pop()
+
   $rootScope.g =
     state: $state
 

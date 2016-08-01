@@ -31,6 +31,16 @@
               .input-group
                 .input-group-addon ₽
                 %input.form-control(ng-model = "vm.settings.open_guaranty_amount")
+    .row
+      .col-xs-12
+        %form.form-horizontal
+          .form-group
+            .col-sm-3
+              %label Договор аренды
+
+            .col-sm-8
+              .input-group
+                %input(type="file" ng-model="vm.settings.contract" base-sixty-four-input accept="application/pdf, application/msword")
 
     .row
       .col-xs-12
