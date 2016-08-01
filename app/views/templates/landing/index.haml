@@ -352,7 +352,7 @@
                 .pledge_sum.buyMode
                   %span.clr_gray выберите срок аренды
 
-              .text_center(ng-show = "vm.order.rent && vm.order.days > 5")
+              .text_center(ng-show = "vm.order.rent && vm.order.days >= 5")
                 .pledge_sum.buyMode
                   %span.clr_gray сумма залога за гирлянды:
                   %span.clr_gold {{vm.order.guaranty_amount }} руб

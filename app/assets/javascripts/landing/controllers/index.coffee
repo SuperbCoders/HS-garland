@@ -438,7 +438,7 @@ class IndexController
       days = picker.endDate.diff(picker.startDate, 'days') + 1
 
       if days < 5
-        alert('Минимальный срок аренды 5 дней')
+#        alert('Минимальный срок аренды 5 дней')
         picker.setEndDate(picker.startDate)
         picker.endDate.add(4, 'days')
       vm.rootScope.$apply( ->
