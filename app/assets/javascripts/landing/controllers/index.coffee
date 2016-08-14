@@ -17,6 +17,17 @@ class IndexController
     @fetch_gallery_images()
 
     vm.active_work_tab = 0
+    vm.groupName = 'все фото'
+
+#    валидация ватчеры
+    vm.isValid = false
+    @scope.$watch('vm.order.name', (d) -> vm.validate())
+    @scope.$watch('vm.order.email', (d) -> vm.validate())
+    @scope.$watch('vm.order.phone', (d) -> vm.validate())
+    @scope.$watch('vm.order.start_date', (d) -> vm.validate())
+    @scope.$watch('vm.order.end_date', (d) -> vm.validate())
+    @scope.$watch('vm.order.delivery_address', (d) -> vm.validate())
+    @scope.$watch('vm.order.delivery', (d) -> vm.validate())
 
     # When delivery method changed, need recalc price
     @scope.$watch('vm.order.days', (d) -> vm.calc_price())
@@ -25,12 +36,18 @@ class IndexController
     @scope.$watch('vm.order.delivery', (method) -> vm.calc_price() if method)
     @scope.$watch('vm.order.rent', (m) ->
       console.log vm.order
-      vm.calc_price() if m
+      vm.calc_price()
     )
     @init_landing()
 
     @initScriptModal()
     @initWorkSliders2()
+
+    setTimeout ( ->
+      vm.anchorScroll()
+      return
+    ), 200
+
 
 
     @rootScope.$on '$stateChangeStart', () ->
@@ -39,39 +56,68 @@ class IndexController
     console.log "Index Selects : "+$('.select2').length
 
   gotoAnchor: (x) ->
-    vm = @
-    newHash = x
-    if vm.location.hash() != newHash
-      # set the $location.hash to `newHash` and
-      # $anchorScroll will automatically scroll to it
-      vm.location.hash x
-    else
-      # call $anchorScroll() explicitly,
-      # since $location.hash hasn't changed
-      vm.anchorScroll()
+    #костыль так как код который ниже не работал. код с сайта ангуляра
+    elm = document.getElementById(x)
+    window.scrollBy(0, elm.getBoundingClientRect().top)
+    $('html').removeClass 'open_menu'
+#    vm = @
+#    newHash = x
+#    if vm.location.hash() != newHash
+#      # set the $location.hash to `newHash` and
+#      # $anchorScroll will automatically scroll to it
+#      vm.location.hash x
+#    else
+#      # call $anchorScroll() explicitly,
+#      # since $location.hash hasn't changed
+#      vm.anchorScroll()
     return
 
+  getTitleImg: (image) ->
+    vm = @
+    date = new Date(image.date)
+
+    if image.date
+      dataStr = vm.months[date.getMonth()]+' '+date.getFullYear()
+    else
+      dataStr = ''
+
+    if image.description
+      des = image.description
+    else
+      des = ''
+
+    return dataStr+' | '+des
+    
   filter: (type) ->
     vm = @
     switch type
       when 'all'
         vm.tags = {all: true}
+        vm.groupName = 'все фото'
 
       when 'holidays'
         vm.tags = {holidays: true}
+        vm.groupName = 'праздники'
 
       when 'iterior'
         vm.tags = {iterior: true}
+        vm.groupName = 'ярмарки и интерьеры'
 
       when 'cinema'
         vm.tags = {cinema: true}
+        vm.groupName = 'реклама и кино'
 
       when 'wedding'
         vm.tags = {wedding: true}
+        vm.groupName = 'свадьбы'
 
 #    чтобы в мобильной успел обновиться при селекте
     vm.scope.$apply() if !vm.scope.$$phase
-    vm.init_work_slider()
+#    vm.init_work_slider()
+    setTimeout ( ->
+      vm.init_work_slider()
+      return
+    ), 100
     return false
 
   open_fancybox: (image_id) ->
@@ -95,7 +141,11 @@ class IndexController
         vm.gallery['iterior'] += 1 if image.tags.iterior
         vm.gallery['cinema'] += 1 if image.tags.cinema
         vm.gallery['wedding'] += 1 if image.tags.wedding
-      vm.init_work_slider()
+#      vm.init_work_slider()
+      setTimeout ( ->
+        vm.init_work_slider()
+        return
+      ), 100
       # select2 не ангуляровский приходиться так извращаться чтобы поменять ему текст      
       $("select[data-select-class='tab_select_emul']")
         .next()
@@ -104,6 +154,31 @@ class IndexController
         .attr('title', 'все фото ('+vm.gallery['all']+')')
       return
     )
+
+
+  validate: ->
+    vm = @
+    
+    res = vm.order.name and vm.order.email and vm.order.phone
+    
+    if vm.order.rent
+      res = res and vm.order.start_date and vm.order.end_date
+      
+    re = /\S+@\S+\.\S+/
+    res = res and re.test(vm.order.email)
+
+    if vm.order.delivery != 'pickup'
+      res = res and vm.order.delivery_address
+
+    if res
+      $('#bay_btn').removeClass('white_btn_gold').removeClass('gold_btn_white').addClass('gold_btn_white')
+      $('#rent_btn').removeClass('white_btn_gold').removeClass('gold_btn_white').addClass('gold_btn_white')
+      vm.isValid = true
+    else
+      $('#bay_btn').removeClass('white_btn_gold').removeClass('gold_btn_white').addClass('white_btn_gold')
+      $('#rent_btn').removeClass('white_btn_gold').removeClass('gold_btn_white').addClass('white_btn_gold')
+      vm.isValid = false
+
 
   calc_price: ->
     vm = @
@@ -131,7 +206,7 @@ class IndexController
         # Суммируем ЦЕНА_ПРОДАЖИ_ГИРЛЯНД + (КОЛИЧЕСТВО_ЛАМП * ЦЕНА_ПРОДАЖИ_ЛАМП)
         garland_total_price += (garland.length.buy_price + (garland.length.lamps * garland.power.buy_price))
 
-
+      garland_total_price = 0 if isNaN(garland_total_price)
       # Умножаем получившуюся сумму на количество гирлянд
       # затем суммируем в общую сумму заказа
       order.total_price += garland_total_price * garland.count
@@ -168,6 +243,7 @@ class IndexController
   make_order: ->
     vm = @
 
+    return if not vm.isValid    
     return if not vm.order.name
     return if not vm.order.email
     return if not vm.order.phone
@@ -204,7 +280,7 @@ class IndexController
           ret
       return
 
-#      инициализация большого слайдера с галереей
+  # инициализация большого слайдера с галереей
   init_work_slider: ->
     console.log 'init_work_slider()'
     $('.workSlider').each ->
@@ -351,7 +427,12 @@ class IndexController
 
     mainSlider.update()
 
-    @init_work_slider()
+#    @init_work_slider()
+
+    setTimeout ( ->
+      vm.init_work_slider()
+      return
+    ), 100
 
     $('.validateMe').validationEngine
       scroll: false
@@ -394,7 +475,7 @@ class IndexController
       'Ноябрь',
       'Декабрь'
     ]
-
+    vm.months = months
 
     $('.monthBtn').on 'click', ->
       firedEl = $(this).parent()

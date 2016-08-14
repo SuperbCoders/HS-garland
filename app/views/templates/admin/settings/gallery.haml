@@ -2,7 +2,7 @@
   .box-header.with-border
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.all")
-      все фото (121)
+      все фото ({{vm.stat.all}})
     %label.checkbox-inline
       %input(type = 'checkbox' ng-model = "vm.filter.holidays")
       праздники ({{vm.stat.holidays}})
@@ -27,3 +27,10 @@
             %a.btn.btn-xs.btn-danger.btn-flat(ng-click = "vm.destroy(image)")
               %i.fa.fa-trash
             %span.label.label-default(ng-repeat = "(key, value) in image.tags" ng-show = "{{value}}" style = 'margin-right: 2px') {{ key | tagFilter}}
+            %br
+            %input(ng-model="image.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
+            %br
+            %input(ng-model="image.description" )
+
+            -#%input.form-control(placeholder = "дата" ng-model="file.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
+            %button.btn.btn-default(ng-click="vm.send_edit(image)") Редактировать описание

@@ -7,9 +7,9 @@
         #main_slider_pagination.swiper-button-pagination.dt_hidden
     .swiper-wrapper.clearfix
       - SliderImage.all.each do |s_image|
-        .slide_img.swiper-slide.mob_hidden
+        .slide_img.swiper-slide
           %img{:src => "/uploads/#{s_image.file}"}/
-      .slide_img.swiper-slide.dt_hidden.imgBS
+      -#.slide_img.swiper-slide.dt_hidden.imgBS
         %img{:src => "/i/top_banner_mob.jpg"}/
     .slide_content
       .section_inner.text_center
@@ -22,9 +22,9 @@
   %a.btn_v3.order_now_btn.white_btn(href = "" ng-click = "vm.gotoAnchor('order_form')") заказать сейчас
 
 .wrapper
-  .base
-    = render 'templates/landing/shared/menu'
 
+  = render 'templates/landing/shared/menu'
+  .base
     .main_content
       .section_w.section_v1
         .section_inner
@@ -146,24 +146,115 @@
                   %li.filter_item(ng-class = "{'ui-state-active': vm.tags['wedding']}")
                     %a.filter_link(href = "" ng-click = "vm.filter('wedding')")
                       %span свадьбы ({{vm.gallery.wedding}})
-
+              -#{{vm.tags  vm.groupName}}
               .tabBlock{"data-tab-context" => "#works_filter"}
-                #filter_tab_1
+                #filter_tab_1(ng-show="vm.tags.all === true")
                   .tab_inner.works_slider
                     .swiper-container.workSlider
                       .swiper-wrapper.clearfix
-                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags: vm.tags}" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags:{'all':true} }" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
                           .work_slide(ng-switch-when = "0")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
                             .work_sl_info
-                              %img(ng-src = "{{vm.images[$index].path}}" id = "{{vm.images[$index].id}}" colorboxable)
-                              .work_sl_info
-                                %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-gorup-name="ASD" rel="imageset-1" href="{{vm.images[$index].path}}" ng-click = "vm.open_fancybox(vm.images[$index].id)" title="title") крупнее
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="все фото" rel="imageset-1" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
 
                           .work_slide(ng-switch-when = "1")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
                             .work_sl_info
-                              %img(ng-src = "{{vm.images[$index + 1].path}}" id = "{{vm.images[$index + 1].id}}" colorboxable)
-                              .work_sl_info
-                                %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-gorup-name="ASD" rel="imageset-1" href="{{vm.images[$index +1 ].path}}" ng-click = "vm.open_fancybox(vm.images[$index + 1].id)" title="title") крупнее
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="все фото" rel="imageset-1" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+
+                    .slider_pagination.mob_hidden
+                    .swiper-button-next.slider_next
+                    .swiper-button-prev.slider_prev
+
+
+                #filter_tab_2(ng-show='vm.tags.holidays === true')
+                  .tab_inner.works_slider
+                    .swiper-container.workSlider
+                      .swiper-wrapper.clearfix
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags:{'holidays':true} }" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
+                          .work_slide(ng-switch-when = "0")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="праздники" rel="imageset-2" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+                          .work_slide(ng-switch-when = "1")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="праздники" rel="imageset-2" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+
+                    .slider_pagination.mob_hidden
+                    .swiper-button-next.slider_next
+                    .swiper-button-prev.slider_prev
+
+
+                #filter_tab_3(ng-show='vm.tags.iterior===true')
+                  .tab_inner.works_slider
+                    .swiper-container.workSlider
+                      .swiper-wrapper.clearfix
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags:{'iterior':true} }" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
+                          .work_slide(ng-switch-when = "0")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="ярмарки и интерьеры" rel="imageset-3" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+                          .work_slide(ng-switch-when = "1")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="ярмарки и интерьеры" rel="imageset-3" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+
+                    .slider_pagination.mob_hidden
+                    .swiper-button-next.slider_next
+                    .swiper-button-prev.slider_prev
+
+                #filter_tab_4(ng-show='vm.tags.cinema === true')
+                  .tab_inner.works_slider
+                    .swiper-container.workSlider
+                      .swiper-wrapper.clearfix
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags:{'cinema':true} }" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
+                          .work_slide(ng-switch-when = "0")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="реклама и кино" rel="imageset-4" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+                          .work_slide(ng-switch-when = "1")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="реклама и кино" rel="imageset-4" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+
+                    .slider_pagination.mob_hidden
+                    .swiper-button-next.slider_next
+                    .swiper-button-prev.slider_prev
+
+
+                #filter_tab_5(ng-show='vm.tags.wedding === true')
+                  .tab_inner.works_slider
+                    .swiper-container.workSlider
+                      .swiper-wrapper.clearfix
+                        .swiper-slide(ng-repeat = "image in vm.images | filter:{tags:{'wedding':true} }" ng-switch on="$index % 2" ng-init = "vm.image_added = vm.image_added + 1")
+                          .work_slide(ng-switch-when = "0")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="свадьбы" rel="imageset-5" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
+
+                          .work_slide(ng-switch-when = "1")
+                            -#.work_sl_info
+                            %img(ng-src = "{{image.path}}" id = "{{image.id}}" colorboxable)
+                            .work_sl_info
+                              %a.btn_v2.work_sl_info.white_btn_white.fancyboxLink(data-group-name="свадьбы" rel="imageset-5" href="{{image.path}}" ng-click = "vm.open_fancybox(image.id)" title="{{vm.getTitleImg(image)}}") крупнее
 
 
                     .slider_pagination.mob_hidden
@@ -186,7 +277,7 @@
               выберите размер
               %br/
               и закажите доставку
-            %form.validateMe
+            %form.validateMe(name="qwe")
               .text_center
                 %label.order_switcher
                   {{ vm.order_mode }}
@@ -269,7 +360,7 @@
                             %br/
                           -#%span.clr_gray (посмотреть на карте)
                           %p
-                            %a.radio_tip_link.clr_gray{:href => "https://yandex.ua/maps/10758/himki/?source=wizbiz_new_map_single&ncrnd=2233&text=%D0%BE%D1%81%D0%BA%20%D0%B1%D1%83%D0%BC%D0%B5%D1%80%D0%B0%D0%BD%D0%B3&sll=37.343002%2C55.864621&sspn=0.000180%2C0.000101&sctx=CAAAAAEAHThnRGnPQkCNl24Sg%2BBLQJP8iF%2BxhuQ%2Faw2l9iLa3T8CAAAAAQIBAAAAAAAAAAG0Q3myvn9qxdUAAAABAACAPwAAAAAAAAAA&ol=psearch&oid=62520244", :target => "_blank"} (посмотреть на карте)
+                            %a.radio_tip_link.clr_gray{:href => "https://yandex.ua/maps/-/CVd3RTyq", :target => "_blank"} (посмотреть на карте)
 
                 .order_opt_row
                   .order_opt_cell  
@@ -343,28 +434,28 @@
                   .formCell.input_w
                     %span.form_cell_icon
                     %input.f_input.input_v2(class = "validate[required]" placeholder = "ваш телефон" ng-model="vm.order.phone" ui-mask="+7 (999) 999-99-99"  ui-mask-placeholder ui-mask-placeholder-char="_")
-                .form_cell.form_cell_wide
+                .form_cell.form_cell_wide(ng-show = "vm.order.delivery !== 'pickup'")
                   .formCell.input_w
                     %span.form_cell_icon
                     %input.f_input.input_v2(class = "validate[required]" placeholder = "адрес доставки" ng-model = "vm.order.delivery_address")
 
-              .text_center(ng-show = "vm.order.rent && !vm.order.days")
-                .pledge_sum.buyMode
-                  %span.clr_gray выберите срок аренды
+              -#.text_center(ng-show = "vm.order.rent && !vm.order.days")
+              -#  .pledge_sum.buyMode
+              -#    %span.clr_gray выберите срок аренды
 
-              .text_center(ng-show = "vm.order.rent && vm.order.days >= 5")
+              .text_center(ng-show = "vm.order.rent")
                 .pledge_sum.buyMode
                   %span.clr_gray сумма залога за гирлянды:
                   %span.clr_gold {{vm.order.guaranty_amount }} руб
                 .rent_sum
                   %span.clr_gray стоимость аренды:
                   %span.clr_gold {{ vm.order.total_price }} руб
-                %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
+                %button.btn_v3.order_btn.white_btn_gold#rent_btn(ng-click = "vm.make_order()") заказать
 
               .text_center(ng-show = "!vm.order.rent")
                 .rent_sum
                   %span.clr_gray Итого:
                   %span.clr_gold {{ vm.order.total_price }} руб
-                %button.btn_v3.order_btn.white_btn_gold(ng-click = "vm.make_order()") заказать
+                %button.btn_v3.order_btn.white_btn_gold#bay_btn(ng-click = "vm.make_order()") заказать
 
   = render 'templates/landing/shared/footer'

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     scope :gallery do
       post 'upload' => 'gallery#upload'
       get '/' => 'gallery#index'
+      put '/' => 'gallery#update'
       post 'destroy' => 'gallery#destroy'
     end
 

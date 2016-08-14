@@ -109,7 +109,8 @@ body {
 .header {
   @include transition_all(background .3s);
   @extend %translate3d;
-  position: absolute;
+  //position: absolute;
+  position: fixed;
   top: 90px;
   right: 0;
   left: 0;

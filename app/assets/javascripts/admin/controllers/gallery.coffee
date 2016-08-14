@@ -85,13 +85,21 @@ class GalleryController
     vm.http.get('/admin/gallery').then((response) ->
       vm.images = response.data
 
-
       vm.stat.all = vm.images.length
       for image in vm.images
         vm.stat.holidays += 1 if image.holidays
         vm.stat.iterior += 1 if image.iterior
         vm.stat.cinema += 1 if image.cinema
         vm.stat.wedding += 1 if image.wedding
+        arr = image.date.split('-')
+        image.date = arr[2]+'-'+arr[1]+'-'+arr[0]
+    )
+    
+  send_edit: (value)->
+    vm = @
+    
+    vm.http.put('/admin/gallery', {id: value.id, date: value.date, description: value.description}).then((res) ->
+      console.log res
     )
 
   upload_modal: ->

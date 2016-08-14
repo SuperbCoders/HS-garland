@@ -28,6 +28,13 @@ class Admin::GalleryController < ApplicationController
     "#{date_str[0..1]}.#{date_str[2..3]}.#{date_str[4..8]}".to_date
   end
 
+  def update
+    image = GalleryImage.find(params[:id])
+    image.date = image_date(params[:date])
+    image.description = params[:description]
+    image.save
+  end
+
   def slider_destroy
     result = {success: false, error: ''}
     image = SliderImage.find(params[:id])

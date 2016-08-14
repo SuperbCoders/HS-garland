@@ -3,13 +3,13 @@
     .mob_menu_btn.mobMenuBtn
       %span
     .logo_holder
-      %span.logo
+      %a.logo(href = "/#/")
     %ul.main_menu
       %li.menu_item
-        %a.menu_link(href = "/#/order_form" ng-click = "vm.gotoAnchor('order_form')")
+        %a.menu_link(href = "/#/#order_form" ng-click = "vm.gotoAnchor('order_form')")
           %span.link_text
             %span.mob_hidden расчитать стоимость
-            %span.dt_hidden заказать
+            %span.dt_hidden стоимость
       %li.menu_item
         %a.menu_link(href = '' ui-sref = 'conditions')
           %span.link_text условия аренды
@@ -22,4 +22,4 @@
         %a.menu_link(href = "tel:84993933285")
           %span.link_text
             %span.mob_hidden звоните: 8 499 393 32 85
-            %span.dt_hidden адрес
+            %span.dt_hidden Позвонить

@@ -76,33 +76,5 @@
               %p В общем, мы все продумали, чтобы было удобно и безопасно.
         .text_center
           %a.btn_v3.order_btn.gold_btn_white{:href => "/#/#order_form"} оформить заказ
-.footer_holder.footer_v2
-  .footer
-    .section_inner
-      .footer_table
-        .footer_t_cell
-          %p.text_upper
-            HAPPY STATION
-            %br/
-            в соцсетях:
-          %ul.footer_share
-            %li
-              %a.sh_link.sh_fb{:href => "#"}
-            %li
-              %a.sh_link.sh_in{:href => "#"}
-            %li
-              %a.sh_link.sh_vk{:href => "#"}
-        .footer_t_cell
-          %p
-            %a.footer_logo{:href => "#"}
-              %span.text_upper
-                Перейти в магазин
-                %br/
-                Happy Station
-        .footer_t_cell
-          %p.text_upper нужна помощь?
-          .callback_text
-            Звоните: +1-855-773-6736
-            %br/
-            или пишите
-            %a.callback_link{:href => "mailto:arenda@happystation.ru"} arenda@happystation.ru
+
+  = render 'templates/landing/shared/footer'
