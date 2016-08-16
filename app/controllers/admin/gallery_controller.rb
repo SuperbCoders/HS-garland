@@ -32,7 +32,12 @@ class Admin::GalleryController < ApplicationController
     image = GalleryImage.find(params[:id])
     image.date = image_date(params[:date])
     image.description = params[:description]
-    image.save
+    if image.save
+      render json: {image: image}
+    else
+      render json: {error: image.errors.full_messages.first}
+    end
+
   end
 
   def slider_destroy

@@ -74,6 +74,13 @@ class GalleryController
         alert(response.data.error)
     )
 
+  compare: (a, b)->
+    if a.id < b.id
+      return 1
+    if a.id > b.id
+      return -1
+    return 0
+
   fetch: ->
     vm = @
     vm.stat =
@@ -93,14 +100,20 @@ class GalleryController
         vm.stat.wedding += 1 if image.wedding
         arr = image.date.split('-')
         image.date = arr[2]+'-'+arr[1]+'-'+arr[0]
+
+      vm.images.sort(vm.compare)
     )
-    
+
   send_edit: (value)->
     vm = @
     
-    vm.http.put('/admin/gallery', {id: value.id, date: value.date, description: value.description}).then((res) ->
-      console.log res
+    vm.http.put('/admin/gallery', {id: value.id, date: value.date, description: value.description}).then(
+      (res) ->
+        alert 'Новые реквизиты: '+res.data.image.description+' '+res.data.image.date
+      ,(res) ->
+        alert 'Ошибка'+res.data
     )
+#    todo show error
 
   upload_modal: ->
     vm = @

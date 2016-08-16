@@ -28,9 +28,7 @@
               %i.fa.fa-trash
             %span.label.label-default(ng-repeat = "(key, value) in image.tags" ng-show = "{{value}}" style = 'margin-right: 2px') {{ key | tagFilter}}
             %br
-            %input(ng-model="image.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
-            %br
             %input(ng-model="image.description" )
-
-            -#%input.form-control(placeholder = "дата" ng-model="file.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
+            %br
+            %input(ng-model="image.date" ui-mask="99.99.9999"  ui-mask-placeholder ui-mask-placeholder-char="_")
             %button.btn.btn-default(ng-click="vm.send_edit(image)") Редактировать описание
