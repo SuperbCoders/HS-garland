@@ -109,7 +109,6 @@ body {
 .header {
   @include transition_all(background .3s);
   @extend %translate3d;
-  //position: absolute;
   position: fixed;
   top: 90px;
   right: 0;
@@ -202,6 +201,12 @@ body {
   position: relative;
   display: block;
   width: 100%;
+
+  @include my_mob($resp_1) {
+    .menu_item .menu_link {
+      font-size: 10px;
+    }
+  }
 
   @include my_mob($resp_2) {
     position: fixed;
@@ -1019,6 +1024,7 @@ body {
 
 .share_discount {
   @extend %hor_vert_centr;
+  @extend %translate3d;
   z-index: 2;
   position: absolute;
   padding: 0 10px;
@@ -1404,10 +1410,8 @@ body {
         margin-bottom: 20px;
         border-bottom: 1px solid #818181;
       }
-
     }
   }
-
 }
 
 .date_p_value {
@@ -1439,11 +1443,25 @@ body {
   line-height: 40px;
   //padding-left: 40px;
   padding-bottom: 5px;
-  border-bottom: 1px solid #818181;
+  //border-bottom: 1px solid #818181;
   font-family: $BebasNeueLight;
 
   .swiper-slide {
     min-width: 100%;
+  }
+
+  .swiper-container {
+    padding-bottom: 5px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 0;
+      left: 0;
+      border-bottom: 1px solid #818181;
+    }
+
   }
 }
 
@@ -1653,12 +1671,17 @@ body {
   }
 
   @include my_mob($resp_2) {
-    margin-top: -50px;
+    //margin-top: -50px;
   }
 }
 
 .order_opt_row {
   display: table-row;
+
+  @include my_mob($resp_2) {
+    display: block;
+    text-align: center;
+  }
 }
 
 .order_opt_item {
@@ -1674,6 +1697,7 @@ body {
   display: inline-block;
   font: 24px/30px $BebasNeueLight;
   letter-spacing: 1.5px;
+  text-align: left;
 
   .check_text {
     @extend .icon-before;
@@ -1742,6 +1766,7 @@ body {
   display: inline-block;
   font: 24px/30px $BebasNeueLight;
   letter-spacing: 1.5px;
+  text-align: left;
 
   .check_text {
     position: relative;
@@ -1919,6 +1944,8 @@ body {
   display: inline-block;
   line-height: 1;
   cursor: pointer;
+  position: relative;
+  width: 100%;
 
   &:hover {
     color: #a98c5a;
@@ -1930,6 +1957,18 @@ body {
     color: #a98c5a;
     cursor: default;
     text-decoration: none;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      background: #a98c5a;
+      height: 2px;
+      margin-top: 14px;
+      z-index: 2;
+    }
   }
 }
 
@@ -2132,7 +2171,7 @@ body {
     letter-spacing: 1.5px;
     font: 23px/1 $BebasNeueRegular;
     position: relative;
-    z-index: 3;
+    z-index: 2;
 
     &:active {
       @include transform_translate(0, 2px);
@@ -2752,9 +2791,19 @@ $rectWidth: 1280px;
   font: 28px $BebasNeueLight;
 }
 
-@media only screen and (min-width: $resp_2) {
+@media only screen and (min-width: $resp_1) {
   .dt_hidden {
     display: none !important;
+  }
+}
+
+.dt_only {
+  display: none;
+}
+
+@media only screen and (min-width: $resp_1) {
+  .dt_only {
+    display: block;
   }
 }
 
