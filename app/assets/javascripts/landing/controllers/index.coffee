@@ -28,6 +28,8 @@ class IndexController
     @scope.$watch('vm.order.end_date', (d) -> vm.validate())
     @scope.$watch('vm.order.delivery_address', (d) -> vm.validate())
     @scope.$watch('vm.order.delivery', (d) -> vm.validate())
+    @scope.$watch('vm.order.days', (d) -> vm.validate())
+    @scope.$watch('vm.order.rent', (d) -> vm.validate())
 
     # When delivery method changed, need recalc price
     @scope.$watch('vm.order.days', (d) -> vm.calc_price())
@@ -162,7 +164,7 @@ class IndexController
     res = vm.order.name and vm.order.email and vm.order.phone
     
     if vm.order.rent
-      res = res and vm.order.start_date and vm.order.end_date
+      res = res and vm.order.start_date and vm.order.end_date and vm.order.days>=5
       
     re = /\S+@\S+\.\S+/
     res = res and re.test(vm.order.email)
@@ -354,6 +356,8 @@ class IndexController
       false
 
 
+  plural: (n, str1, str2, str5) ->
+    n + ' ' + (if n % 10 == 1 and n % 100 != 11 then str1 else if n % 10 >= 2 and n % 10 <= 4 and (n % 100 < 10 or n % 100 >= 20) then str2 else str5)
 
 
   init_landing: ->
@@ -507,6 +511,20 @@ class IndexController
       $('.dateRangeYear').append $('<option>' + @innerHTML + '</option>')
       return
 
+    datePicker.data('daterangepicker').parentEl.find('.calendar .daterangepicker_input input').on 'updated.daterangepicker', ->
+      drp = datePicker.data('daterangepicker')
+      if drp.endDate and drp.startDate
+        if drp.endDate.diff(drp.startDate, 'days') == 0
+          vm.rootScope.$apply( ->
+            vm.order.days = 1
+          )
+      else if drp.startDate
+        vm.rootScope.$apply( ->
+          vm.order.days = 1
+        )
+      return
+
+
     $('.dateRangeYear').on 'change', ->
       yearSelect = datePicker.data('daterangepicker').parentEl.find('.calendar.left .month .yearselect')
       yearSelect[0].selectedIndex = @selectedIndex
@@ -522,6 +540,7 @@ class IndexController
 #        alert('Минимальный срок аренды 5 дней')
         picker.setEndDate(picker.startDate)
         picker.endDate.add(4, 'days')
+
       vm.rootScope.$apply( ->
         vm.order.start_date = picker.startDate
         vm.order.end_date = picker.endDate

@@ -4,35 +4,64 @@
 
       %tr
         %td
-          %img{:alt => "", :src => "http://happystation.ru/images/order_mail/good_taste.png", :style => "border:0px"}/
+          %img{:alt => "", :src => "http://arendalamp.ru/i/good_task.jpg", :style => "border:0px"}/
 
       %tr
         %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-style:italic;padding-top:30px"}
           %p
-            %span{:style => "font-size:25px"} Вас ждет отличный праздник!
-            -#%br
-            -#  %a{:href => "mailto:yesthatsmybox@GMAIL.COM", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} yesthatsmybox@GMAIL.COM
+            %span{:style => "font-size:25px"} #{@order.customer.name}, мы не знаем, что вы празднуете,
+          %p
+            %span{:style => "font-size:25px"} но что бы это ни было - поздравляем!
           %p
             %span{:style => "font-size:20px"}
-              Заказ номер №#{@order.order_id}
+              Номер заказа #{@order.order_id}
               %br
                 %strong #{@order.created_at.strftime('%d.%m.%Y')}
-              Мы не знаем, что вы празднуете, но что бы это ни было — поздравляем!
 
-
+  %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "background-color:rgb(255,255,255);margin:20px auto;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;color:rgb(0,0,0);font-style:italic", :width => "700"}
+    %tbody
       %tr
-        %td{:style => "border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
-          - @order.order_garlands.each do |order_garland|
-            = "#{order_garland.count} X #{order_garland.garland_price.length} м. #{order_garland.garland_price.lamps} ламп мощностью #{order_garland.lamp_price.power} Вт на сумму #{order_garland.price} рублей"
+        - @order.order_garlands.each do |order_garland|
+          %td{:style => "width:80%"}
+            %span{:style => "font-size:25px"} Гирлянда  #{order_garland.garland_price.length} м
+            -#" #{order_garland.garland_price.lamps} ламп мощностью #{order_garland.lamp_price.power} Вт на сумму #{order_garland.price} рублей"
+          %td{:style => "text-align:right"}
+            %span{:style => "font-size:25px; min-width:30px; teex-aligen:right"} #{order_garland.count} шт
             %br
             %br
-          %br
-          - if @order.rent
-            -#%p Стоимость аренды на #{@order.days} дней — #{@order.total_price} рублей
-            %p Сумма залога — #{Setting.general.guaranty_amount} рублей (эта сумма вернется вам в полном размере, если вы вернете гирлянды целыми и чистыми).
-          - elsif @order.total_price < Setting.general.delivery_free_limit
+
+      - if @order.rent
+        %tr{:style => "border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+
+          %td{:style => "width:80%;border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+            %p Стоимость аренды на #{@order.days} дн.:
+          %td{:style => "text-align:right;border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+            %p #{@order.total_price}.-
+        %tr
+          %td{:style => "width:84%;"}
+            %p Сумма залога
+            %p{:style => "font-size:12px"}
+              %span эта сумма вернется вам в полном размере, если вы вернете гирлянды целыми и чистыми. Подробности
+              %a{:href => "http://arendalamp.ru/#/conditions/", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} тут
+
+          %td{:style => "text-align:right;vertical-align:top"}
+            %p #{@order.guaranty_amount}.-
+
+      -else
+        %tr{:style => "border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+
+          %td{:style => "width:80%;border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+            %p Итого:
+          %td{:style => "text-align:right;border-top-width:4px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:30px 0px;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+            %p #{@order.total_price}.-
+
+  %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "background-color:rgb(255,255,255);margin:20px auto;font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;color:rgb(0,0,0);font-style:italic", :width => "700"}
+    %tbody
+      - if @order.total_price < Setting.general.delivery_free_limit
+        %tr
+          %td
             %p Доставка #{Setting.general.delivery_moscow} р. по Москве
-      %tr
+      -#%tr
         %td
           %table{:style => "border-top-width:1px;border-top-style:solid;border-top-color:rgb(34,34,34);padding:10px 0px 30px", :width => "700"}
             %tbody
@@ -60,7 +89,9 @@
           %p Монтаж рассчитывается индивидуально, в зависимости от места мероприятия. Пришлите фотографии, схему или описание площадки, остальное мы берем на себя.
       %tr
         %td
-          %p Если у вас остались вопросы — будем рады ответить по почте hello@arendalamp.ru или по телефону +7 499 393-32-85 (потом мы его заменим на новый).
+          %p Если у вас остались вопросы — будем рады ответить по почте hello@arendalamp.ru или по телефону +7 499 393-32-85.
+
+
       %tr
         %td
           %b Еще раз спасибо от всей семьи Happy Station!
@@ -77,19 +108,19 @@
       -#    %p{:style => "font-size:20px;padding:10px 0px"}
       -#      Если вы хотите побыстрее узнать что-то о своем заказе или о доставке
       -#      %a{:href => "http://www.happystation.ru/about/contacts/", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} пишите нам
-      %tr
-        %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic;padding:10px 0px"}
-          %span{:style => "font-size:20px"} Еще вы можете:
-          %ul{:style => "padding:0px;margin:0px 0px 30px;list-style-position:inside"}
-            %li
-              %a{:href => "https://www.facebook.com/happystationru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} Подписаться на новости
-          %p{:style => "font-size:20px;padding:10px 0px"}
-            Cпасибо за то, что выбрали нас!
-            %br
-              С уважением,
-              %br
-                вся команда
-                %a{:href => "http://www.happystation.ru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} happystation.ru
+      -#%tr
+        -#%td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic;padding:10px 0px"}
+        -#  %span{:style => "font-size:20px"} Еще вы можете:
+        -#  %ul{:style => "padding:0px;margin:0px 0px 30px;list-style-position:inside"}
+        -#    %li
+        -#      %a{:href => "https://www.facebook.com/happystationru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} Подписаться на новости
+        -#  %p{:style => "font-size:20px;padding:10px 0px"}
+        -#    Cпасибо за то, что выбрали нас!
+        -#    %br
+        -#      С уважением,
+        -#      %br
+        -#        вся команда
+        -#        %a{:href => "http://www.happystation.ru", :style => "color:rgb(82,82,82);text-decoration:none", :target => "_blank"} happystation.ru
       %tr
         %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic"}
           %img{:alt => "", :src => "http://happystation.ru/images/order_mail/order_mail_logo.png", :style => "border:0px;padding:10px 0px"}

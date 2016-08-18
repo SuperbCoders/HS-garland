@@ -25,7 +25,7 @@ class Order
   as_enum :status, [:new, :confirmed, :declined], map: :string, source: :status
 
   before_create :set_defaults
-  after_create { OrderMailer.order(id).deliver }
+  # after_create { OrderMailer.order(id).deliver }
   after_save :set_order_id
 
   def self.new_order(params)
@@ -53,10 +53,10 @@ class Order
         end
 
         order.calc_price
-        # order.order_garlands.create(garland_price_id: )
       end
     end
 
+    OrderMailer.order(order.id).deliver
     order
   end
 
@@ -83,7 +83,9 @@ class Order
       order.total_price += garland_total_price * order_garland.count
 
       if order.rent
-        order.guaranty_amount += garland_total_price * order_garland.count
+        # order.guaranty_amount += garland_total_price * order_garland.count
+        order.guaranty_amount += (order_garland.garland_price.buy_price + (order_garland.garland_price.lamps * order_garland.lamp_price.buy_price)) * order_garland.count
+        # (garland.length.buy_price + (garland.length.lamps * garland.powerguabuy_price)) * garland.count
       end
 
       logger.info "Total price #{order.total_price}"
