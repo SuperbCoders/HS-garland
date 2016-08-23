@@ -50,6 +50,18 @@
     controller: 'GeneralSettingsController'
     controllerAs: 'vm'
 
+  .state 'settings.cost_garland',
+    url: '/cost_garland'
+    templateUrl: '/templates/admin/settings/cost_garland'
+    controller: 'GeneralSettingsController'
+    controllerAs: 'vm'
+
+  .state 'settings.rent_garland',
+    url: '/rent_garland'
+    templateUrl: '/templates/admin/settings/rent_garland'
+    controller: 'GeneralSettingsController'
+    controllerAs: 'vm'
+
   .state 'settings.gallery',
     url: '/gallery'
     templateUrl: '/templates/admin/settings/gallery'

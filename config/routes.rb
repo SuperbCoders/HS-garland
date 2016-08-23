@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     # Settings
     match '/settings/general' => 'admin#general', via: [:get, :post]
     match '/settings/share_banner' => 'admin#share_banner', via: [:get, :post]
+    match '/settings/cost_garland' => 'admin#cost_garland', via: [:get, :post]
+    match '/settings/rent_garland' => 'admin#rent_garland', via: [:get, :post]
 
     # Gallery
     scope :gallery do

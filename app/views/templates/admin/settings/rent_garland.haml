@@ -1,0 +1,17 @@
+.box
+  .box-header.with-border
+    %h3.box-title.lead Текст стоимость аренда
+
+  .box-body
+    .row
+      .col-xs-12
+
+        %form.form-horizontal
+          .form-group
+            .col-sm-12
+              %textarea.form-control(rows = 5 ng-model = "vm.rent_garland.text")
+
+          .form-group
+            .col-sm-12
+              %button.btn.btn-success.btn-flat(ng-click = "vm.save_rent_garland()") Сохранить
+

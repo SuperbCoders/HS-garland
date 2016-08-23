@@ -12,6 +12,22 @@ class Admin::AdminController < Admin::BaseController
     render json: ShareBanner.banner
   end
 
+  def cost_garland
+    if request.post?
+      CostGarland.banner.update_attributes(text: banner_params[:text])
+    end
+
+    render json: CostGarland.banner
+  end
+
+  def rent_garland
+    if request.post?
+      RentGarland.banner.update_attributes(text: banner_params[:text])
+    end
+
+    render json: RentGarland.banner
+  end
+
   def general
     if request.post?
       Setting.general.update_attributes(setting_params)
