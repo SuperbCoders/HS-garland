@@ -37,6 +37,9 @@
               %td
                 %span.label.label-default(ng-show = 'order.need_installation') монтаж
                 %span.label.label-default(ng-show = 'order.rain_protection') защита от дождя
+                %span.label.label-default(ng-show = 'order.delivery==="moscow"') доставка по москве
+                %span.label.label-default(ng-show = 'order.delivery==="moscow_out"') доставка за пределы москвы
+                %span.label.label-default(ng-show = 'order.delivery==="pickup"') самовывоз
               %td
                 %select.form-control.input-xs(ng-model = "order.status" ng-change = "vm.save(order)")
                   %option(ng-repeat = "status in vm.order_statuses" value = "{{status}}") {{ status | statusFilter }}
