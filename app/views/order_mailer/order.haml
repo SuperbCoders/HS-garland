@@ -7,6 +7,22 @@
           %img{:alt => "", :src => "http://arendalamp.ru/i/good_task.jpg", :style => "border:0px"}/
 
       %tr
+        %td{:style => "width:80%;border-bottom-width:4px;border-bottom-style:solid;border-bottom-color:rgb(34,34,34);font-family:'Times New Roman',Times,Georgia,serif;font-size:16px;font-style:italic", :valign => "top", :width => "700"}
+          - if @order.rent and @order.delivery == :pickup
+            %p
+              %span{:style => "font-size:25px"} АРЕНДА С САМОВЫВОЗОМ
+          - if @order.rent and @order.delivery != :pickup
+            %p
+              %span{:style => "font-size:25px"} АРЕНДА С ДОСТАВКОЙ
+          - if !@order.rent and @order.delivery == :pickup
+            %p
+              %span{:style => "font-size:25px"} ПОКУПКА САМОВЫВОЗОМ
+          - if !@order.rent and @order.delivery != :pickup
+            %p
+              %span{:style => "font-size:25px"} ПОКУПКА С ДОСТАВКОЙ
+
+
+      %tr
         %td{:style => "font-family:'Times New Roman',Times,Georgia,serif;font-style:italic;padding-top:30px"}
           %p
             %span{:style => "font-size:25px"} #{@order.customer.name}, мы не знаем, что вы празднуете,
@@ -76,12 +92,21 @@
       %tr
         %td
           %b Как оплатить
-          %p Теперь вам нужно внести залог и оплатить аренду. Залог можно вносить наличными или переводом на карту. Если вы хотите забрать гирлянды самовывозом, — оплату можно будет сделать при встрече. Если выбрали доставку, — свяжитесь с нами для пояснений.
+          - if @order.rent and @order.delivery == :pickup
+            %p Теперь вам нужно внести залог и оплатить аренду. Залог можно вносить наличными или переводом на карту. Если вы хотите забрать гирлянды самовывозом, — оплату можно будет сделать при встрече.
+          - if @order.rent and @order.delivery != :pickup
+            %p Теперь вам нужно внести залог и оплатить аренду. Залог можно вносить наличными или переводом на карту. Свяжитесь с нами для пояснений в выборе способа оплаты.
+          - if !@order.rent
+            %p Оплатить гирлянды можно банковской картой, наличными при получении или переводом на карту.
       %tr
         %td
           %b Как забрать
-          %p Если вы заказали доставку, то мы с вами обязательно свяжемся в ближайшее время.
-          %p Самовывоз по адресу: Пятницкое шоссе, стр 6, ОСК Бумеранг (просим за день предупреждать о приезде, у нас на складе строгая пропускная система.)
+          - if @order.delivery != :pickup
+            %p Вы получите заказанное количество гирлянд по адресу:
+            %p #{@order.delivery_address}
+          -else
+            %p Вы получите заказанное количество гирлянд - самовывозом. Самовывоз по адресу:
+            %p Пятницкое шоссе, стр 6, ОСК Бумеранг (просим за день предупреждать о приезде, у нас на складе строгая пропускная система.)
 
       %tr
         %td

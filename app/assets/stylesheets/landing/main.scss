@@ -1194,7 +1194,7 @@ body {
   display: inline-block;
   vertical-align: top;
   position: relative;
-  margin: 7px 0 35px;
+  margin: 7px 0 15px;
   width: 52px;
   height: 30px;
   font: 22px $BebasNeueLight;
@@ -1507,7 +1507,6 @@ body {
       }
     }
   }
-
 }
 
 .settings_counter {
@@ -2343,6 +2342,31 @@ body {
   }
 
 }
+
+.article_v2 {
+  color: #6d6f71;
+  font: 12px/1.5 $HelveticaNeueLight;
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  table {
+    font-style: italic;
+    margin: -8px auto 25px;
+
+    td {
+      text-align: left;
+      padding: 2px 3px 1px;
+      width: 50%;
+
+      &:first-child {
+        text-align: right;
+      }
+    }
+  }
+}
+
 
 .text_center {
   text-align: center;

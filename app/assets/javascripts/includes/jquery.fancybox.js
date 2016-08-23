@@ -1409,6 +1409,11 @@
 			} else if (!current.locked) {
 				rez.top  += viewport.y;
 				rez.left += viewport.x;
+
+                // костыль для мобильной версии 
+                rez.top  = getValue( W.scrollTop()-550 );
+                rez.left = getValue(Math.max(rez.left, rez.left + ((viewport.w - width)  * current.leftRatio)));
+                return rez;
 			}
 
 			rez.top  = getValue(Math.max(rez.top,  rez.top  + ((viewport.h - height) * current.topRatio)));

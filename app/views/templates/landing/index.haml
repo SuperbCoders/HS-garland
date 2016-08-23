@@ -285,6 +285,13 @@
                   %span.switcher_trigger
                   %span.switcher_on купить
                   %span.switcher_off арендовать
+
+              .buyMode.modeInvert(style="display:none;")
+                .article_v2
+                  = CostGarland.banner.text.html_safe
+              .buyMode
+                .article_v2
+                  = RentGarland.banner.text.html_safe
               .buyMode(ng-show = 'vm.order.rent')
                 .date_p_controls
                   .swiper-container.monthSlider

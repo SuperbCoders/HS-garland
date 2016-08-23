@@ -1,12 +1,12 @@
 .hero_holder {
   height: 100%;
   position: relative;
-  background: url(/i/inner_hero.jpg) no-repeat 50%;
+  background: url(../i/inner_hero.jpg) no-repeat 50%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
+  overflow: hidden;
 }
 
 .hero_inner {
