@@ -92,7 +92,8 @@ class Order
       logger.info "#{garland_total_price} | #{order_garland.count}"
     end
 
-    if not self.rent and self.delivery == :moscow and self.total_price < Setting.general.delivery_free_limit
+    # if not self.rent and
+    if self.delivery == :moscow and self.total_price < Setting.general.delivery_free_limit
       logger.info "Without delivery price"
       self.total_price += Setting.general.delivery_moscow
     else

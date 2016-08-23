@@ -218,10 +218,10 @@ class IndexController
 
 
     # Если доставка по москве И общая_сумма_заказа менье чем в настройках
-    if order.delivery is 'moscow' and order.total_price < settings.general.delivery_free_limit
+    if order.delivery is 'moscow' and order.total_price < settings.general.open_delivery_free_limit
       # То плюсуем сумму доставки по москве
       # которую берем из настроек админки
-      order.total_price += settings.general.delivery_moscow
+      order.total_price += settings.general.open_delivery_moscow
 
     console.log 'calc_price end ------------------- '
   add_garland: ->
