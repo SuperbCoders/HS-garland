@@ -245,6 +245,9 @@ class IndexController
   make_order: ->
     vm = @
 
+    if vm.isSend
+      console.log('send')
+      return
     return if not vm.isValid    
     return if not vm.order.name
     return if not vm.order.email
@@ -256,9 +259,13 @@ class IndexController
     if vm.order.rent and vm.order.days < 5
       return alert('Минимальный срок аренды 5 дней')
 
-    vm.http.post('/order', vm.order).then((response) ->
-      vm.rootScope.order_id = response.data.order.order_id
-      vm.rootScope.g.state.go('thanks')
+    vm.isSend = true;
+    vm.http.post('/order', vm.order).then(
+      (response) ->
+        vm.rootScope.order_id = response.data.order.order_id
+        vm.rootScope.g.state.go('thanks')
+      (response) ->
+        vm.isSend = false;
     )
 
   init_select2: ->
